@@ -1,7 +1,8 @@
-import React from 'react'
+import React from 'react';
+import {Text } from "react-native-elements";
 
 export default function login() {
   return (
-    <div>login</div>
+    <Text>login</Text>
   )
 }
