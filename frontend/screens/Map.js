@@ -1,8 +1,8 @@
 import React from 'react';
 import {Text } from "react-native-elements";
 
-export default function SignUp() {
+export default function Map() {
   return (
-    <Text>SignUp</Text>
+    <Text>Map</Text>
   )
 }
