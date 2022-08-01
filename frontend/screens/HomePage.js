@@ -1,11 +1,25 @@
 import React from 'react';
-import {StyleSheet, Text } from "react-native-elements";
+import { StyleSheet, Text, View, Button } from 'react-native';
 
-export default function HomePage() {
+export default function HomePage(props) {
   return (
-    <Text style={{flex:1, alignItems: 'center',
-    justifyContent: 'center',}}>Bienvenue sur Echo</Text>
+    <View  style={styles.container}>
+      <Button
+      title="Home"
+      onPress={() => {
+        props.navigation.navigate("BottomNavigation", { screen: "Home" });
+    }}
+      >
+      </Button>
+    </View>
   )
 }
-
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#F97760',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
 

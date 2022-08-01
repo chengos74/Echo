@@ -1,4 +1,5 @@
 import React from 'react'
+import { StyleSheet, Text, View } from 'react-native';
 
 //desactiver les warning
 import { LogBox } from 'react-native';
@@ -11,7 +12,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 //icons
 // import { Ionicons } from '@expo/vector-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+//fontawesome
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import {faComment, faMapLocationDot, faUser, faHouse, faCirclePlus } from '@fortawesome/free-solid-svg-icons'
 
 //screens
 import profile from './screens/Profile';
@@ -20,8 +23,7 @@ import publication from './screens/Insert';
 import localisation from './screens/Map'
 import Home from './screens/HomePage'
 
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+
 
 //création de la tab et stack
 const Stack = createStackNavigator();
@@ -31,32 +33,33 @@ const BottomNavigation = () => {
  
   return (
     <Tab.Navigator  
-      screenOptions={( { route } ) => ({
-        tabBarIcon: ( { color } ) => {
-          let iconName;
+    screenOptions={( { route } ) => ({
+      tabBarIcon: ( { color } ) => {
+        let iconName;
 
-          if(route.name === 'home') {
-            iconName = 'fa-solid fa-house'
-          } else if(route.name === 'publication') {
-            iconName = 'ios-chatbubbles';
-          } else if(route.name === 'chat') {
-            iconName = 'fa-solid fa-comment';
-          } else if(route.name === 'localisation') {
-            iconName = 'fa-solid fa-location-dot';
-          } else if(route.name === 'profile') {
-            iconName = 'fa-solid fa-user';
-          }
-          return <FontAwesomeIcon name={iconName} size={24} color={color} />
-        },
-      })}
-      tabBarOptions={{
-        activeTintColor : '#0984e3',
-        inactiveTintColor : '#dfe6e9',
-        style: {
-          backgroundColor : '#130f40'
+        if(route.name === 'Home') {
+          iconName = faHouse;
+        } else if(route.name === 'localisation') {
+          iconName = faMapLocationDot;
+        } else if(route.name === 'publication') {
+          iconName = faCirclePlus;
+        }else if(route.name === 'chat') {
+          iconName = faComment;
+        }else if(route.name === 'profile') {
+          iconName = faUser;
         }
-      }}
-    >
+        return <FontAwesomeIcon icon={iconName} size={20} color={color} />
+      },
+    })}
+    tabBarOptions={{
+      activeTintColor : '#FF0000',
+      inactiveTintColor : '#dfe6e9',
+      style: {
+        backgroundColor : '#11640F'
+      }
+    }}
+  >
+      <Tab.Screen name='Home' component={Home} />
       <Tab.Screen name='localisation' component={localisation} />
       <Tab.Screen name='publication' component={publication} />
       <Tab.Screen name="chat" component={chat} />
@@ -67,8 +70,8 @@ const BottomNavigation = () => {
 
 export default function App() {
   return (
-    <NavigationContainer>
-        <Stack.Navigator screenOptions={{ headerShown : false }} >
+    <NavigationContainer style={styles.container}>
+        <Stack.Navigator screenOptions={{ headerShown : true }} >
           <Stack.Screen name='Home' component={Home} />
           <Stack.Screen name='BottomNavigation' component={BottomNavigation} />
         </Stack.Navigator>
