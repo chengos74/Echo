@@ -19,7 +19,8 @@ import {faComment, faMapLocationDot, faUser, faHouse, faCirclePlus } from '@fort
 //screens
 import profile from './screens/Profile';
 import chat from './screens/ChatAccueil';
-import publication from './screens/PubliChoice';
+import publiChoice from './screens/PubliChoice';
+import publication from './screens/Insert';
 import CameraScreen from './screens/CameraScreen';
 import localisation from './screens/Map';
 import Home from './screens/HomePage';
