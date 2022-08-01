@@ -1,8 +1,16 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, View } from 'react-native';
 
-export default function Insert() {
+export default function Insert(props) {
   return (
-    <Text>Insert</Text>
+    <View>
+      <Button
+      title='Camera'
+      onPress={() => {props.navigation.navigate("CameraScreen", { screen: "CameraScreen" });}}
+      >
+      </Button>
+        <Text>Insert</Text>
+    </View>
+
   )
 }

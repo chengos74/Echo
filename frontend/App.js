@@ -22,6 +22,8 @@ import chat from './screens/ChatAccueil';
 import publication from './screens/Insert';
 import localisation from './screens/Map'
 import Home from './screens/HomePage'
+import Camera from './screens/CameraScreen';
+import CameraScreen from './screens/CameraScreen';
 
 
 
@@ -72,7 +74,8 @@ export default function App() {
   return (
     <NavigationContainer style={styles.container}>
         <Stack.Navigator screenOptions={{ headerShown : true }} >
-          <Stack.Screen name='Home' component={Home} />
+          <Stack.Screen exact name='Home' component={Home} />
+          <Stack.Screen name='CameraScreen' component={CameraScreen} />
           <Stack.Screen name='BottomNavigation' component={BottomNavigation} />
         </Stack.Navigator>
       </NavigationContainer>
