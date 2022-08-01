@@ -20,8 +20,8 @@ import {faComment, faMapLocationDot, faUser, faHouse, faCirclePlus } from '@fort
 import profile from './screens/Profile';
 import chat from './screens/ChatAccueil';
 import publication from './screens/Insert';
-import localisation from './screens/Map'
-import Home from './screens/HomePage'
+import localisation from './screens/Map';
+import Home from './screens/HomePage';
 
 
 
