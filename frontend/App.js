@@ -22,8 +22,9 @@ import chat from './screens/ChatAccueil';
 import publication from './screens/Insert';
 import localisation from './screens/Map'
 import Home from './screens/HomePage'
-import Camera from './screens/CameraScreen';
 import CameraScreen from './screens/CameraScreen';
+import localisation from './screens/Map';
+import Home from './screens/HomePage';
 
 
 
