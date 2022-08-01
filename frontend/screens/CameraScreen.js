@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { StyleSheet, Text, View } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
-import { CameraType, WhiteBalance } from 'expo-camera';
+import { CameraType, VideoQuality, WhiteBalance } from 'expo-camera';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 //-----IMPORT ICONS-----//
@@ -11,7 +11,7 @@ import { faCameraRotate, faCircle, faBolt } from '@fortawesome/free-solid-svg-ic
 //-----IMPORT CAMERA EXPO-----//
 import { Camera } from 'expo-camera';
 
-export default function CameraScreen() {
+export default function CameraScreen(props) {
 
   // State qui passe à true si on autorise l'accès à la caméra
   const [hasPermission, setHasPermission] = useState(false);
@@ -59,14 +59,62 @@ export default function CameraScreen() {
             <FontAwesomeIcon icon={faBolt} size={34} color={'white'} />
           </TouchableOpacity>
 
+
           <TouchableOpacity
             style={{ alignSelf: 'flex-end', alignItems: 'center', marginRight: 20, }}
-            onPress={() => {
 
-            }}
+            onPress={async () => {
+
+              if (cameraRef) {
+                let photo = await cameraRef.takePictureAsync({
+                  quality: 0.7,
+                  base64: true,
+                  exif: true,
+                });
+
+                // création d'un fichier qui contient la photo
+                let dataPhoto = new FormData();
+                dataPhoto.append('photo', {
+                  uri: photo.uri,
+                  type: 'image/jpeg',
+                  name: 'user_photo.jpg',
+                });
+                
+                //-----CODE POUR ENREGISTRER UNE VIDEO, FONCTIONNEL-----//
+                // il reste à choisir la manière d'enregistrer une vidéo d'un point de vue UI/UX
+                
+                // let video = await cameraRef.recordAsync({
+                //   codec : VideoCodec[JPEG],
+                //   maxDuration : 3,
+                //   quality : VideoQuality['720p'],
+                // });
+
+                // // création d'un fichier qui contient la vidéo 
+                // let dataVideo = new FormData();
+                // dataVideo.append('video', {
+                //   uri: video.uri,
+                //   type: 'video/mov',
+                //   name : 'user_video.mov'
+                // })
+                // console.log(dataVideo);
+
+                //-----FIN DU CODE POUR ENREGISTRER UNE VIDEO, FONCTIONNEL-----//
+
+                // IP adress partage de connexion
+                const ip = "172.20.10.5";
+
+                // réponse du backend
+                await fetch("http://" + ip + ":3000/camera", {
+                  method: 'POST',
+                  body: dataPhoto,
+                });
+              }
+            }
+            }
           >
             <FontAwesomeIcon icon={faCircle} size={64} color={'white'} />
           </TouchableOpacity>
+
 
           <TouchableOpacity
             style={{ alignSelf: 'flex-end', alignItems: 'center', marginRight: 20, }}
