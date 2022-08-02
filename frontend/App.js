@@ -65,7 +65,10 @@ const BottomNavigation = () => {
   >
       <Tab.Screen name='Home' component={Home} />
       <Tab.Screen name='localisation' component={localisation} />
-      <Tab.Screen name='Publication' component={PChoice} />
+      <Tab.Screen name='publication' component={publication} />
+      <Tab.Screen name='PChoice' component={PChoice} />
+
+
       <Tab.Screen name="chat" component={chat} />
       <Tab.Screen name="profile" component={profile} />
       <Tab.Screen name="Login" component={Login} />
@@ -76,7 +79,7 @@ const BottomNavigation = () => {
 export default function App() {
   return (
     <NavigationContainer style={styles.container}>
-        <Stack.Navigator screenOptions={{ headerShown : true }} >
+        <Stack.Navigator screenOptions={{ headerShown : false }} >
           <Stack.Screen exact name='Home' component={Home} />
           <Stack.Screen name='CameraScreen' component={CameraScreen} />
           <Stack.Screen name='PParams' component={PParams} />

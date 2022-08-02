@@ -123,6 +123,9 @@ export default function HomePage(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#F97760',
+    alignItems: 'center',
+    justifyContent: 'center', 
     backgroundColor: '#101010',
   },
   searchSection: {
