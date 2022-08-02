@@ -13,18 +13,18 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 //icons
 // import { Ionicons } from '@expo/vector-icons';
 //fontawesome
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { FontAwesomeIcon  } from '@fortawesome/react-native-fontawesome';
 import {faComment, faMapLocationDot, faUser, faHouse, faCirclePlus } from '@fortawesome/free-solid-svg-icons'
 
 //screens
 import profile from './screens/Profile';
 import chat from './screens/ChatAccueil';
+import publiChoice from './screens/PubliChoice';
 import publication from './screens/Insert';
-// import localisation from './screens/Map'
-// import Home from './screens/HomePage'
 import CameraScreen from './screens/CameraScreen';
 import localisation from './screens/Map';
 import Home from './screens/HomePage';
+import Login from './screens/loginScreen';
 
 
 
@@ -51,7 +51,7 @@ const BottomNavigation = () => {
         }else if(route.name === 'profile') {
           iconName = faUser;
         }
-        return <FontAwesomeIcon icon={iconName} size={20} color={color} />
+        return <FontAwesomeIcon  icon={iconName} size={20} color={color} />
       },
     })}
     tabBarOptions={{
@@ -64,9 +64,10 @@ const BottomNavigation = () => {
   >
       <Tab.Screen name='Home' component={Home} />
       <Tab.Screen name='localisation' component={localisation} />
-      <Tab.Screen name='publication' component={publication} />
+      {/* <Tab.Screen name='publication' component={publication} /> */}
       <Tab.Screen name="chat" component={chat} />
       <Tab.Screen name="profile" component={profile} />
+      <Tab.Screen name="Login" component={Login} />
     </Tab.Navigator>
   )
 }
