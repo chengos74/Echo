@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F97760',
     alignItems: 'center',
-    // justifyContent: 'center',
+    justifyContent: 'center',
   }, 
   searchSection: {
     marginTop: 10,
