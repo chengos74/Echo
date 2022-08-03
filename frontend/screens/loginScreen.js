@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import { StyleSheet, Button, View, TextInput, TouchableOpacity, Text } from 'react-native';
 
 //fontawesome
-//fontawesome
 import { FontAwesomeIcon  } from '@fortawesome/react-native-fontawesome';
 import { faFacebook, faGoogle, faTiktok, faInstagram} from '@fortawesome/free-brands-svg-icons'
 
@@ -27,7 +26,7 @@ export default function login(props) {
   const [isImageLoading, setIsImageLoading] = useState(false);
 
   
-  //facebook 
+  //facebook connexion
   const facebookLogin = async () => {
     try {
       await Facebook.initializeAsync({
@@ -49,7 +48,7 @@ export default function login(props) {
       alert(`Facebook Login Error: ${message}`);
     }
   }
-
+  //facebook logout
   const logout = () => {
     setIsLoggedin(false);
     setUserData(null);
