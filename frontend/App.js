@@ -25,7 +25,7 @@ import PParams from './screens/PubliParamsScreen';
 import CameraScreen from './screens/CameraScreen';
 import localisation from './screens/Map';
 import Home from './screens/HomePage';
-import Login from './screens/loginScreen';
+import Account from './screens/Account';
 import SignUp from './screens/SignUp';
 
 
@@ -57,10 +57,11 @@ const BottomNavigation = () => {
       },
     })}
     tabBarOptions={{
-      activeTintColor : '#FF0000',
-      inactiveTintColor : '#dfe6e9',
+      activeTintColor : '#D66D67',
+      inactiveTintColor: '#348A55',
+      showLabel: false,
       style: {
-        backgroundColor : '#11640F'
+        backgroundColor : '#505050'
       }
     }}
   >
@@ -70,7 +71,7 @@ const BottomNavigation = () => {
       <Tab.Screen name='PChoice' component={PChoice} />
       <Tab.Screen name="chat" component={chat} />
       <Tab.Screen name="profile" component={profile} />
-      <Tab.Screen name="Login" component={Login} />
+      <Tab.Screen name="Account" component={Account} />
     </Tab.Navigator>
   )
 }

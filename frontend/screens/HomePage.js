@@ -112,9 +112,7 @@ export default function HomePage(props) {
     <View style={styles.container}>
 
       <View style={styles.searchSection}>
-
         <FontAwesomeIcon style={styles.searchIcon} icon={faSearch} size={24} color={'#7E7E7E'} />
-
         <TextInput
           style={styles.searchInput}
           placeholder='Search'
@@ -128,14 +126,7 @@ export default function HomePage(props) {
       </View>
 
       {searchClick}
-
-      <Button style={{ justifyContent: 'center' }}
-        title="Home"
-        onPress={() => {
-          props.navigation.navigate("BottomNavigation", { screen: "Home" });
-        }}
-      >
-      </Button>
+    
     </View>
   )
 }
