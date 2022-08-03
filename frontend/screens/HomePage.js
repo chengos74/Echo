@@ -1,5 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Button, TextInput, FlatList, Text, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, View, Button, TextInput, FlatList, Text, TouchableOpacity, ScrollView, Image } from 'react-native';
+import { Card, Avatar, ListItem, } from "@rneui/themed";
+import Post from '../screenComponents/PostComponent'
+
 
 //-----IMPORT ICONS-----//
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
@@ -32,12 +35,15 @@ const DATA = [
   },
 ];
 
+
 export default function HomePage(props) {
 
   // State qui reçoit la valeur du search input
   const [search, setSearch] = useState(null);
   // State qui contient la balise FlatList
-  const [searchClick, setSearchClick] = useState();
+  const [searchClick, setSearchClick] = useState(null);
+
+  let imageTest = '../assets/photo.jpg'
 
   // fonction que détecte le click sur un item de la flatlist
   async function handlesubmit(textFromInput) {
@@ -124,28 +130,38 @@ export default function HomePage(props) {
         >
         </TextInput>
       </View>
-
       {searchClick}
-    
+
+      <ScrollView>
+        
+        <Post />
+
+      </ScrollView>
+
+      <Button style={{ justifyContent: 'center' }}
+        title="Home"
+        onPress={() => {
+          props.navigation.navigate("BottomNavigation", { screen: "Home" });
+        }}
+      >
+      </Button>
+
     </View>
   )
 }
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F97760',
-    alignItems: 'center',
-    justifyContent: 'center', 
-    backgroundColor: '#101010',
+    backgroundColor: '#151515',
   },
   searchSection: {
-    marginTop: 20,
+    marginTop: 50,
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#505050',
     borderRadius: 10,
     height: 42,
-    width: '60%',
+    width: '50%',
     alignSelf: 'center'
   },
   searchInput: {
@@ -174,6 +190,6 @@ const styles = StyleSheet.create({
   closeIcon: {
     alignItems: 'center',
     justifyContent: 'center',
-  },
+  }
 });
 
