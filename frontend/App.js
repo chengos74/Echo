@@ -61,7 +61,7 @@ const BottomNavigation = () => {
       inactiveTintColor: '#348A55',
       showLabel: false,
       style: {
-        backgroundColor : '#505050'
+        backgroundColor : '#101010'
       }
     }}
   >
