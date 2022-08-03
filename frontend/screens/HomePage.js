@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Button, TextInput, FlatList, Text, TouchableOpacity } from 'react-native';
 
 //-----IMPORT ICONS-----//
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faSearch, faUser, faHashtag, faCircleXmark, faLocation, faLocationDot } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faUser, faHashtag, faCircleXmark, faLocationDot } from '@fortawesome/free-solid-svg-icons';
 
 // fictionnal data for the Flatlist
 // id sera l'id à pêcher en bdd (id utilisateur)
@@ -39,23 +39,42 @@ export default function HomePage(props) {
   // State qui contient la balise FlatList
   const [searchClick, setSearchClick] = useState();
 
-  // item fictifs pour la flatlist
+  // fonction que détecte le click sur un item de la flatlist
+  async function handlesubmit(textFromInput) {
+    // IP adress partage de connexion
+    const ip = "192.168.1.12";
+
+    let userResearch = textFromInput;
+
+    // réponse du backend
+    let rawReponse = await fetch("http://" + ip + ":3000/search", {
+      method: 'POST',
+      headers:{'Content-Type' : 'application/x-www-form-urlencoded'},
+      body: `userResearch=${userResearch}`
+    });
+    let response = await rawReponse.json()
+    console.log("reponse"+JSON.stringify(response));
+  }
+
+  // item pour la flatlist
   function oneItem({ item }) {
 
     var iconName;
     if (item.type == 'user') {
       iconName = faUser;
-    } else if (item.type == 'tag'){
+    } else if (item.type == 'tag') {
       iconName = faHashtag;
     } else {
       iconName = faLocationDot;
     }
 
     return (
-      <View style={styles.item}>
+      <TouchableOpacity style={styles.item}
+        onPress={{}}
+      >
         <FontAwesomeIcon style={styles.searchIcon} icon={iconName} size={24} color={'#7E7E7E'} />
         <Text style={styles.title} > : {item.title} </Text>
-      </View>
+      </TouchableOpacity>
     )
   };
 
@@ -75,7 +94,7 @@ export default function HomePage(props) {
       </TouchableOpacity>)
   };
 
-  // flatlist qui apparaît quand on on fait une recherhe
+  // flatlist qui fati apparaître le flatlist quand on on fait une recherhe
   var OnSearchClick = () => {
     return (
       <FlatList
@@ -101,7 +120,7 @@ export default function HomePage(props) {
           placeholder='Search'
           placeholderTextColor="#7E7E7E"
           color='white'
-          onChangeText={(value) => setSearch(value)}
+          onChangeText={(value) => { setSearch(value), handlesubmit(value) }}
           value={search}
           onFocus={() => { setSearchClick(OnSearchClick) }}
         >
