@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import { StyleSheet, Button, View, TextInput, TouchableOpacity, Text } from 'react-native';
 
 //fontawesome
-//fontawesome
 import { FontAwesomeIcon  } from '@fortawesome/react-native-fontawesome';
 import { faFacebook, faGoogle, faTiktok, faInstagram} from '@fortawesome/free-brands-svg-icons'
 
@@ -15,7 +14,7 @@ WebBrowser.maybeCompleteAuthSession();
 
 
 
-export default function login() {
+export default function login(props) {
 
   //username et password
   const [userName, setUserName] = useState("");
@@ -27,7 +26,7 @@ export default function login() {
   const [isImageLoading, setIsImageLoading] = useState(false);
 
   
-  //facebook 
+  //facebook connexion
   const facebookLogin = async () => {
     try {
       await Facebook.initializeAsync({
@@ -49,7 +48,7 @@ export default function login() {
       alert(`Facebook Login Error: ${message}`);
     }
   }
-
+  //facebook logout
   const logout = () => {
     setIsLoggedin(false);
     setUserData(null);
@@ -69,6 +68,8 @@ export default function login() {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.login}>Login</Text>
+      <View style={styles.lineStyle} />
         <TextInput 
         style={styles.input}
         placeholder="UserName"
@@ -101,7 +102,7 @@ export default function login() {
         <FontAwesomeIcon style={styles.Icon} icon={faGoogle} size={24} color={'#7E7E7E'} />
       </TouchableOpacity>
       
-        <TouchableOpacity style={styles.searchSection}>
+        {/* <TouchableOpacity style={styles.searchSection}>
         <Text style={styles.searchInput}>tiktok</Text>
         <FontAwesomeIcon style={styles.Icon} icon={faTiktok} size={24} color={'#7E7E7E'} />
 
@@ -109,11 +110,14 @@ export default function login() {
         <TouchableOpacity style={styles.searchSection}>
         <Text style={styles.searchInput}>instagram</Text>
         <FontAwesomeIcon style={styles.Icon} icon={faInstagram} size={24} color={'#7E7E7E'} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         <View style={styles.lineStyle} />
-        <Text style={{fontSize:20, fontWeight:"bold", marginTop: 30, color:'#7E7E7E' }}
-        >Don't have an account - Sign-Up</Text>
+        <TouchableOpacity onPress={() => {
+          props.navigation.navigate("SignUp", { screen: "SignUp" });
+      }}>
+        <Text style={{fontSize:20, fontWeight:"bold", marginTop: 30, color:'#7E7E7E' }} >Don't have an account - Sign-Up </Text>
+      </TouchableOpacity>
 
   </View>
 )
@@ -124,7 +128,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#101010',
     alignItems: 'center',
-    // justifyContent: 'center',
+    justifyContent: 'center',
+  },
+  login: {
+    color: '#7E7E7E',
+    fontSize: 34,
+    fontWeight: "bold",
   },
   input: {
     marginTop: 30,
