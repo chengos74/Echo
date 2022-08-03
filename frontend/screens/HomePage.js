@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Button, TextInput, FlatList, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Button, TextInput, FlatList, Text, TouchableOpacity, ScrollView, Image } from 'react-native';
+import { Card, Avatar, ListItem, } from "@rneui/themed";
+import Post from '../screenComponents/PostComponent'
 
 //-----IMPORT ICONS-----//
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faSearch, faUser, faHashtag, faCircleXmark, faLocation, faLocationDot } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faUser, faHashtag, faCircleXmark, faLocationDot } from '@fortawesome/free-solid-svg-icons';
 
 // fictionnal data for the Flatlist
 // id sera l'id à pêcher en bdd (id utilisateur)
@@ -32,12 +34,15 @@ const DATA = [
   },
 ];
 
+
 export default function HomePage(props) {
 
   // State qui reçoit la valeur du search input
   const [search, setSearch] = useState(null);
   // State qui contient la balise FlatList
-  const [searchClick, setSearchClick] = useState();
+  const [searchClick, setSearchClick] = useState(null);
+
+  let imageTest = '../assets/photo.jpg'
 
   // item fictifs pour la flatlist
   function oneItem({ item }) {
@@ -45,7 +50,7 @@ export default function HomePage(props) {
     var iconName;
     if (item.type == 'user') {
       iconName = faUser;
-    } else if (item.type == 'tag'){
+    } else if (item.type == 'tag') {
       iconName = faHashtag;
     } else {
       iconName = faLocationDot;
@@ -93,9 +98,7 @@ export default function HomePage(props) {
     <View style={styles.container}>
 
       <View style={styles.searchSection}>
-
         <FontAwesomeIcon style={styles.searchIcon} icon={faSearch} size={24} color={'#7E7E7E'} />
-
         <TextInput
           style={styles.searchInput}
           placeholder='Search'
@@ -107,8 +110,13 @@ export default function HomePage(props) {
         >
         </TextInput>
       </View>
-
       {searchClick}
+
+      <ScrollView>
+        
+        <Post />
+
+      </ScrollView>
 
       <Button style={{ justifyContent: 'center' }}
         title="Home"
@@ -123,19 +131,16 @@ export default function HomePage(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F97760',
-    alignItems: 'center',
-    justifyContent: 'center', 
-    backgroundColor: '#101010',
+    backgroundColor: '#151515',
   },
   searchSection: {
-    marginTop: 20,
+    marginTop: 50,
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#505050',
     borderRadius: 10,
     height: 42,
-    width: '60%',
+    width: '50%',
     alignSelf: 'center'
   },
   searchInput: {
@@ -164,6 +169,6 @@ const styles = StyleSheet.create({
   closeIcon: {
     alignItems: 'center',
     justifyContent: 'center',
-  },
+  }
 });
 
