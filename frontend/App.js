@@ -26,6 +26,7 @@ import CameraScreen from './screens/CameraScreen';
 import localisation from './screens/Map';
 import Home from './screens/HomePage';
 import Login from './screens/loginScreen';
+import SignUp from './screens/SignUp';
 
 
 
@@ -45,7 +46,7 @@ const BottomNavigation = () => {
           iconName = faHouse;
         } else if(route.name === 'localisation') {
           iconName = faMapLocationDot;
-        } else if(route.name === 'Publication') {
+        } else if(route.name === 'publication') {
           iconName = faCirclePlus;
         }else if(route.name === 'chat') {
           iconName = faComment;
@@ -67,8 +68,6 @@ const BottomNavigation = () => {
       <Tab.Screen name='localisation' component={localisation} />
       <Tab.Screen name='publication' component={publication} />
       <Tab.Screen name='PChoice' component={PChoice} />
-
-
       <Tab.Screen name="chat" component={chat} />
       <Tab.Screen name="profile" component={profile} />
       <Tab.Screen name="Login" component={Login} />
@@ -80,10 +79,11 @@ export default function App() {
   return (
     <NavigationContainer style={styles.container}>
         <Stack.Navigator screenOptions={{ headerShown : false }} >
+          <Stack.Screen name='BottomNavigation' component={BottomNavigation} />
           <Stack.Screen exact name='Home' component={Home} />
           <Stack.Screen name='CameraScreen' component={CameraScreen} />
           <Stack.Screen name='PParams' component={PParams} />
-          <Stack.Screen name='BottomNavigation' component={BottomNavigation} />
+          <Stack.Screen name='SignUp' component={SignUp} />
         </Stack.Navigator>
       </NavigationContainer>
   );
