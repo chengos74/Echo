@@ -20,7 +20,6 @@ import {faComment, faMapLocationDot, faUser, faHouse, faCirclePlus } from '@fort
 import profile from './screens/Profile';
 import chat from './screens/ChatAccueil';
 import PChoice from './screens/PubliChoiceScreen'
-import publication from './screens/Insert';
 import PParams from './screens/PubliParamsScreen';
 import CameraScreen from './screens/CameraScreen';
 import localisation from './screens/Map';
@@ -46,7 +45,7 @@ const BottomNavigation = () => {
           iconName = faHouse;
         } else if(route.name === 'localisation') {
           iconName = faMapLocationDot;
-        } else if(route.name === 'publication') {
+        } else if(route.name === 'Publication') {
           iconName = faCirclePlus;
         }else if(route.name === 'chat') {
           iconName = faComment;
@@ -66,8 +65,7 @@ const BottomNavigation = () => {
   >
       <Tab.Screen name='Home' component={Home} />
       <Tab.Screen name='localisation' component={localisation} />
-      <Tab.Screen name='publication' component={publication} />
-      <Tab.Screen name='PChoice' component={PChoice} />
+      <Tab.Screen name='Publication' component={PChoice} />
       <Tab.Screen name="chat" component={chat} />
       <Tab.Screen name="profile" component={profile} />
       <Tab.Screen name="Login" component={Login} />
