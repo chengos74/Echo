@@ -1,12 +1,23 @@
 import React from 'react';
-import { StyleSheet, View, Image, TouchableOpacity, Text } from 'react-native';
+import { StyleSheet, View, Image, TouchableOpacity, Text, ScrollView } from 'react-native';
+
+
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+
+
+import Publications from '../screenComponents/PublicationsAccount';
+import LikeAccount from '../screenComponents/LikeAccount';
+
 
 //fontawesome
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import {faShare, faLink, faLock, faEye } from '@fortawesome/free-solid-svg-icons'
-import {faInstagram} from '@fortawesome/free-brands-svg-icons'
+import { faInstagram } from '@fortawesome/free-brands-svg-icons'
+
 
 export default function account() {
+  
+  const Tab = createMaterialTopTabNavigator();
 
     
   return (
@@ -16,7 +27,7 @@ export default function account() {
       {/* entête */}
         <View style={{flexDirection: 'row'}}>
           <Image
-            source={require('../assets/myeyeslamp-2Qwp7CgdWcg-unsplash.jpg')}
+            source={require('../assets/myeyeslamp.jpg')}
             style={styles.image}
         />
           <Text style={styles.identifiant}>NicolasLagarge</Text>
@@ -45,74 +56,16 @@ export default function account() {
         <FontAwesomeIcon  icon={faInstagram} size={20} color= "#7E7E7E" style={{marginLeft: 20}} />
         <Text style={styles.web}>nicolaslafarge</Text>
       </View>
-      {/* publication et liked */}
-      <View style={{ flexDirection: 'row', paddingTop: 20 }}>
-        <Text style={styles.publicationactive}>Publication</Text>
-        <FontAwesomeIcon  icon={faLock} size={20} color= "#7E7E7E" style={{marginLeft: 20, marginTop: 8}} />
-        <Text style={styles.publication}>Liked</Text>
-      </View>
-      <View style={styles.lineStyle} />
-      {/* videos et photos */}
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 5 }}>
-          <Image
-              source={require('../assets/nemo.jpg')}
-              style={styles.gallerytop}
-          />
-        <FontAwesomeIcon icon={faEye} size={18} color="#FFFFFF" style={{ marginLeft: 5, justifyContent: 'flex-end', position: 'absolute', top: 100, left: 5 }} />
-        <Text style={{position: 'absolute', top: 102, left: 30, color: '#FFFFFF', fontSize: 12}}> 75</Text>
-          <Image
-              source={require('../assets/forest.jpg')}
-              style={styles.gallerytop}
-          />
-        <FontAwesomeIcon icon={faEye} size={18} color="#FFFFFF" style={{ marginLeft: 5, justifyContent: 'flex-end', position: 'absolute', top: 100, left: 135 }} />
-        <Text style={{position: 'absolute', top: 102, left: 160, color: '#FFFFFF', fontSize: 12}}> 105</Text>
-          <Image
-              source={require('../assets/tournesol.jpg')}
-              style={styles.gallerytop}
-          />
-        <FontAwesomeIcon icon={faEye} size={18} color="#FFFFFF" style={{ marginLeft: 5, justifyContent: 'flex-end', position: 'absolute', top: 100, left: 265 }} />
-        <Text style={{position: 'absolute', top: 102, left: 290, color: '#FFFFFF', fontSize: 12}}> 150</Text>
-      </View>
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 5 }}>
-          <Image
-              source={require('../assets/hossein.jpg')}
-              style={styles.gallery}
-          />
-        <FontAwesomeIcon icon={faEye} size={18} color="#FFFFFF" style={{ marginLeft: 5, justifyContent: 'flex-end', position: 'absolute', top: 100, left: 5 }} />
-        <Text style={{position: 'absolute', top: 102, left: 30, color: '#FFFFFF', fontSize: 12}}> 50</Text>
-          <Image
-              source={require('../assets/darkroomlabs-F8c1zwtNzYs-unsplash.jpg')}
-              style={styles.gallery}
-          />
-        <FontAwesomeIcon icon={faEye} size={18} color="#FFFFFF" style={{ marginLeft: 5, justifyContent: 'flex-end', position: 'absolute', top: 100, left: 135 }} />
-        <Text style={{position: 'absolute', top: 102, left: 160, color: '#FFFFFF', fontSize: 12}}> 205</Text>
-          <Image
-              source={require('../assets/masha-raymers.jpg')}
-              style={styles.gallery}
-          />
-        <FontAwesomeIcon icon={faEye} size={18} color="#FFFFFF" style={{ marginLeft: 5, justifyContent: 'flex-end', position: 'absolute', top: 100, left: 265 }} />
-        <Text style={{position: 'absolute', top: 102, left: 290, color: '#FFFFFF', fontSize: 12}}> 345</Text>
-      </View>
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 5 }}>
-          <Image
-              source={require('../assets/mario-la-pergola.jpg')}
-              style={styles.gallery}
-          />
-        <FontAwesomeIcon icon={faEye} size={18} color="#FFFFFF" style={{ marginLeft: 5, justifyContent: 'flex-end', position: 'absolute', top: 100, left: 5 }} />
-        <Text style={{position: 'absolute', top: 102, left: 30, color: '#FFFFFF', fontSize: 12}}> 784</Text>
-          <Image
-              source={require('../assets/stephen-leonardi-C4.jpg')}
-              style={styles.gallery}
-          />
-        <FontAwesomeIcon icon={faEye} size={18} color="#FFFFFF" style={{ marginLeft: 5, justifyContent: 'flex-end', position: 'absolute', top: 100, left: 135 }} />
-        <Text style={{position: 'absolute', top: 102, left: 160, color: '#FFFFFF', fontSize: 12}}> 587</Text>
-          <Image
-              source={require('../assets/stephen-leonardi-dm.jpg')}
-              style={styles.gallery}
-          />
-        <FontAwesomeIcon icon={faEye} size={18} color="#FFFFFF" style={{ marginLeft: 5, justifyContent: 'flex-end', position: 'absolute', top: 100, left: 265 }} />
-        <Text style={{position: 'absolute', top: 102, left: 290, color: '#FFFFFF', fontSize: 12}}> 250</Text>
-      </View>
+      {/* publication et liked videos et photos */}
+      <ScrollView>
+        <Tab.Navigator style={{marginTop: 20}}>
+          <Tab.Screen name="Publications" component={Publications} />
+          <Tab.Screen name="Likes" component={LikeAccount} />
+        </Tab.Navigator>
+      </ScrollView>
+      {/* <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', paddingHorizontal: 5 }}>
+      {video}
+    </View> */}
     </View>
 )
 }

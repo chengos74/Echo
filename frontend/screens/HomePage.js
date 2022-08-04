@@ -138,13 +138,13 @@ export default function HomePage(props) {
 
       </ScrollView>
 
-      <Button style={{ justifyContent: 'center' }}
+      {/* <Button style={{ justifyContent: 'center' }}
         title="Home"
         onPress={() => {
           props.navigation.navigate("BottomNavigation", { screen: "Home" });
         }}
       >
-      </Button>
+      </Button> */}
 
     </View>
   )
@@ -192,4 +192,3 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   }
 });
-
