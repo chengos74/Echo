@@ -58,7 +58,8 @@ const BottomNavigation = () => {
     })}
     tabBarOptions={{
       activeTintColor : '#94FFBD',
-      inactiveTintColor: '#94FFBD',
+      inactiveTintColor : '#348A55',
+
       showLabel: false,
       style: {
         backgroundColor : '#151515'

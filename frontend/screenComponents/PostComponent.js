@@ -14,86 +14,144 @@ const PostComponent = () => {
       postPseudo: 'mr Bean',
       postProfilePicture: require('../assets/profilePicture/userPicture1.jpg'),
       postImage: require('../assets/photo/photo1.jpg'),
+      desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
       likes: 83,
+      comments: 12,
       isLiked: false,
       isComment: false,
       city: 'Bordeaux',
       time: 1,
     },
+    {
+      postPseudo: 'Tom',
+      postProfilePicture: require('../assets/profilePicture/userPicture2.jpg'),
+      postImage: require('../assets/photo/photo2.jpg'),
+      desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+      likes: 3,
+      comments: 1,
+      isLiked: false,
+      isComment: false,
+      city: 'Pey Berland',
+      time: 2,
+    },
+    {
+      postPseudo: 'Groot',
+      postProfilePicture: require('../assets/profilePicture/userPicture3.jpg'),
+      postImage: require('../assets/photo/photo3.jpg'),
+      desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+      likes: 127,
+      comments: 38,
+      isLiked: false,
+      isComment: false,
+      city: 'Voie Lactée',
+      time: 3,
+    },
   ];
+
+
+
+  var postComment = postInfo.map((data, index) => {
+    // State qui passe à true quand on like
+    const [like, setLike] = useState(data.isLiked);
+    // State qui passe à true quand on comment
+    const [comment, setComment] = useState(data.isComment);
+
+    // on coupe la description à 80 char
+    if (data.desc.length > 80) {
+      data.desc = data.desc.slice(0, 80) + ' ...';
+    }
+
+    return (
+      <View
+        key={index}
+        style={{
+          paddingBottom: 10,
+          borderBottomColor: 'gray',
+          borderBottomWidth: 0.1,
+        }}>
+        <View style={{
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: 15,
+        }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Avatar
+              rounded
+              source={data.postProfilePicture}
+              size={64}
+            />
+            <View style={styles.subtitleCardHead}>
+              <Text style={{ fontSize: 18, marginTop: 10, color: "white", fontWeight: 'bold' }}> {data.postPseudo} </Text>
+              <View style={{ flexDirection: 'row', marginTop: 10 }}>
+                <FontAwesomeIcon icon={faLocationDot} size={16} color={'#EBEBEB'} />
+                <Text style={{ marginLeft: 3, color: "#7E7E7E" }}> {data.city} </Text>
+              </View>
+            </View>
+            <Text style={{ marginTop: 40, color: "#7E7E7E" }}>{data.time}h ago</Text>
+          </View>
+        </View>
+        <View style={{
+          position: 'relative',
+          justifyContent: 'center',
+          alignItems: 'center',
+
+        }}>
+          <Image source={data.postImage} style={{ width: '100%', height: 400, }} />
+        </View>
+        <View style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          paddingHorizontal: 12,
+          paddingVertical: 15,
+          backgroundColor: '#348A55',
+        }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', }}>
+            <TouchableOpacity>
+              <FontAwesomeIcon icon={faEllipsisVertical} style={{ color: '#fff' }} size={20} />
+            </TouchableOpacity>
+          </View>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <TouchableOpacity onPress={() => setLike(!like)}>
+              <FontAwesomeIcon icon={like ? faHeart : faHeartRegular} style={{ color: like ? '#D66D67' : 'white', marginRight: 5 }} size={24} />
+            </TouchableOpacity>
+            <Text style={{ marginRight: 20, color: '#fff', }}>{like ? data.likes + 1 : data.likes}</Text>
+            <TouchableOpacity onPress={() => setComment(!comment)}>
+              <FontAwesomeIcon icon={comment ? faComment : faCommentRegular} style={{ color: '#fff', marginRight: 5 }} size={20} />
+            </TouchableOpacity>
+            <Text style={{ marginRight: 20, color: '#fff', }}>{comment ? data.comments + 1 : data.comments}</Text>
+            <TouchableOpacity>
+              <FontAwesomeIcon icon={faPaperPlane} style={{ color: '#fff' }} size={20} />
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          paddingHorizontal: 12,
+          paddingVertical: 0,
+          backgroundColor: '#348A55',
+        }}>
+          <View>
+            <View key={index} style={{ flexDirection: '' }}>
+              <Text style={{ fontWeight: 'bold', color: 'white' }}>{data.postPseudo}</Text>
+              <Text style={{ color: 'white', fontSize: 13, marginBottom: 10 }}
+                onPress={() => { }}
+              >{data.desc}</Text>
+            </View>
+            {postComment}
+          </View>
+        </View>
+      </View>
+    );
+  });
+
 
   return (
     <View style={{ flex: 1 }}>
-      {postInfo.map((data, index) => {
-        // State qui passe à true quand on like
-        const [like, setLike] = useState(data.isLiked);
-        // State qui passe à true quand on comment
-        const [comment, setComment] = useState(data.isComment);
-        return (
-          <View
-            key={index}
-            style={{
-              paddingBottom: 10,
-              borderBottomColor: 'gray',
-              borderBottomWidth: 0.1,
-            }}>
-            <View style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
-              padding: 15,
-            }}>
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Avatar
-                  rounded
-                  source={data.postProfilePicture}
-                  size={64}
-                />
-                <View style={styles.subtitleCardHead}>
-                  <Text style={{ fontSize: 18, marginTop: 10, color: "white", fontWeight: 'bold' }}> {data.postPseudo} </Text>
-                  <View style={{ flexDirection: 'row', marginTop: 10 }}>
-                    <FontAwesomeIcon icon={faLocationDot} size={16} color={'#EBEBEB'} />
-                    <Text style={{ marginLeft: 3, color: "#7E7E7E" }}> {data.city} </Text>
-                  </View>
-                </View>
-                <Text style={{ marginTop: 40, color: "#7E7E7E" }}>{data.time}h ago</Text>
-              </View>
-            </View>
-            <View style={{
-              position: 'relative',
-              justifyContent: 'center',
-              alignItems: 'center',
-
-            }}>
-              <Image source={data.postImage} style={{ width: '100%', height: 400, }} />
-            </View>
-            <View style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              paddingHorizontal: 12,
-              paddingVertical: 15,
-            }}>
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <TouchableOpacity>
-                  <FontAwesomeIcon icon={faEllipsisVertical} style={{ color: '#fff' }} size={20} />
-                </TouchableOpacity>
-              </View>
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <TouchableOpacity onPress={() => setLike(!like)}>
-                    <FontAwesomeIcon icon={like ? faHeart : faHeartRegular} style={{ color: like ? 'red' : 'white', marginRight: 15 }} size={24} />
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={() => setComment(!comment)}>
-                    <FontAwesomeIcon icon={comment ? faComment : faCommentRegular} style={{ color: '#fff', marginRight: 15 }} size={20} />
-                  </TouchableOpacity>
-                  <TouchableOpacity>
-                    <FontAwesomeIcon icon={faPaperPlane} style={{ color: '#fff' }} size={20} />
-                  </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-        );
-      })}
+      {postComment}
     </View>
   );
 }
