@@ -33,9 +33,11 @@ export default function PubliChoice(props) {
 
 	return (
 		<View>
-			<View>
+
+			<Text>{"\n"}</Text>
+
+			<View style={{ paddingLeft:10 }}>
 				<TouchableOpacity
-					// style={{ flex: 1, marginTop: '5%', marginLeft: '5%' }}
 					style={styles.squareBis}
 					title='Back'
 					onPress={() => { props.navigation.navigate("Home", { screen: "Home" }); }}
@@ -46,8 +48,7 @@ export default function PubliChoice(props) {
 
 			<View style={{ alignItems: 'flex-end' }}>
 				<TouchableOpacity
-					// style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'center', marginTop: '5%', marginLeft: '84%' }}
-					style={styles.squareBis2}
+					style={styles.squareBis}
 					title='Back'
 					onPress={() => { props.navigation.navigate("PParams", { screen: "PParams" }); }}
 				>
@@ -56,10 +57,9 @@ export default function PubliChoice(props) {
 			</View>
 
 			<View>
-				<View style={{ alignItems: 'center', justifyContent: 'center'}}>
+				<View style={{ alignItems: 'center', justifyContent: 'center' }}>
 					<TouchableOpacity
 						style={styles.square}
-						// style={{ flex: 1, alignItems: 'center', justifyContent: 'center', paddingTop: '30%', borderWidth: 2 }}
 						title='Camera'
 						onPress={() => { props.navigation.navigate("CameraScreen", { screen: "CameraScreen" }); }}
 					>
@@ -69,7 +69,6 @@ export default function PubliChoice(props) {
 
 				<View style={{ alignItems: 'center', justifyContent: 'center' }}>
 					<TouchableOpacity
-						// style={{ flex: 1, alignItems: 'center', paddingTop: '45%', marginRight: '2%', borderWidth: 2, borderColor: 'red' }}
 						style={styles.square}
 						title="Camera roll"
 						onPress={pickImage}
@@ -91,33 +90,17 @@ export default function PubliChoice(props) {
 
 
 const styles = StyleSheet.create({
-	// container: {
-	// 	marginTop: 125,
-	// 	marginLeft: 225,
-	// },
 
 	square: {
-		backgroundColor: "#7cb48f",
 		width: 53,
 		height: 50,
 		margin: 4,
-		borderWidth: 2,
 	},
 
 	squareBis: {
-		backgroundColor: "#7cb48f",
 		width: 40,
 		height: 40,
 		margin: 4,
-		borderWidth: 2,
-	},
-
-	squareBis2: {
-		backgroundColor: "#7cb48f",
-		width: 40,
-		height: 40,
-		margin: 4,
-		borderWidth: 2,
 	},
 
 });
