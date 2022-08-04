@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Button, TextInput, FlatList, Text, TouchableOpacity, ScrollView, Image } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
 import { Avatar, } from "@rneui/themed";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faLocationDot, faEllipsisVertical, faHeart, faComment, faMessage, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
-import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons'
-import { faComment as faCommentRegular } from '@fortawesome/free-regular-svg-icons'
+import { faLocationDot, faEllipsisVertical, faHeart, faComment, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons';
+import { faComment as faCommentRegular } from '@fortawesome/free-regular-svg-icons';
 
 const PostComponent = () => {
 
@@ -26,7 +26,7 @@ const PostComponent = () => {
       postPseudo: 'Tom',
       postProfilePicture: require('../assets/profilePicture/userPicture2.jpg'),
       postImage: require('../assets/photo/photo2.jpg'),
-      desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+      desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
       likes: 3,
       comments: 1,
       isLiked: false,
@@ -48,9 +48,7 @@ const PostComponent = () => {
     },
   ];
 
-
-
-  var postComment = postInfo.map((data, index) => {
+  const postComment = postInfo.map((data, index) => {
     // State qui passe à true quand on like
     const [like, setLike] = useState(data.isLiked);
     // State qui passe à true quand on comment
@@ -78,7 +76,7 @@ const PostComponent = () => {
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Avatar
               rounded
-              source={data.postProfilePicture}
+              source={data.postProfilePicture} // photo de profil de l'utilisateur
               size={64}
             />
             <View style={styles.subtitleCardHead}>
@@ -88,13 +86,13 @@ const PostComponent = () => {
                 <Text style={{ marginLeft: 3, color: "#7E7E7E" }}> {data.city} </Text>
               </View>
             </View>
-            <Text style={{ marginTop: 40, color: "#7E7E7E" }}>{data.time}h ago</Text>
+            <Text style={{ marginTop: 40, color: "#7E7E7E" }}>{data.time}h ago</Text> 
           </View>
         </View>
         <View style={{
           position: 'relative',
           justifyContent: 'center',
-          alignItems: 'center',
+          alignItems: 'center', 
 
         }}>
           <Image source={data.postImage} style={{ width: '100%', height: 400, }} />
@@ -114,11 +112,16 @@ const PostComponent = () => {
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <TouchableOpacity onPress={() => setLike(!like)}>
-              <FontAwesomeIcon icon={like ? faHeart : faHeartRegular} style={{ color: like ? '#D66D67' : 'white', marginRight: 5 }} size={24} />
+              <FontAwesomeIcon 
+                icon={like ? faHeart : faHeartRegular} 
+                style={{ color: like ? '#D66D67' : 'white', marginRight: 5 }} size={24} 
+              />
             </TouchableOpacity>
             <Text style={{ marginRight: 20, color: '#fff', }}>{like ? data.likes + 1 : data.likes}</Text>
             <TouchableOpacity onPress={() => setComment(!comment)}>
-              <FontAwesomeIcon icon={comment ? faComment : faCommentRegular} style={{ color: '#fff', marginRight: 5 }} size={20} />
+              <FontAwesomeIcon 
+                icon={comment ? faComment : faCommentRegular} 
+                style={{ color: '#fff', marginRight: 5 }} size={20} />
             </TouchableOpacity>
             <Text style={{ marginRight: 20, color: '#fff', }}>{comment ? data.comments + 1 : data.comments}</Text>
             <TouchableOpacity>
@@ -147,7 +150,6 @@ const PostComponent = () => {
       </View>
     );
   });
-
 
   return (
     <View style={{ flex: 1 }}>
