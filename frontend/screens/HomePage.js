@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Button, TextInput, FlatList, Text, TouchableOpacity, ScrollView, Image } from 'react-native';
 import { Card, Avatar, ListItem, } from "@rneui/themed";
-import Post from '../screenComponents/PostComponent'
+import Post from '../screenComponents/PostComponent';
+import Stories from '../screenComponents/StoryComponent';
 
 
 //-----IMPORT ICONS-----//
@@ -133,7 +134,7 @@ export default function HomePage(props) {
       {searchClick}
 
       <ScrollView>
-
+        <Stories />
         <Post />
 
       </ScrollView>

@@ -27,6 +27,7 @@ import localisation from './screens/Map';
 import Home from './screens/HomePage';
 import Account from './screens/Account';
 import SignUp from './screens/SignUp';
+import Status from './screenComponents/StatusComponent';
 
 
 
@@ -83,6 +84,7 @@ export default function App() {
         <Stack.Navigator screenOptions={{ headerShown : false }} >
           <Stack.Screen name='BottomNavigation' component={BottomNavigation} />
           <Stack.Screen exact name='Home' component={Home} />
+          <Stack.Screen name="Status" component={Status} />
           <Stack.Screen name='CameraScreen' component={CameraScreen} />
           <Stack.Screen name='PParams' component={PParams} />
           <Stack.Screen name='SignUp' component={SignUp} />
