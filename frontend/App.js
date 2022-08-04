@@ -14,7 +14,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 // import { Ionicons } from '@expo/vector-icons';
 //fontawesome
 import { FontAwesomeIcon  } from '@fortawesome/react-native-fontawesome';
-import {faComment, faMapLocationDot, faUser, faHouse, faCirclePlus } from '@fortawesome/free-solid-svg-icons'
+import {faComment, faMapLocationDot, faCircleUser, faHouse, faCirclePlus, faCamera, faUserGear } from '@fortawesome/free-solid-svg-icons'
 
 //screens
 import profile from './screens/Profile';
@@ -38,7 +38,7 @@ const Tab = createBottomTabNavigator();
 const BottomNavigation = () => {
  
   return (
-    <Tab.Navigator  
+      <Tab.Navigator  
     screenOptions={( { route } ) => ({
       tabBarIcon: ( { color } ) => {
         let iconName;
@@ -52,7 +52,11 @@ const BottomNavigation = () => {
         }else if(route.name === 'chat') {
           iconName = faComment;
         }else if(route.name === 'profile') {
-          iconName = faUser;
+          iconName = faCircleUser;
+        }else if(route.name === 'PChoice') {
+          iconName = faCamera;
+        }else if(route.name === 'Account') {
+          iconName = faUserGear;
         }
         return <FontAwesomeIcon  icon={iconName} size={20} color={color} />
       },
@@ -66,8 +70,10 @@ const BottomNavigation = () => {
         backgroundColor : '#151515'
       }
     }}
-  >
+    >
+      
       <Tab.Screen name='Home' component={Home} />
+
       <Tab.Screen name='localisation' component={localisation} />
       <Tab.Screen name='publication' component={publication} />
       <Tab.Screen name='PChoice' component={PChoice} />
