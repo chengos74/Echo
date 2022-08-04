@@ -1,126 +1,172 @@
-import React from 'react';
-import { Text, View, TouchableOpacity, StyleSheet, TextInput, ScrollView, KeyboardAvoidingView } from "react-native";
+// Import React & cie
+import React, { useState } from 'react';
+import { Text, View, TouchableOpacity, StyleSheet, TextInput, ScrollView, Switch } from "react-native";
 
+import Slider from '@react-native-community/slider';
+
+
+// Import icons
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faCircleArrowLeft, faCircleArrowRight } from '@fortawesome/free-solid-svg-icons'
 
 
-export default function InsertCheck(props) {
-
-	const UselessTextInput = (props) => {
-		return (
-			<TextInput
-				{...props} // Inherit any props passed to it; e.g., multiline, numberOfLines below
-				editable
-				maxLength={40}
-			/>
-		);
-	}
-
-	const UselessTextInputMultiline = () => {
-		const [value, onChangeText] = React.useState('Description');
-
-		// If you type something in the text box that is a color, the background will change to that
-		// color.
-		return (
-			<View
-				style={{
-					backgroundColor: value,
-					borderBottomColor: '#000000',
-					borderBottomWidth: 1,
-				}}>
-				<UselessTextInput
-					multiline
-					numberOfLines={2}
-					onChangeText={text => onChangeText(text)}
-					value={value}
-					style={{ padding: 10 }}
-				/>
-			</View>
-		);
-	}
+// Fonction paramètres de la publication
+export default function PubliParams(props) {
 
 
-	// const [text, onChangeText] = React.useState("");
+        // Pour l'input de la description
+        const [text, onChangeText] = React.useState("Description");
 
-	return (
-		<KeyboardAvoidingView
-			behavior={Platform.OS === "ios" ? "padding" : "height"}
-		>
-			<ScrollView>
-
-				<TouchableOpacity
-					style={{ flex: 1, marginTop: '5%', marginLeft: '5%' }}
-					title='Back'
-					onPress={() => { props.navigation.navigate("Publication", { screen: "PChoice" }); }}
-				>
-					<FontAwesomeIcon icon={faCircleArrowLeft} size={35} color={'black'} />
-				</TouchableOpacity>
-
-				<Text
-					style={{ marginTop: '5%', marginLeft: '35%' }}
-				>
-					Fichier choisi
-				</Text>
+        // Pour le switch
+        const [isEnabled, setIsEnabled] = useState(false);
+        const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
 
-				<Text style={styles.container}>
-					<Text
-					// style={{ marginTop: '60%', marginLeft: '35%' }}
-					>
-						Publier
-					</Text>
+        return (
+                <ScrollView>
 
-					<TouchableOpacity
-						// style={{ flex: 1, marginLeft: '85%', marginTop: '60%' }}
-						title='Publier'
-						onPress={() => { props.navigation.navigate("Home", { screen: "Home" }); }}
-					>
-						<FontAwesomeIcon icon={faCircleArrowRight} size={35} color={'black'} />
-					</TouchableOpacity>
-				</Text>
+                        <View>
 
-				<Text>Scroll bar :  périmètre</Text>
 
-				<Text>{"\n"}</Text>
+                                <Text>{"\n"}</Text>
 
-				<Text>Option Ephémère</Text>
 
-				<Text>{"\n"}</Text>
+                                <View>
 
-				<UselessTextInputMultiline />
+                                        {/* Flèche back (gauche) */}
+                                        <Text>
+                                                <View style={{ alignItems: 'flex-end', marginLeft: 45, paddingBottom: 3, width: 30, height: 37, borderWidth: 2 }}>
+                                                        <TouchableOpacity
+                                                                // style={{ width: 40, height: 40, margin: 4, }}
+                                                                title='Back'
+                                                                onPress={() => { props.navigation.navigate("Publication", { screen: "PChoice" }); }}
+                                                        // style={{marginLeft: 10}}
+                                                        >
+                                                                <FontAwesomeIcon icon={faCircleArrowLeft} size={35} color={'black'} />
+                                                        </TouchableOpacity>
+                                                </View>
 
-				{/* <TextInput
-				multiline
-				// numberOfLines={6}
-				onChangeText={onChangeText}
-				value={text}
-				style={styles.input}
-			/> */}
+                                                {/* "Fichier choisi" */}
+                                                <View style={{ alignItems: 'center', marginLeft: 100, borderWidth: 2 }}>
+                                                        <Text>
+                                                                FICHIER CHOISI
+                                                        </Text>
+                                                </View>
+                                        </Text>
+                                </View>
 
-			</ScrollView >
-		</KeyboardAvoidingView>
 
-	)
+                                {/* Aperçu du fichier choisi (depuis la pellicule ou la camera) */}
+                                <View style={{ alignItems: 'center', paddingTop: 20 }}>
+                                        <View style={{ justifyContent: 'center', alignItems: 'flex-end', borderWidth: 2, width: 300, height: 210, borderRadius: 15 }}>
+                                        </View>
+                                </View>
+
+
+                                <Text>{"\n"}</Text>
+
+                                <Text>{"\n"}</Text>
+
+                                {/* "Publier" + flèche retour vers home (droite) */}
+                                <View style={{ alignItems: 'flex-end', marginRight: 40 }} >
+                                        <Text>
+                                                <View style={{ borderWidth: 2, height: 40, justifyContent: 'center' }}>
+                                                        <Text>
+                                                                PUBLIER
+                                                        </Text>
+                                                </View>
+
+                                                <TouchableOpacity
+                                                        style={{ borderWidth: 2, height: 40 }}
+                                                        title='Publier'
+                                                        onPress={() => { props.navigation.navigate("Home", { screen: "Home" }); }}
+                                                >
+                                                        <FontAwesomeIcon icon={faCircleArrowRight} size={35} color={'black'} />
+                                                </TouchableOpacity>
+                                        </Text>
+                                </View>
+
+                                <Text>{"\n"}</Text>
+
+                                <Text>{"\n"}</Text>
+
+
+                                {/* Slider */}
+                                <View style={{ borderWidth: 2, borderRadius: 15, alignItems: 'center', marginLeft: 43, marginRight: 43 }}>
+                                        <Text>
+                                                <View style={{justifyContent:'center', paddingTop: 8}}>
+                                                        <Slider
+                                                                style={{ width: 200, height: 40}}
+                                                                minimumValue={0}
+                                                                maximumValue={1}
+                                                                minimumTrackTintColor="#FFFFFF"
+                                                                maximumTrackTintColor="#000000"
+                                                        />
+                                                </View>
+                                                <View
+                                                        style={{ justifyContent: 'center', paddingBottom:10, paddingLeft:10 }}
+                                                >
+                                                        <Text>
+                                                                :   1 KM
+                                                        </Text>
+                                                </View>
+                                        </Text>
+                                </View>
+
+                                <Text>{"\n"}</Text>
+
+                                {/* Switch */}
+                                <View style={{ alignItems: 'flex-end', marginRight: 40 }}>
+                                        <Text>
+                                                <View style={{ justifyContent: 'center', borderWidth: 2, height: 35 }}>
+                                                        <Text>
+                                                                EPHEMERE :
+                                                        </Text>
+                                                </View>
+                                                <View style={{ borderWidth: 2 }}>
+                                                        <Switch
+                                                                trackColor={{ false: "#767577", true: "#81b0ff" }}
+                                                                thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+                                                                ios_backgroundColor="#3e3e3e"
+                                                                onValueChange={toggleSwitch}
+                                                                value={isEnabled}
+                                                        />
+                                                </View>
+                                        </Text>
+                                </View>
+
+
+                                <Text>{"\n"}</Text>
+
+
+                                {/* Input pour la description de la publication, dont hashtags */}
+
+                                <TextInput
+                                        multiline
+                                        // numberOfLines={2}
+                                        onChangeText={onChangeText}
+                                        value={text}
+                                        style={styles.input}
+                                />
+
+                        </View>
+                </ScrollView >
+
+        )
 }
 
-
+// Style cheets
 const styles = StyleSheet.create({
-	container: {
-		marginTop: 125,
-		marginLeft: 225,
-	},
 
-	input: {
-		borderWidth: 2,
-		paddingBottom: '40%',
-		padding: 10,
-		marginLeft: '10%',
-		marginRight: '10%',
-		marginBottom: '70%',
-		borderRadius: 20,
-		maxHeight: 200,
-		height: 40,
-	}
+        input: {
+                borderWidth: 2,
+                paddingBottom: '40%',
+                padding: 3,
+                marginLeft: '10%',
+                marginRight: '10%',
+                marginBottom: '63%',
+                maxHeight: 200,
+                height: 40,
+        }
 
 });
