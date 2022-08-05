@@ -30,18 +30,22 @@ export default function account() {
             source={require('../assets/myeyeslamp.jpg')}
             style={styles.image}
         />
+        <View>
           <Text style={styles.identifiant}>NicolasLagarge</Text>
-        <Text style={styles.prenom}> Nicolas Lafarge</Text>
-        <TouchableOpacity style={{ fontSize: 17, color: "#7E7E7E", fontWeight: 'bold', marginTop: 100, marginLeft: -100 }}>
-          <Text style={{ backgroundColor: "#8A2C27", color: "#7E7E7E", paddingRight: 30, paddingLeft: 30, padding: 5, borderRadius: 16 }} >Follow</Text>
-        </TouchableOpacity>
-        <FontAwesomeIcon  icon={faShare} size={40} color= "#7E7E7E" style={{marginTop: 30, marginLeft: 80}} />  
-        <TouchableOpacity style={{ fontSize: 17, color: "#7E7E7E", fontWeight: 'bold', marginTop: 70, marginLeft: -70 }}>
-          <Text style={{ color: "#7E7E7E", paddingRight: 30, paddingLeft: 30, padding: 5, borderRadius: 16 }}>Report</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={{ fontSize: 17, color: "#7E7E7E", fontWeight: 'bold', marginTop: 90, marginLeft: -100 }}>
-          <Text style={{ color: "#7E7E7E", paddingRight: 30, paddingLeft: 30, padding: 5, borderRadius: 16 }} >Block</Text>
-        </TouchableOpacity>
+          <Text style={styles.prenom}> Nicolas Lafarge</Text>
+          <TouchableOpacity>
+            <Text style={{ backgroundColor: "#8A2C27", color: "#7E7E7E", padding: 5, width: 120, marginTop: 28, borderRadius: 16, textAlign: 'center' }} >Follow</Text>
+          </TouchableOpacity>
+        </View>
+        <View>
+          <FontAwesomeIcon  icon={faShare} size={40} color= "#7E7E7E" style={{marginTop: 25}} />  
+          <TouchableOpacity style={{ fontSize: 17, color: "#7E7E7E", fontWeight: 'bold'}}>
+            <Text style={{ color: "#7E7E7E", padding: 5, borderRadius: 16 }}>Report</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={{ fontSize: 17, color: "#7E7E7E", fontWeight: 'bold'}}>
+            <Text style={{ color: "#7E7E7E", padding: 5, borderRadius: 16 }} >Block</Text>
+          </TouchableOpacity>
+        </View>
       </View>
       {/* Following et followers */}
       <View style={{ flexDirection: 'row', paddingTop: 20}}>
@@ -89,20 +93,19 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     width: 100,
     height: 100,
+    marginRight: 22,
   },
   identifiant: {
     fontSize: 20,
     color: "#7E7E7E",
     fontWeight: 'bold',
-    marginTop: 30,
-    marginLeft: 20
+    marginTop: 25,
+    marginRight: 25,
   },
   prenom: {
     fontSize: 13,
     color: "#7E7E7E",
     fontWeight: 'bold',
-    marginTop: 60,
-    marginLeft: -140,
   },
   follow: {
     fontSize: 15,
