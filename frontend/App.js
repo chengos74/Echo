@@ -22,7 +22,7 @@ import chat from './screens/ChatAccueil';
 import PChoice from './screens/PubliChoiceScreen'
 import PParams from './screens/PubliParamsScreen';
 import CameraScreen from './screens/CameraScreen';
-import localisation from './screens/Map';
+import localisation from './screens/MapScreen';
 import Home from './screens/HomePage';
 import Account from './screens/Account';
 import SignUp from './screens/SignUp';
