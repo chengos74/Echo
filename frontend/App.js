@@ -17,17 +17,20 @@ import { FontAwesomeIcon  } from '@fortawesome/react-native-fontawesome';
 import {faComment, faMapLocationDot, faUser, faHouse, faCirclePlus, faCircleUser, faUserGear } from '@fortawesome/free-solid-svg-icons'
 
 //screens
-import profile from './screens/Profile';
+import profile from './screens/ProfileScreen';
 import chat from './screens/ChatAccueil';
 import PChoice from './screens/PubliChoiceScreen'
 import PParams from './screens/PubliParamsScreen';
 import CameraScreen from './screens/CameraScreen';
-import localisation from './screens/Map';
+import localisation from './screens/MapScreen';
 import Home from './screens/HomePage';
 import Account from './screens/Account';
 import SignUp from './screens/SignUp';
 import Message from './screenComponents/ChatMessages'
 import ImagePublication from './screenComponents/imagePublicationAccount';
+import Status from './screenComponents/StatusComponent';
+import ProfileSettings from './screens/ProfileSettingsScreen';
+
 
 
 
@@ -84,6 +87,8 @@ export default function App() {
         <Stack.Navigator screenOptions={{ headerShown : false }} >
           <Stack.Screen name='BottomNavigation' component={BottomNavigation} />
           <Stack.Screen exact name='Home' component={Home} />
+          <Stack.Screen name='Status' component={Status} />
+          <Stack.Screen name='ProfileSettings' component={ProfileSettings} />
           <Stack.Screen name='CameraScreen' component={CameraScreen} />
           <Stack.Screen name='PParams' component={PParams} />
           <Stack.Screen name='SignUp' component={SignUp} />
