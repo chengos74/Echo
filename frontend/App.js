@@ -14,20 +14,18 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 // import { Ionicons } from '@expo/vector-icons';
 //fontawesome
 import { FontAwesomeIcon  } from '@fortawesome/react-native-fontawesome';
-import {faComment, faMapLocationDot, faCircleUser, faHouse, faCirclePlus, faCamera, faUserGear } from '@fortawesome/free-solid-svg-icons'
+import {faComment, faMapLocationDot, faUser, faHouse, faCirclePlus } from '@fortawesome/free-solid-svg-icons'
 
 //screens
 import profile from './screens/Profile';
 import chat from './screens/ChatAccueil';
 import PChoice from './screens/PubliChoiceScreen'
-import publication from './screens/Insert';
 import PParams from './screens/PubliParamsScreen';
 import CameraScreen from './screens/CameraScreen';
 import localisation from './screens/Map';
 import Home from './screens/HomePage';
 import Account from './screens/Account';
 import SignUp from './screens/SignUp';
-import Status from './screenComponents/StatusComponent';
 
 
 
@@ -38,7 +36,7 @@ const Tab = createBottomTabNavigator();
 const BottomNavigation = () => {
  
   return (
-      <Tab.Navigator  
+    <Tab.Navigator  
     screenOptions={( { route } ) => ({
       tabBarIcon: ( { color } ) => {
         let iconName;
@@ -47,35 +45,27 @@ const BottomNavigation = () => {
           iconName = faHouse;
         } else if(route.name === 'localisation') {
           iconName = faMapLocationDot;
-        } else if(route.name === 'publication') {
+        } else if(route.name === 'PChoice') {
           iconName = faCirclePlus;
         }else if(route.name === 'chat') {
           iconName = faComment;
         }else if(route.name === 'profile') {
-          iconName = faCircleUser;
-        }else if(route.name === 'PChoice') {
-          iconName = faCamera;
-        }else if(route.name === 'Account') {
-          iconName = faUserGear;
+          iconName = faUser;
         }
         return <FontAwesomeIcon  icon={iconName} size={20} color={color} />
       },
     })}
     tabBarOptions={{
       activeTintColor : '#94FFBD',
-      inactiveTintColor : '#348A55',
-
+      inactiveTintColor: '#94FFBD',
       showLabel: false,
       style: {
         backgroundColor : '#151515'
       }
     }}
-    >
-      
+  >
       <Tab.Screen name='Home' component={Home} />
-
       <Tab.Screen name='localisation' component={localisation} />
-      <Tab.Screen name='publication' component={publication} />
       <Tab.Screen name='PChoice' component={PChoice} />
       <Tab.Screen name="chat" component={chat} />
       <Tab.Screen name="profile" component={profile} />
@@ -90,7 +80,6 @@ export default function App() {
         <Stack.Navigator screenOptions={{ headerShown : false }} >
           <Stack.Screen name='BottomNavigation' component={BottomNavigation} />
           <Stack.Screen exact name='Home' component={Home} />
-          <Stack.Screen name="Status" component={Status} />
           <Stack.Screen name='CameraScreen' component={CameraScreen} />
           <Stack.Screen name='PParams' component={PParams} />
           <Stack.Screen name='SignUp' component={SignUp} />

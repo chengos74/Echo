@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Button, Image, Touchable, StyleSheet } from 'react-native';
+import { Image, StyleSheet } from 'react-native';
 import { View, Text } from "react-native"
 import * as ImagePicker from 'expo-image-picker';
-// import Home from './screens/HomePage';
 
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faCamera, faImages, faCircleArrowLeft, faCircleArrowRight } from '@fortawesome/free-solid-svg-icons'
+import { faCamera, faImages, faCircleArrowLeft, faCircleArrowRight, faClose, faCircleXmark } from '@fortawesome/free-solid-svg-icons'
 
 
 export default function PubliChoice(props) {
 
+	// Constante pour pickImage (accéder à la pellicule)
 	const [image, setImage] = useState(null);
 
+	// Accéder à la pellicule
 	const pickImage = async () => {
 		// No permissions request is necessary for launching the image library
 		let result = await ImagePicker.launchImageLibraryAsync({
@@ -24,83 +24,91 @@ export default function PubliChoice(props) {
 			quality: 1,
 		});
 
-		// console.log(result);
-
 		if (!result.cancelled) {
 			setImage(result.uri);
 		}
+
+		// return (
+		// 	<View>{pickImage}</View>
+		// )
 	};
 
 	return (
-		<View>
+		<View style={{ backgroundColor: '#151515' }}>
+			<View style={{ flexDirection: 'row', marginTop: 25, justifyContent: 'space-between', alignItems: 'center' }}>
 
-			<Text>{"\n"}</Text>
-
-			<View style={{ paddingLeft:10 }}>
 				<TouchableOpacity
-					style={styles.squareBis}
+					style={{ marginLeft: 10 }}
 					title='Back'
 					onPress={() => { props.navigation.navigate("Home", { screen: "Home" }); }}
 				>
-					<FontAwesomeIcon icon={faCircleArrowLeft} size={35} color={'black'} />
+					<FontAwesomeIcon icon={faCircleXmark} size={35} color={'white'} />
 				</TouchableOpacity>
-			</View>
 
-			<View style={{ alignItems: 'flex-end' }}>
+				<Text style={{ fontWeight: 'bold', color: 'white' }}>New publication </Text>
+
+
+
+
 				<TouchableOpacity
-					style={styles.squareBis}
+					style={styles.square}
 					title='Back'
 					onPress={() => { props.navigation.navigate("PParams", { screen: "PParams" }); }}
 				>
-					<FontAwesomeIcon icon={faCircleArrowRight} size={35} color={'black'} />
+					<Text style={{ color: '#94FFBD', fontWeight: 'bold', marginRight: 10, fontSize: 17 }}>Next</Text>
 				</TouchableOpacity>
+
+
 			</View>
 
-			<View>
-				<View style={{ alignItems: 'center', justifyContent: 'center' }}>
+			{/* <Text style={{ flexDirection: 'row', alignContent: 'stretch', flexWrap: 'wrap', marginTop: 20, borderWidth: 2, justifyContent: 'center' }}>
+				<TouchableOpacity
+					style={styles.square}
+					title='Back'
+					onPress={() => { props.navigation.navigate("Home", { screen: "Home" }); }}
+				>
+					<FontAwesomeIcon icon={faCircleArrowLeft} size={35} color={'#7E7E7E'} />
+				</TouchableOpacity>
+
+				<View style={{ borderWidth: 2, marginRight: 10, justifyContent:'center' }}>
+				<Text style={{ fontWeight: 'bold', justifyContent: 'center' }}>New publication
+				</Text>
+				</View>
+				<View style={{ color: 'blue', borderWidth: 2 }}>
+				<Text style={{ color: 'blue', fontWeight: 'bold' }}>Next</Text>
+				</View>
+			</Text> */}
+
+
+			<View style={{ alignItems: 'center', paddingTop: 20 }}>
+				<View style={{ justifyContent: 'center', alignItems: 'flex-end', borderWidth: 2, width: '90%', height: 210, backgroundColor: 'white', borderRadius: 20 }}>
+				</View>
+			</View>
+
+			<View style={{ alignItems: 'center', justifyContent: 'center', height: 250 }}>
+
+				<View style={{ alignItems: 'center', justifyContent: 'center', height: 250 }}>
 					<TouchableOpacity
-						style={styles.square}
 						title='Camera'
 						onPress={() => { props.navigation.navigate("CameraScreen", { screen: "CameraScreen" }); }}
 					>
-						<FontAwesomeIcon icon={faCamera} size={50} color={'black'} />
+						<FontAwesomeIcon icon={faCamera} size={200} color={'#7E7E7E'} />
 					</TouchableOpacity>
 				</View>
 
-				<View style={{ alignItems: 'center', justifyContent: 'center' }}>
-					<TouchableOpacity
-						style={styles.square}
-						title="Camera roll"
-						onPress={pickImage}
-					>
-						<FontAwesomeIcon icon={faImages} size={50} color={'black'} />
-					</TouchableOpacity>
+
+
+				<View style={{ alignItems: 'center', justifyContent: 'center', height: 250, marginTop: -25 }}>
+					{pickImage}
 				</View>
+
 			</View>
-
-
-			{image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
-
-
 		</View>
-
-	);
+	)
 
 };
 
 
 const styles = StyleSheet.create({
-
-	square: {
-		width: 53,
-		height: 50,
-		margin: 4,
-	},
-
-	squareBis: {
-		width: 40,
-		height: 40,
-		margin: 4,
-	},
 
 });

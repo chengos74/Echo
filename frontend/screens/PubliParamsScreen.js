@@ -37,10 +37,8 @@ export default function PubliParams(props) {
                                         <Text>
                                                 <View style={{ alignItems: 'flex-end', marginLeft: 45, paddingBottom: 3, width: 30, height: 37, borderWidth: 2 }}>
                                                         <TouchableOpacity
-                                                                // style={{ width: 40, height: 40, margin: 4, }}
                                                                 title='Back'
-                                                                onPress={() => { props.navigation.navigate("Publication", { screen: "PChoice" }); }}
-                                                        // style={{marginLeft: 10}}
+                                                                onPress={() => { props.navigation.navigate("PChoice", { screen: "PChoice" }); }}
                                                         >
                                                                 <FontAwesomeIcon icon={faCircleArrowLeft} size={35} color={'black'} />
                                                         </TouchableOpacity>
@@ -48,7 +46,7 @@ export default function PubliParams(props) {
 
                                                 {/* "Fichier choisi" */}
                                                 <View style={{ alignItems: 'center', marginLeft: 100, borderWidth: 2 }}>
-                                                        <Text>
+                                                        <Text style={{fontWeight: 'bold', fontStyle: 'italic'}}>
                                                                 FICHIER CHOISI
                                                         </Text>
                                                 </View>
@@ -71,7 +69,7 @@ export default function PubliParams(props) {
                                 <View style={{ alignItems: 'flex-end', marginRight: 40 }} >
                                         <Text>
                                                 <View style={{ borderWidth: 2, height: 40, justifyContent: 'center' }}>
-                                                        <Text>
+                                                        <Text style={{fontWeight: 'bold', fontStyle: 'italic'}}>
                                                                 PUBLIER
                                                         </Text>
                                                 </View>
@@ -94,7 +92,7 @@ export default function PubliParams(props) {
                                 {/* Slider */}
                                 <View style={{ borderWidth: 2, borderRadius: 15, alignItems: 'center', marginLeft: 43, marginRight: 43 }}>
                                         <Text>
-                                                <View style={{justifyContent:'center', paddingTop: 8}}>
+                                                <View style={{ justifyContent: 'center', paddingTop: 8 }}>
                                                         <Slider
                                                                 style={{ width: 200, height: 40}}
                                                                 minimumValue={0}
@@ -103,10 +101,11 @@ export default function PubliParams(props) {
                                                                 maximumTrackTintColor="#000000"
                                                         />
                                                 </View>
+
                                                 <View
-                                                        style={{ justifyContent: 'center', paddingBottom:10, paddingLeft:10 }}
+                                                        style={{ justifyContent: 'center', paddingBottom: 10, paddingLeft: 10 }}
                                                 >
-                                                        <Text>
+                                                        <Text style={{fontWeight: 'bold', fontStyle: 'italic'}}>
                                                                 :   1 KM
                                                         </Text>
                                                 </View>
@@ -119,7 +118,7 @@ export default function PubliParams(props) {
                                 <View style={{ alignItems: 'flex-end', marginRight: 40 }}>
                                         <Text>
                                                 <View style={{ justifyContent: 'center', borderWidth: 2, height: 35 }}>
-                                                        <Text>
+                                                        <Text style={{fontWeight: 'bold', fontStyle: 'italic'}}>
                                                                 EPHEMERE :
                                                         </Text>
                                                 </View>
