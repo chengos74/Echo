@@ -14,7 +14,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 // import { Ionicons } from '@expo/vector-icons';
 //fontawesome
 import { FontAwesomeIcon  } from '@fortawesome/react-native-fontawesome';
-import {faComment, faMapLocationDot, faUser, faHouse, faCirclePlus } from '@fortawesome/free-solid-svg-icons'
+import {faComment, faMapLocationDot, faUser, faHouse, faCirclePlus, faCircleUser, faUserGear } from '@fortawesome/free-solid-svg-icons'
 
 //screens
 import profile from './screens/ProfileScreen';
@@ -26,8 +26,11 @@ import localisation from './screens/MapScreen';
 import Home from './screens/HomePage';
 import Account from './screens/Account';
 import SignUp from './screens/SignUp';
+import Message from './screenComponents/ChatMessages'
+import ImagePublication from './screenComponents/imagePublicationAccount';
 import Status from './screenComponents/StatusComponent';
 import ProfileSettings from './screens/ProfileSettingsScreen';
+
 
 
 
@@ -52,7 +55,9 @@ const BottomNavigation = () => {
         }else if(route.name === 'chat') {
           iconName = faComment;
         }else if(route.name === 'profile') {
-          iconName = faUser;
+          iconName = faCircleUser;
+        }else if(route.name === 'Account') {
+          iconName = faUserGear;
         }
         return <FontAwesomeIcon  icon={iconName} size={20} color={color} />
       },
@@ -87,6 +92,8 @@ export default function App() {
           <Stack.Screen name='CameraScreen' component={CameraScreen} />
           <Stack.Screen name='PParams' component={PParams} />
           <Stack.Screen name='SignUp' component={SignUp} />
+          <Stack.Screen name='Message' component={Message} />
+          <Stack.Screen name='Image' component={ImagePublication} />
         </Stack.Navigator>
       </NavigationContainer>
   );

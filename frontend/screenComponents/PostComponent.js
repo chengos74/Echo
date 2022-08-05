@@ -138,7 +138,7 @@ const PostComponent = () => {
           backgroundColor: '#348A55',
         }}>
           <View>
-            <View key={index} style={{}}>
+            <View key={index}>
               <Text style={{ fontWeight: 'bold', color: 'white' }}>{data.postPseudo}</Text>
               <Text style={{ color: 'white', fontSize: 13, marginBottom: 10 }}
                 onPress={() => { }}

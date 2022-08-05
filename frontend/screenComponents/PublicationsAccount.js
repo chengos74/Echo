@@ -1,5 +1,6 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
+import { useNavigation } from '@react-navigation/native';
 
 //fontawesome
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
@@ -7,7 +8,8 @@ import { faEye } from '@fortawesome/free-solid-svg-icons'
 
 export default function PublicationsAccount(props) {
 
-  //donnees fictives
+const navigation = useNavigation();
+    //donnees fictives
   const data = [
     {
       id: 0,
@@ -103,8 +105,8 @@ export default function PublicationsAccount(props) {
 
   const photos = data.map((e, i) => {
     return (
-      <View >
-        <TouchableOpacity>
+      <View key={i}>
+        <TouchableOpacity onPress={() =>{navigation.push("Image", {image: e.image, like: e.like})} }>
           <Image
             source={e.image}
             style={styles.gallerytop}

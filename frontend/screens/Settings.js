@@ -3,6 +3,18 @@ import { StyleSheet, Text, View } from 'react-native';
 
 export default function Settings() {
   return (
-    <Text>Settings</Text>
+    <View style={{Flex: 1}}>
+      <Text>Settings</Text>
+    </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#101010',
+  },
+
+});
