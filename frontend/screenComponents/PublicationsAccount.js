@@ -1,13 +1,13 @@
-import { View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native'
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
 
 //fontawesome
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import {faEye } from '@fortawesome/free-solid-svg-icons'
+import { faEye } from '@fortawesome/free-solid-svg-icons'
 
 export default function PublicationsAccount(props) {
 
-    //donnees fictives
+  //donnees fictives
   const data = [
     {
       id: 0,
@@ -101,7 +101,7 @@ export default function PublicationsAccount(props) {
     },
   ]
 
-   const photos = data.map((e, i) => {
+  const photos = data.map((e, i) => {
     return (
       <View >
         <TouchableOpacity>
@@ -109,18 +109,18 @@ export default function PublicationsAccount(props) {
             source={e.image}
             style={styles.gallerytop}
           />
-            <FontAwesomeIcon icon={faEye} size={18} color="#FFFFFF" style={{ marginLeft: 5, justifyContent: 'flex-end', position: 'absolute', top: 100, left: 5 }} />
-        <Text style={{ position: 'absolute', top: 102, left: 30, color: '#FFFFFF', fontSize: 12 }}> {e.like}</Text>
-            </TouchableOpacity>
-        </View>
+          <FontAwesomeIcon icon={faEye} size={18} color="#FFFFFF" style={{ marginLeft: 5, justifyContent: 'flex-end', position: 'absolute', top: 100, left: 5 }} />
+          <Text style={{ position: 'absolute', top: 102, left: 30, color: '#FFFFFF', fontSize: 12 }}> {e.like}</Text>
+        </TouchableOpacity>
+      </View>
     )
-   })
-  
-  
+  })
+
+
   return (
     <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', paddingHorizontal: 5 }}>
-      {photos}
-      </View>
+        {photos}
+    </View>
   )
 }
 
