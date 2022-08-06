@@ -1,6 +1,13 @@
 import React, { useEffect, useState, Components } from "react";
 import { StyleSheet, View } from "react-native";
-import { Button, Overlay, Input } from 'react-native-elements';
+
+// ATTENTION : BALISES BUTTON, OVERLAY ET INPUT --> UTILISER LA DOC RNEUI 4.0.0.RC6 
+
+// NE PAS IMPORTER DES ÉLÉMENTS DEPUIS REACT NATIVE ELEMENTS --> CONFLIT 
+
+// IMPORTER UNIQUEMENT DES ÉLÉMENTS DEPUIS @RNEUI/THEMED OU @RNEUI/BASE
+import { Button, Overlay, Input } from "@rneui/themed";
+
 import Icon from "react-native-vector-icons/FontAwesome";
 
 import MapView, { Marker } from 'react-native-maps';
@@ -248,6 +255,7 @@ export default function MapScreen(props) {
 					longitudeDelta: 0.0421
 				}}
 			> */}
+
 			<MapView ref={map => { this.map = map }} />
 
 			{/* { componentDidMount } */}
