@@ -1,7 +1,7 @@
 import { Input } from '@rneui/base';
-import { Avatar, Button, Overlay, withTheme } from '@rneui/themed';
+import { Avatar } from '@rneui/themed';
 import React, { useState } from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, FlatList } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const ProfileSettingsScreen = ({ route, navigation }) => {
@@ -11,120 +11,96 @@ const ProfileSettingsScreen = ({ route, navigation }) => {
   const { desc } = route.params; // reçoit la description de l'utisateur depuis le profile
   const [visible, setVisible] = useState(false);
 
-  // affiche l'overlay
-  const toggleOverlay = () => {
-    setVisible(!visible);
-  }
-  console.log(route)
-  return (
-    <View style={{ flex: 1, backgroundColor: '#151515', alignItems: 'center' }}>
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 60, width: '90%', }}>
-        <TouchableOpacity>
-          <Text style={{ color: 'white', fontSize: 20 }}>cancel</Text>
-        </TouchableOpacity>
-        <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20 }}>Modify profile</Text>
-        <TouchableOpacity>
-          <Text style={{ color: '#67D692', fontSize: 20, fontWeight: 'bold' }}>Done</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={{ justifyContent: 'center', alignItems: 'center', top: 30, }}>
+
+  // array pour la FLatlist
+  const data = [
+    {
+      userName: pseudo,
+      profilePicture: profilePicture,
+      desc: desc
+    }
+  ];
+
+  // TopBar (cancel, modify, Done)
+  const header =
+    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 60, width: '90%', alignSelf: 'center' }}>
+      <TouchableOpacity onPress={() => { navigation.goBack() }} >
+        <Text style={{ color: 'white', fontSize: 20 }}>cancel</Text>
+      </TouchableOpacity>
+      <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20 }}>Modify profile</Text>
+      <TouchableOpacity onPress={() => { navigation.goBack() }}>
+        <Text style={{ color: '#67D692', fontSize: 20, fontWeight: 'bold' }}>Done</Text>
+      </TouchableOpacity>
+    </View>
+
+  // Header de la flatlist (photo de profil)
+  const headerListComponent = () => {
+    return (
+
+      <View style={{
+        justifyContent: 'center',
+        alignItems: 'center',
+        top: 30,
+        marginBottom: 80,
+      }}>
         <Avatar
           rounded
           source={profilePicture} // photo de profil de l'utilisateur
-          size={94}
+          size={112}
         />
-        <Text style={{ color: '#fff', textAlign: 'center', fontWeight: 'bold', fontSize: 18, top: 10 }}>{pseudo}</Text>
-      </View>
-      <View style={{ top: 60, }}>
-        <View style={{flex: 1 ,justifyContent: 'space-evenly', bottom: 50}}>
-          <View>
-            <TouchableOpacity style={{ height: 42, backgroundColor: '#7E7E7E', borderRadius: 10, width: 300 }}
-              onPress={toggleOverlay}
-            >
-              <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-                <Text style={{ color: '#fff', alignSelf: 'center', top: 10, fontSize: 16, left: 10 }}>Change username : </Text>
-                <Text style={{ color: '#DBDBDB', alignSelf: 'center', top: 11, left: 10 }}>{pseudo}</Text>
-              </View>
-            </TouchableOpacity>
-            <View style={{ justifyContent: 'center', }}>
-              <Overlay
-                overlayStyle={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  height: 100,
-                  width: 300,
-                  backgroundColor: 'black'
-                }}
-                isVisible={visible}
-                onBackdropPress={toggleOverlay}
-              >
-                <View style={{ alignItems: 'center', width: 200, flexDirection: 'row', justifyContent: 'center', top: 10, }}>
-                  <Input
-                    label={'New username :'}
-                    labelStyle={{ color: 'white' }}
-                    style={{ width: '100%' }}
-                    inputStyle={{ color: 'white' }}
-                    placeholder={pseudo}
-                    ></Input>
-                    <Button 
-                      buttonStyle={{
-                        backgroundColor: '#348A55', 
-                        borderRadius: 10}} 
-                      titleStyle={{color: '#FFF'}}
-                      onPress={toggleOverlay}
-                      >
-                      Done
-                    </Button>
-                </View>
-              </Overlay>
-            </View>
-          </View>
-          
-          <View>
-            <TouchableOpacity style={{ height: 42, backgroundColor: '#7E7E7E', borderRadius: 10, width: 300 }}
-              onPress={toggleOverlay}
-            >
-              <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-                <Text style={{ color: '#fff', alignSelf: 'center', top: 10, fontSize: 16, left: 10 }}>Change description : </Text>
-                <Text style={{ color: '#DBDBDB', alignSelf: 'center', top: 11, left: 10 }}>{desc}</Text>
-              </View>
-            </TouchableOpacity>
-            <View style={{ justifyContent: 'center', }}>
-              <Overlay
-                overlayStyle={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  height: 100,
-                  width: 300,
-                  backgroundColor: 'black'
-                }}
-                isVisible={visible}
-                onBackdropPress={toggleOverlay}
-              >
-                <View style={{ alignItems: 'center', width: 300, flexDirection: 'row', justifyContent: 'center', top: 10, }}>
-                  <Input
-                    label={'New description :'}
-                    labelStyle={{ color: 'white' }}
-                    style={{ width: '100%' }}
-                    inputStyle={{ color: 'white' }}
-                    placeholder={'description'}
-                    ></Input>
-                    <Button 
-                      buttonStyle={{
-                        backgroundColor: '#348A55', 
-                        borderRadius: 10}} 
-                      titleStyle={{color: '#FFF'}}
-                      onPress={toggleOverlay}
-                      >
-                      Done
-                    </Button>
-                </View>
-              </Overlay>
-            </View>
-          </View>
-        </View>
+        <TouchableOpacity >
+          <Text style={{ color: '#67D692', textAlign: 'center', fontWeight: 'bold', fontSize: 18, top: 10 }}>Change photo</Text>
+        </TouchableOpacity>
 
       </View>
+    )
+  };
+
+  // item de la flatlist
+  const userItem = ({ item }) => {
+    return (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+
+        <View style={{ height: 1, width: '100%', backgroundColor: '#242424', marginBottom: 10 }} />
+
+        <View style={{ flexDirection: 'row', flex: 1, alignItems: 'baseline', width: '70%', justifyContent: 'center' }}>
+          <Text style={{ color: '#67D692', fontSize: 18 }}>Username : </Text>
+          <Input placeholder={item.userName} placeholderTextColor='white' inputStyle={{ color: 'white' }} defaultValue={item.userName} ></Input>
+        </View>
+
+        <View style={{ height: 1, width: '100%', backgroundColor: '#242424', marginBottom: 10 }} />
+
+        <View style={{ flexDirection: 'row', flex: 1, alignItems: 'center', width: '70%', justifyContent: 'center' }}>
+          <Text style={{ color: '#67D692', fontSize: 18 }} >Description : </Text>
+          <Input
+            defaultValue={item.desc}
+            placeholder={item.desc}
+            placeholderTextColor='white'
+            inputStyle={{ color: 'white' }}
+            multiline
+            numberOfLines={4}
+            textAlignVertical='top'
+            maxLength={90} ></Input>
+        </View>
+
+        <View style={{ height: 1, width: '100%', backgroundColor: '#242424' }} />
+      </View>
+    )
+  }
+
+  return (
+    <View style={{ flex: 1, backgroundColor: '#151515', }}>
+
+      {header}
+
+      <FlatList
+        data={data}
+        renderItem={userItem}
+        ListHeaderComponentStyle={{ justifyContent: 'center', alignItems: 'center' }}
+        ListHeaderComponent={headerListComponent}
+      >
+      </FlatList>
+
     </View>
   )
 }

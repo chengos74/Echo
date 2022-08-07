@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 import ProfileComponent from '../screenComponents/ProfileComponent';
 
 export default function ProfileScreen() {
