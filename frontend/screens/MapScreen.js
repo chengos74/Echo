@@ -70,7 +70,7 @@ export default function MapScreen(props) {
                     image={require('../assets/green-circle.png')}
                 />
 
-            </MapView>
+            {/* </MapView> */}
 
         </View >
     )
