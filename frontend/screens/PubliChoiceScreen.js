@@ -57,17 +57,23 @@ export default function PubliChoice(props) {
 				</View>
 			</View>
 
-			<View>
-				<View style={{ alignItems: 'center', marginTop: 20, flexDirection: 'row', marginLeft: 20 }}>
+			<View style={{ alignItems: 'center', flexDirection: 'row', marginLeft: 20, }}>
+				<View style={{ flexDirection: 'row', alignItems: 'center' }}>
+
+					{/* Bouton Pellicule */}
 					<TouchableOpacity
-						style={{ marginRight: 10 }}
+						hitSlop={{ top: 30, bottom: 30, left: 30, right: 30 }}
+						style={{ marginRight: 10, }}
 						title='Pellicule'
-						onPress={() => {pickImage}}
+						onPress={() => { pickImage }}
 					>
 						<FontAwesomeIcon icon={faImages} size={30} color={'#fff'} />
 					</TouchableOpacity>
+
+					{/* Bouton Camera */}
 					<Text style={{ color: 'white', fontWeight: 'bold', fontSize: 24, marginRight: 10 }}>/</Text>
 					<TouchableOpacity
+						hitSlop={{ top: 30, bottom: 30, left: 30, right: 30 }}
 						title='Camera'
 						onPress={() => { props.navigation.navigate("CameraScreen", { screen: "CameraScreen" }); }}
 					>
