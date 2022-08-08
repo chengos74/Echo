@@ -21,6 +21,7 @@ export default function login(props) {
   const [nom, setNom] = useState("");
   const [prenom, setPrenom] = useState("");
   const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   //facebook useState
@@ -67,7 +68,42 @@ export default function login(props) {
     if (response?.type === 'success') {
       const { authentication } = response;
       }
-  }, [response]);
+    }, [response]);
+  
+  //sauvegarde des données en json
+  const submitData = () => {
+    fetch('http://192.168.43.223:3000/signup', {
+      method: 'POST',
+        headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        nom: nom,
+        prenom: prenom,
+        email: email,
+        username: userName,
+        password: password
+      })
+    }).then(res => res.json())
+      .then(data => {
+      console.log("envoie from front" + JSON.stringify(data));
+      }).catch(err => {
+      console.log("error", err);
+    })
+  }
+
+  //  const submitData = () => {
+  //   fetch('/signup', {
+  //     method: 'POST',
+  //       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+  //     body: `nom=${props.myToken}&prenom=${article.title}&username=${article.title}&email=${article.title}&password=${article.title}`
+      
+  //   }).then(res => res.json())
+  //     .then(data => {
+  //     console.log("envoie from front" +data);
+  //     }).catch(err => {
+  //     console.log("error", err);
+  //   })
+    
+  // }
 
   return (
     <View style={styles.container}>
@@ -87,6 +123,12 @@ export default function login(props) {
         value={prenom} />
         <TextInput 
         style={styles.input}
+        placeholder="Email"
+        placeholderTextColor={"#7E7E7E"}
+        onChangeText={(value) => setEmail(value)}
+       value={email} />
+        <TextInput 
+        style={styles.prenom}
         placeholder="UserName"
         placeholderTextColor={"#7E7E7E"}
         onChangeText={(value) => setUserName(value)}
@@ -98,7 +140,7 @@ export default function login(props) {
         onChangeText={(value) => setPassword(value)}
         value={password} />
       
-      <TouchableOpacity onPress={() => console.log("Username is :" + userName + " and password is :" +password)} style={styles.valider}>
+      <TouchableOpacity onPress={() => submitData()} style={styles.valider}>
           <Text style={styles.searchInput}>Valider</Text>
         </TouchableOpacity>
 
@@ -110,12 +152,12 @@ export default function login(props) {
         <FontAwesomeIcon style={styles.Icon} icon={faFacebook} size={24} color={'#7E7E7E'} />
       </TouchableOpacity>
       
-      <TouchableOpacity style={styles.searchSection} onPress={() => {
+      {/* <TouchableOpacity style={styles.searchSection} onPress={() => {
         googlePromptAsync({useProxy: true});
         }}>
         <Text style={styles.searchInput}>google</Text>
         <FontAwesomeIcon style={styles.Icon} icon={faGoogle} size={24} color={'#7E7E7E'} />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       
         {/* <TouchableOpacity style={styles.searchSection}>
         <Text style={styles.searchInput}>tiktok</Text>
@@ -211,7 +253,8 @@ const styles = StyleSheet.create({
     borderColor: "black",
     backgroundColor: "#505050",
     borderRadius: 26,
-    height: 46
+    height: 46,
+    marginTop: 30
   },
   
   appButtonText: {

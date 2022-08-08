@@ -18,18 +18,19 @@ import {faComment, faMapLocationDot, faUser, faHouse, faCirclePlus, faCircleUser
 
 //screens
 import profile from './screens/ProfileScreen';
-import chat from './screens/ChatAccueil';
+import chat from './screens/ChatScreen';
 import PChoice from './screens/PubliChoiceScreen'
 import PParams from './screens/PubliParamsScreen';
 import CameraScreen from './screens/CameraScreen';
 import localisation from './screens/MapScreen';
-import Home from './screens/HomePage';
-import Account from './screens/Account';
-import SignUp from './screens/SignUp';
+import Home from './screens/HomePageScreen';
+import Account from './screens/AccountScreen';
+import SignUp from './screens/SignUpScreen';
 import Message from './screenComponents/ChatMessages'
 import ImagePublication from './screenComponents/imagePublicationAccount';
 import Status from './screenComponents/StatusComponent';
 import ProfileSettings from './screens/ProfileSettingsScreen';
+import Login from './screens/loginScreen';
 
 
 
@@ -94,6 +95,7 @@ export default function App() {
           <Stack.Screen name='SignUp' component={SignUp} />
           <Stack.Screen name='Message' component={Message} />
           <Stack.Screen name='Image' component={ImagePublication} />
+          <Stack.Screen name='Login' component={Login} />
         </Stack.Navigator>
       </NavigationContainer>
   );
