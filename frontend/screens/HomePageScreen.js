@@ -117,6 +117,9 @@ export default function HomePage(props) {
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity  onPress={() => {
+          props.navigation.navigate("Login", { screen: "Login" });
+    }}>
 
       <View style={styles.searchSection}>
         <FontAwesomeIcon style={styles.searchIcon} icon={faSearch} size={24} color={'#7E7E7E'} />
@@ -139,6 +142,8 @@ export default function HomePage(props) {
         <Post />
 
       </ScrollView>
+      </TouchableOpacity>
+
 
       {/* <Button style={{ justifyContent: 'center' }}
         title="Home"
