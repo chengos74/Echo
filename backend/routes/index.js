@@ -3,23 +3,74 @@ var router = express.Router();
 var uniqid = require('uniqid');
 var fs = require('fs');
 
+//encryption
+var bcrypt = require('bcrypt');
+var uid2 = require('uid2');
+const cost = 10;
+
+//importation models
+var postsModel = require("../models/posts");
+var usersModel = require("../models/users");
+
 /* GET home page. */
 router.get('/', function (req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
 // LOG-IN 
-router.post('/login', (req, res, next) => {
+router.post('/login', async (req, res, next) => {
   // comparer le user à la bdd
+    var user = await usersModel.findOne({ 
+      name : req.body.nom, 
+    })
   // créer une session
   // res.json(userId) redirection vers homepage
 });
 
 //SIGN-UP
-router.post('/signup', (req, res, next) => {
-  // créer un nouveau user
-  // enregistrer en base de données
+router.post('/signup', async (req, res, next) => {
+
+  //comparer si l'email existe déjà
+  var userTaken = await usersModel.findOne({ userEmail : req.body.email })
+  var error = []
+
+  if (req.body.username == ''
+    || req.body.email == ''
+    || req.body.password == '') {
+
+    error.push("T'as rien oublié ? ...")
+
+  } else if (userTaken) {
+
+    error.push("Email already taken")
+  } else {
+
+    // créer un nouveau user
+    // enregistrer en base de données
+    const hash = bcrypt.hashSync(req.body.password, cost)
+  
+    var newUser = new usersModel({
+      name: req.body.nom,
+      prenom: req.body.prenom,
+      username: req.body.username,
+      email: req.body.email,
+      password: hash,
+      token: uid2(32)
+    })
+  
+    console.log("utilisateur new" + newUser);
+    var userSave = await newUser.save();
+  
+    var result = false
+      var token;
+      if(userSave){
+        result = true
+        token = userSave.token
+      }
+  }
+
   // res.json(uderId) redirection vers homepage
+  res.json(userSave, token, error, result)
 });
 
 //PROFIL (NOTRE PAGE PERSONNELLE)

@@ -4,7 +4,10 @@ var mongoose = require("mongoose");
 var usersSchema = mongoose.Schema({
     nom: String,
     prenom: String,
+    username: String,
+    email: String,
     avatar: String,
+    password: String,
     dateInscription : Date,
     dateAnniversaire: Date, 
     galerieCompte: { type: mongoose.Schema.Types.ObjectId, ref: 'posts' },
@@ -18,12 +21,12 @@ var usersSchema = mongoose.Schema({
         isRead: Boolean,
         isSend: Boolean
     },
-    email: String,
     géolocalisation: String,
     password: String,
     id: Number,
     desccription: String,
-    isPublic: Boolean
+    isPublic: Boolean,
+    token: String
 });
 
 var usersModel = mongoose.model("users", usersSchema);
