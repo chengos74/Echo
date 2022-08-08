@@ -4,7 +4,8 @@ var mongoose = require("mongoose");
 var postsSchema = mongoose.Schema({
     pseudo: String,
     avatar: String,
-    localisation: String,
+    latitude: Number,
+    longitude: Number,
     comments: String,
     likes: Number,
     wishlist: String,

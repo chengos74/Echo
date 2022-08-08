@@ -2,15 +2,15 @@ var mongoose = require("mongoose");
 
 //schéma user
 var usersSchema = mongoose.Schema({
-    nom: String,
-    prenom: String,
+    lastName: String,
+    firstName: String,
     username: String,
     email: String,
     avatar: String,
     password: String,
     dateInscription : Date,
-    dateAnniversaire: Date, 
-    galerieCompte: { type: mongoose.Schema.Types.ObjectId, ref: 'posts' },
+    birthday: Date, 
+    userGallery: { type: mongoose.Schema.Types.ObjectId, ref: 'posts' },
     followers: Number,
     following: Number,
     likes: Number,
@@ -21,12 +21,13 @@ var usersSchema = mongoose.Schema({
         isRead: Boolean,
         isSend: Boolean
     },
-    géolocalisation: String,
+    latitude: Number,
+    longitude: Number,
     password: String,
     id: Number,
     desccription: String,
     isPublic: Boolean,
-    token: String
+    token: String,
 });
 
 var usersModel = mongoose.model("users", usersSchema);
