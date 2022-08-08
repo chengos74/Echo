@@ -134,6 +134,7 @@ export default function HomePage(props) {
       {searchClick}
 
       <ScrollView>
+
         <Stories />
         <Post />
 
