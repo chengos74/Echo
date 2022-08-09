@@ -1,12 +1,54 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
 import { Avatar, } from "@rneui/themed";
+import * as Location from 'expo-location'; // Pour la geolocalisation 
+//-----IMPORT DES ICONS-----//
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faLocationDot, faEllipsisVertical, faHeart, faComment, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons';
 import { faComment as faCommentRegular } from '@fortawesome/free-regular-svg-icons';
+//-----IMPORT FONCTIONS DE GEOLIB-----//
+import getDistance from 'geolib/es/getDistance'; // calcul la distance entre deux points 
+import isPointWithinRadius from 'geolib/es/isPointWithinRadius'; // renvoie true si un point est à proximité d'un autre point selon un rayon défini 
+
 
 const PostComponent = () => {
+
+  // State qui reçoit la position de l'utilisateur 
+  const [userPosition, setUserPosition] = useState(null);
+  // message d'erreur si l'utilisateur n'autorise pas la gélolcalisation
+  const [errorMsg, setErrorMsg] = useState(null);
+  const [userLatitude, setUserLatitude] = useState(null);
+  const [userLongitude, setUserLongitude] = useState(null);
+
+  // récupérer la position de l'utilisateur et la permission 
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+
+      if (status != 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
+      }
+      let location = await Location.getCurrentPositionAsync({}); // récupère la postion de l'utilisateur 
+
+      setUserPosition(location);
+      setUserLatitude(location.coords.latitude);
+      setUserLongitude(location.coords.longitude);
+      console.log('1er useEffect');
+    })(); // appel de la fonction anonyme
+  }, []); // useEffect exécuté au chargement du screen 
+
+  console.log(userPosition)
+  console.log(userLatitude);
+  console.log(userLongitude);
+
+  let txt = 'waiting...';
+  if (errorMsg) {
+    txt = errorMsg;
+  } else if (userPosition) {
+
+  };
 
   // Array fictif contenant les infos relatives à un post pour mapper dessus ensuite
   const postInfo = [
@@ -21,6 +63,8 @@ const PostComponent = () => {
       isComment: false,
       city: 'Bordeaux',
       time: 1,
+      latitude: 44.83667581936292,
+      longitude: -0.575641307603843,
     },
     {
       postPseudo: 'Tom',
@@ -33,6 +77,8 @@ const PostComponent = () => {
       isComment: false,
       city: 'Pey Berland',
       time: 2,
+      latitude: 1,
+      longitude: 2,
     },
     {
       postPseudo: 'Groot',
@@ -45,10 +91,24 @@ const PostComponent = () => {
       isComment: false,
       city: 'Voie Lactée',
       time: 3,
+      latitude: 44.83667581936292,
+      longitude: -0.575641307603843,
     },
   ];
 
-  const postComment = postInfo.map((data, index) => {
+  useEffect(() => {
+    if((userLatitude && userLongitude) != null){
+      const user = postInfo.map((data, index) => {
+        let postIsInRange = isPointWithinRadius({ latitude: data.latitude, longitude: data.longitude }, { latitude: userLatitude, longitude: userLongitude }, 2800)
+        console.log('2e useEffect');
+        console.log("is in range : " + postIsInRange);
+      })
+    }
+
+  }, [userLatitude, userLongitude])
+
+  const posts = postInfo.map((data, index) => {
+
     // State qui passe à true quand on like
     const [like, setLike] = useState(data.isLiked);
     // State qui passe à true quand on comment
@@ -86,13 +146,13 @@ const PostComponent = () => {
                 <Text style={{ marginLeft: 3, color: "#7E7E7E" }}> {data.city} </Text>
               </View>
             </View>
-            <Text style={{ marginTop: 40, color: "#7E7E7E" }}>{data.time}h ago</Text> 
+            <Text style={{ marginTop: 40, color: "#7E7E7E" }}>{data.time}h ago</Text>
           </View>
         </View>
         <View style={{
           position: 'relative',
           justifyContent: 'center',
-          alignItems: 'center', 
+          alignItems: 'center',
 
         }}>
           <Image source={data.postImage} style={{ width: '100%', height: 400, }} />
@@ -112,15 +172,15 @@ const PostComponent = () => {
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <TouchableOpacity onPress={() => setLike(!like)}>
-              <FontAwesomeIcon 
-                icon={like ? faHeart : faHeartRegular} 
-                style={{ color: like ? '#D66D67' : 'white', marginRight: 5 }} size={24} 
+              <FontAwesomeIcon
+                icon={like ? faHeart : faHeartRegular}
+                style={{ color: like ? '#D66D67' : 'white', marginRight: 5 }} size={24}
               />
             </TouchableOpacity>
             <Text style={{ marginRight: 20, color: '#fff', }}>{like ? data.likes + 1 : data.likes}</Text>
             <TouchableOpacity onPress={() => setComment(!comment)}>
-              <FontAwesomeIcon 
-                icon={comment ? faComment : faCommentRegular} 
+              <FontAwesomeIcon
+                icon={comment ? faComment : faCommentRegular}
                 style={{ color: '#fff', marginRight: 5 }} size={20} />
             </TouchableOpacity>
             <Text style={{ marginRight: 20, color: '#fff', }}>{comment ? data.comments + 1 : data.comments}</Text>
@@ -144,7 +204,6 @@ const PostComponent = () => {
                 onPress={() => { }}
               >{data.desc}</Text>
             </View>
-            {postComment}
           </View>
         </View>
       </View>
@@ -153,7 +212,7 @@ const PostComponent = () => {
 
   return (
     <View style={{ flex: 1 }}>
-      {postComment}
+      {posts}
     </View>
   );
 }
