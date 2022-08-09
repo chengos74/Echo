@@ -92,16 +92,17 @@ export default function ProfileComponent(props) {
                         <Text style={{ color: 'white' }}>Likes</Text>
                     </View>
                 </View>
-                <ScrollView>
-                    <PublicationsAccount style={{ flex: 1, }} />
-                </ScrollView>
+                {/* <ScrollView>
+                    <PublicationsAccount style={{ flex: 1 }}/>
+                </ScrollView> */}
             </View>
         )
     });
 
     return (
-        <View>
+        <View style={{ flex: 1 }}>
             {profile}
+                    <PublicationsAccount/>
         </View>
     );
 };

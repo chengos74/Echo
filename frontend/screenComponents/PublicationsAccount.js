@@ -1,4 +1,4 @@
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native';
 
@@ -120,9 +120,11 @@ const navigation = useNavigation();
 
 
   return (
-    <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', paddingHorizontal: 5 }}>
+      <ScrollView>
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', paddingHorizontal: 5 }}>
         {photos}
-    </View>
+        </View>
+      </ScrollView>
   )
 }
 
