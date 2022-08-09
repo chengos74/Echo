@@ -1,10 +1,10 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, TextInput, TouchableOpacity, Text } from 'react-native';
 
 //fontawesome
 //fontawesome
-import { FontAwesomeIcon  } from '@fortawesome/react-native-fontawesome';
-import { faFacebook, faGoogle, faTiktok, faInstagram} from '@fortawesome/free-brands-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faFacebook, faGoogle, faTiktok, faInstagram } from '@fortawesome/free-brands-svg-icons'
 
 //auth
 import * as Facebook from 'expo-facebook';
@@ -21,6 +21,7 @@ export default function login(props) {
   const [nom, setNom] = useState("");
   const [prenom, setPrenom] = useState("");
   const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   //facebook useState
@@ -28,7 +29,7 @@ export default function login(props) {
   const [userData, setUserData] = useState(null);
   const [isImageLoading, setIsImageLoading] = useState(false);
 
-  
+
   //facebook 
   const facebookLogin = async () => {
     try {
@@ -63,61 +64,105 @@ export default function login(props) {
     expoClientId: '683904437558-2ftt05jb1u2t2arm66k2ctdokk3mgo6t.apps.googleusercontent.com',
   });
 
-    useEffect(() => {
+  useEffect(() => {
     if (response?.type === 'success') {
       const { authentication } = response;
-      }
+    }
   }, [response]);
+
+  //sauvegarde des données en json
+  const submitData = () => {
+    fetch('http://192.168.1.12:3000/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        nom: nom,
+        prenom: prenom,
+        email: email,
+        username: userName,
+        password: password
+      })
+    }).then(res => res.json())
+      .then(data => {
+        console.log("envoie from front" + JSON.stringify(data));
+      }).catch(err => {
+        console.log("error", err);
+      })
+  }
+
+  //  const submitData = () => {
+  //   fetch('/signup', {
+  //     method: 'POST',
+  //       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+  //     body: `nom=${props.myToken}&prenom=${article.title}&username=${article.title}&email=${article.title}&password=${article.title}`
+
+  //   }).then(res => res.json())
+  //     .then(data => {
+  //     console.log("envoie from front" +data);
+  //     }).catch(err => {
+  //     console.log("error", err);
+  //   })
+
+  // }
 
   return (
     <View style={styles.container}>
       <Text style={styles.login}>Sign-Up</Text>
       <View style={styles.lineStyle} />
-        <TextInput 
+      <TextInput
         style={styles.nom}
         placeholder="Nom"
         placeholderTextColor={"#7E7E7E"}
         onChangeText={(value) => setNom(value)}
-       value={nom} />
-        <TextInput 
+        value={nom} />
+      <TextInput
         style={styles.prenom}
         placeholder="prenom"
         placeholderTextColor={"#7E7E7E"}
         onChangeText={(value) => setPrenom(value)}
         value={prenom} />
-        <TextInput 
+      <TextInput
         style={styles.input}
+        placeholder="Email"
+        placeholderTextColor={"#7E7E7E"}
+        onChangeText={(value) => setEmail(value)}
+        value={email} />
+      <TextInput
+        style={styles.prenom}
         placeholder="UserName"
         placeholderTextColor={"#7E7E7E"}
         onChangeText={(value) => setUserName(value)}
-       value={userName} />
-        <TextInput
+        value={userName} />
+      <TextInput
         style={styles.password}
+        secureTextEntry={true}
         placeholder="Password"
         placeholderTextColor={"#7E7E7E"}
         onChangeText={(value) => setPassword(value)}
         value={password} />
-      
-      <TouchableOpacity onPress={() => console.log("Username is :" + userName + " and password is :" +password)} style={styles.valider}>
-          <Text style={styles.searchInput}>Valider</Text>
-        </TouchableOpacity>
 
-        <View style={styles.lineStyle} />
+      <TouchableOpacity
+        onPress={() => { submitData(); props.navigation.navigate('Home', { screen: 'Home' }) }} 
+        style={styles.valider}>
+        <Text style={styles.searchInput}>Valider</Text>
+      </TouchableOpacity>
 
-      
-        <TouchableOpacity style={styles.searchSection} onPress={facebookLogin} >
+      <View style={styles.lineStyle} />
+
+
+      <TouchableOpacity style={styles.searchSection} onPress={facebookLogin} >
         <Text style={styles.searchInput}>Facebook</Text>
         <FontAwesomeIcon style={styles.Icon} icon={faFacebook} size={24} color={'#7E7E7E'} />
       </TouchableOpacity>
-      
-      <TouchableOpacity style={styles.searchSection} onPress={() => {
+
+      {/* <TouchableOpacity style={styles.searchSection} onPress={() => {
         googlePromptAsync({useProxy: true});
         }}>
         <Text style={styles.searchInput}>google</Text>
         <FontAwesomeIcon style={styles.Icon} icon={faGoogle} size={24} color={'#7E7E7E'} />
-      </TouchableOpacity>
-      
-        {/* <TouchableOpacity style={styles.searchSection}>
+      </TouchableOpacity> */}
+
+      {/* <TouchableOpacity style={styles.searchSection}>
         <Text style={styles.searchInput}>tiktok</Text>
         <FontAwesomeIcon style={styles.Icon} icon={faTiktok} size={24} color={'#7E7E7E'} />
 
@@ -127,10 +172,10 @@ export default function login(props) {
         <FontAwesomeIcon style={styles.Icon} icon={faInstagram} size={24} color={'#7E7E7E'} />
         </TouchableOpacity> */}
 
-        <View style={styles.lineStyle} />
+      <View style={styles.lineStyle} />
 
-  </View>
-)
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
@@ -150,7 +195,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     textAlign: 'center',
     width: "60%",
-    borderWidth: 1, 
+    borderWidth: 1,
     borderColor: "black",
     backgroundColor: "#505050",
     borderRadius: 26,
@@ -159,7 +204,7 @@ const styles = StyleSheet.create({
   prenom: {
     textAlign: 'center',
     width: "60%",
-    borderWidth: 1, 
+    borderWidth: 1,
     borderColor: "black",
     backgroundColor: "#505050",
     borderRadius: 26,
@@ -170,7 +215,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     textAlign: 'center',
     width: "60%",
-    borderWidth: 1, 
+    borderWidth: 1,
     borderColor: "black",
     backgroundColor: "#505050",
     borderRadius: 26,
@@ -207,13 +252,14 @@ const styles = StyleSheet.create({
   password: {
     textAlign: 'center',
     width: "60%",
-    borderWidth: 1, 
+    borderWidth: 1,
     borderColor: "black",
     backgroundColor: "#505050",
     borderRadius: 26,
-    height: 46
+    height: 46,
+    marginTop: 30
   },
-  
+
   appButtonText: {
     fontSize: 18,
     color: "#7E7E7E",
@@ -226,11 +272,11 @@ const styles = StyleSheet.create({
 
   lineStyle: {
     borderWidth: 2,
-    width: "60%", 
-    borderColor:'#7E7E7E', 
-    marginTop: 30, 
+    width: "60%",
+    borderColor: '#7E7E7E',
+    marginTop: 30,
   }
-    
+
 });
 
 

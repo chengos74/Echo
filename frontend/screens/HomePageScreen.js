@@ -37,8 +37,10 @@ const DATA = [
 ];
 
 
-export default function HomePage(props) {
 
+export default function HomePage(props) {
+  // State pour renvoyer à la pga login si non connecté
+  const [isLogin, setIsLogin] = useState(false);
   // State qui reçoit la valeur du search input
   const [search, setSearch] = useState(null);
   // State qui contient la balise FlatList
@@ -56,11 +58,11 @@ export default function HomePage(props) {
     // réponse du backend
     let rawReponse = await fetch("http://" + ip + ":3000/search", {
       method: 'POST',
-      headers:{'Content-Type' : 'application/x-www-form-urlencoded'},
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: `userResearch=${userResearch}`
     });
     let response = await rawReponse.json()
-    console.log("reponse"+JSON.stringify(response));
+    console.log("reponse" + JSON.stringify(response));
   }
 
   // item pour la flatlist
@@ -115,31 +117,68 @@ export default function HomePage(props) {
     )
   };
 
-  return (
-    <View style={styles.container}>
+  var homeNotLoggedIn = () => {
+    return (
+      <TouchableOpacity onPress={() => {
+        if (!isLogin) {
+          props.navigation.navigate("Login", { screen: "Login" });
+        }
+      }}>
 
-      <View style={styles.searchSection}>
-        <FontAwesomeIcon style={styles.searchIcon} icon={faSearch} size={24} color={'#7E7E7E'} />
-        <TextInput
-          style={styles.searchInput}
-          placeholder='Search'
-          placeholderTextColor="#7E7E7E"
-          color='white'
-          onChangeText={(value) => { setSearch(value), handlesubmit(value) }}
-          value={search}
-          onFocus={() => { setSearchClick(OnSearchClick) }}
-        >
-        </TextInput>
-      </View>
-      {searchClick}
+        <View style={styles.searchSection}>
+          <FontAwesomeIcon style={styles.searchIcon} icon={faSearch} size={24} color={'#7E7E7E'} />
+          <TextInput
+            style={styles.searchInput}
+            placeholder='Search'
+            placeholderTextColor="#7E7E7E"
+            color='white'
+            onChangeText={(value) => { setSearch(value), handlesubmit(value) }}
+            value={search}
+            onFocus={() => { setSearchClick(OnSearchClick) }}
+          >
+          </TextInput>
+        </View>
+        {searchClick}
 
-      <ScrollView>
-        <Stories />
-        <Post />
+        <ScrollView>
 
-      </ScrollView>
+          <Stories />
+          <Post />
 
-      {/* <Button style={{ justifyContent: 'center' }}
+        </ScrollView>
+      </TouchableOpacity>
+
+    )
+  }
+
+return (
+      <View style={styles.container}>
+        {homeNotLoggedIn}
+
+        <View style={styles.searchSection}>
+          <FontAwesomeIcon style={styles.searchIcon} icon={faSearch} size={24} color={'#7E7E7E'} />
+          <TextInput
+            style={styles.searchInput}
+            placeholder='Search'
+            placeholderTextColor="#7E7E7E"
+            color='white'
+            onChangeText={(value) => { setSearch(value), handlesubmit(value) }}
+            value={search}
+            onFocus={() => { setSearchClick(OnSearchClick) }}
+          >
+          </TextInput>
+        </View>
+        {searchClick}
+
+        <ScrollView>
+
+          <Stories />
+          <Post />
+
+        </ScrollView>
+
+
+        {/* <Button style={{ justifyContent: 'center' }}
         title="Home"
         onPress={() => {
           props.navigation.navigate("BottomNavigation", { screen: "Home" });
@@ -147,9 +186,9 @@ export default function HomePage(props) {
       >
       </Button> */}
 
-    </View>
-  )
-}
+      </View>
+    )
+  }
 const styles = StyleSheet.create({
   container: {
     flex: 1,
