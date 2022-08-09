@@ -1,18 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Button, TextInput, FlatList, Text, TouchableOpacity, ScrollView, Image } from 'react-native';
-import { Card, Avatar, ListItem, } from "@rneui/themed";
 import Post from '../screenComponents/PostComponent';
 import Stories from '../screenComponents/StoryComponent';
-
-
 //-----IMPORT ICONS-----//
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faSearch, faUser, faHashtag, faCircleXmark, faLocationDot } from '@fortawesome/free-solid-svg-icons';
 
 // fictionnal data for the Flatlist
-// id sera l'id à pêcher en bdd (id utilisateur)
-// title devra matcher avec le text issue de searchInput
-// la flatlist doit être mise à jour au onChangeText pour être dynamique
 const DATA = [
   {
     id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
@@ -36,17 +30,13 @@ const DATA = [
   },
 ];
 
-
-
 export default function HomePage(props) {
   // State pour renvoyer à la pga login si non connecté
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
   // State qui reçoit la valeur du search input
   const [search, setSearch] = useState(null);
   // State qui contient la balise FlatList
   const [searchClick, setSearchClick] = useState(null);
-
-  let imageTest = '../assets/photo.jpg'
 
   // fonction que détecte le click sur un item de la flatlist
   async function handlesubmit(textFromInput) {
@@ -151,10 +141,8 @@ export default function HomePage(props) {
     )
   }
 
-
-
   if (!isLogin) {
-     homeNotLoggedIn
+    homeNotLoggedIn
   } else {
 
     return (
