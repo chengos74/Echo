@@ -149,7 +149,6 @@ export default function HomePage(props) {
     )
   }
 
-
     return (
       <View style={styles.container}>
         <View style={styles.searchSection}>
@@ -186,7 +185,6 @@ export default function HomePage(props) {
       </View>
     )
   }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -239,4 +237,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   }
+
 });

@@ -1,10 +1,10 @@
 {
   "packagerPort": 19000,
-  "expoServerNgrokUrl": "https://xw-3gp.anonymous.frontend.exp.direct",
-  "packagerNgrokUrl": "https://xw-3gp.anonymous.frontend.exp.direct",
-  "ngrokPid": 22540,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null,
   "packagerPid": null,
   "webpackServerPort": null,
   "devToolsPort": 19002,
-  "expoServerPort": null
+  "expoServerPort": 19000
 }
