@@ -61,12 +61,12 @@ export default function account() {
         <Text style={styles.web}>nicolaslafarge</Text>
       </View>
       {/* publication et liked videos et photos */}
-      <ScrollView>
+      <View style={{flex:1}}>
         <Tab.Navigator style={{marginTop: 20}}>
           <Tab.Screen name="Publications" component={Publications} />
           <Tab.Screen name="Likes" component={LikeAccount} />
         </Tab.Navigator>
-      </ScrollView>
+      </View>
       {/* <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', paddingHorizontal: 5 }}>
       {video}
     </View> */}

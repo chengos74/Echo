@@ -112,7 +112,6 @@ export default function HomePage(props) {
       <TouchableOpacity onPress={() => {
           props.navigation.navigate("Login", { screen: "Login" });
       }}>
-
         <View style={styles.searchSection}>
           <FontAwesomeIcon style={styles.searchIcon} icon={faSearch} size={24} color={'#7E7E7E'} />
           <TextInput
