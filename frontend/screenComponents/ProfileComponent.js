@@ -61,13 +61,15 @@ export default function ProfileComponent(props) {
                             borderRadius: 10,
                         }}
                         // ouvrir le screen profile settings et lui push les data ci-dessous
-                        onPress={() => {navigation.push('ProfileSettings', {
-                            pseudo: data.userPseudo,
-                            desc: data.desc,
-                            profilePicture: data.profilePicture,
-                        })}}
-                        >
-                        
+                        onPress={() => {
+                            navigation.push('ProfileSettings', {
+                                pseudo: data.userPseudo,
+                                desc: data.desc,
+                                profilePicture: data.profilePicture,
+                            })
+                        }}
+                    >
+
                         <Text style={{ color: '#fff', marginTop: 6 }}>Modify my profil</Text>
                     </TouchableOpacity>
                 </View>
@@ -92,9 +94,7 @@ export default function ProfileComponent(props) {
                         <Text style={{ color: 'white' }}>Likes</Text>
                     </View>
                 </View>
-                {/* <ScrollView>
-                    <PublicationsAccount style={{ flex: 1 }}/>
-                </ScrollView> */}
+
             </View>
         )
     });
