@@ -38,7 +38,7 @@ router.post('/signup', async (req, res, next) => {
     || req.body.email == ''
     || req.body.password == '') {
 
-    error.push("T'as rien oublié ? ...")
+    error.push("Fields empty ...")
 
   } else if (userTaken) {
 
