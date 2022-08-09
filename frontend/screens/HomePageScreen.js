@@ -120,9 +120,7 @@ export default function HomePage(props) {
   var homeNotLoggedIn = () => {
     return (
       <TouchableOpacity onPress={() => {
-        if (!isLogin) {
           props.navigation.navigate("Login", { screen: "Login" });
-        }
       }}>
 
         <View style={styles.searchSection}>
@@ -151,10 +149,8 @@ export default function HomePage(props) {
     )
   }
 
-return (
+    return (
       <View style={styles.container}>
-        {homeNotLoggedIn}
-
         <View style={styles.searchSection}>
           <FontAwesomeIcon style={styles.searchIcon} icon={faSearch} size={24} color={'#7E7E7E'} />
           <TextInput
@@ -241,4 +237,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   }
+
 });

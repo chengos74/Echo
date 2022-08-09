@@ -14,6 +14,7 @@ import { TouchableOpacity } from "react-native";
 
 
 
+
 export const getCurrentLocation = () => {
 	return new Promise((resolve, reject) => {
 		navigator.geolocation.getCurrentPosition(position => resolve(position), e => reject(e));
@@ -28,6 +29,7 @@ export default function MapScreen(props) {
 	const [currentLatitude, setCurrentLatitude] = useState(0);
 	const [currentLongitude, setCurrentLongitude] = useState(0);
 
+	//// Mise en place de la géolocalisation
 	useEffect(() => {
 		async function askPermissions() {
 			let { status } = await Location.requestForegroundPermissionsAsync();
@@ -43,6 +45,7 @@ export default function MapScreen(props) {
 		askPermissions()
 
 	}, [])
+
 
 	useEffect(() => {
 		const currentLocation = {
