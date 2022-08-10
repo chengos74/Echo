@@ -121,7 +121,12 @@ router.post('/add-content', (req, res, next) => {
 });
 
 //POST
-router.post('/post-content', (req, res, next) => {
+router.get('/post-content', async (req, res, next) => {
+
+  var contentBDD = await postsModel.find();
+  
+  console.log(contentBDD);
+  res.json({result : contentBDD})
   // afficher la homepage avec la nouvelle publication 
 });
 

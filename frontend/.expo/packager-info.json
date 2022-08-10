@@ -6,5 +6,5 @@
   "packagerPid": null,
   "webpackServerPort": null,
   "devToolsPort": 19002,
-  "expoServerPort": 19000
+  "expoServerPort": null
 }

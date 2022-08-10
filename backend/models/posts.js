@@ -6,6 +6,7 @@ var postsSchema = mongoose.Schema({
     avatar: String,
     latitude: Number,
     longitude: Number,
+    adress: String,
     comments: String,
     likes: Number,
     wishlist: String,
