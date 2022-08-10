@@ -1,14 +1,15 @@
 // Import React & cie
 import React, { useState } from 'react';
-import { Text, View, TouchableOpacity, StyleSheet, TextInput, ScrollView, Switch, KeyboardAvoidingView } from "react-native";
+import { Text, View, TouchableOpacity, TextInput, ScrollView, Switch, KeyboardAvoidingView, Image } from "react-native";
 import { Slider } from '@rneui/themed';
-
+import { connect } from 'react-redux';
 // Import icons
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faCircleArrowLeft, faCircleArrowRight } from '@fortawesome/free-solid-svg-icons'
-// Fonction paramètres de la publication
-export default function PubliParams(props) {
 
+// Fonction paramètres de la publication
+function PubliParams(props) {
+    console.log("photo taken: "+ JSON.stringify(props.newPhoto[0].uri));
     // Pour l'input de la description
     const [text, onChangeText] = React.useState(null);
     // State pour la valeur du slider
@@ -17,6 +18,10 @@ export default function PubliParams(props) {
     const [isEnabled, setIsEnabled] = useState(false);
     // toggle switch ephemere
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+
+    // State qui reçoit l'uri de la photo qui vient d'être prise
+    const [uriPhoto, setUriPhoto] = useState(props.newPhoto[0].uri);
+    console.log(uriPhoto);
 
     return (
         <KeyboardAvoidingView
@@ -43,7 +48,9 @@ export default function PubliParams(props) {
                 <ScrollView>
                     {/* Aperçu du fichier choisi (depuis la pellicule ou la camera) */}
                     <View style={{ alignItems: 'center', paddingTop: 30 }}>
-                        <View style={{ justifyContent: 'center', alignItems: 'center', width: 320, height: 240, borderRadius: 10, backgroundColor: '#fff' }}>
+                        <View style={{ justifyContent: 'center', alignItems: 'center', width: 320, height: 240, borderRadius: 10, backgroundColor: 'white' }}>
+                            {/* <Image source={require(`../../backend/tmp/${uriPhoto}`)} /> */}
+                            <Image source={{uri : '../../backend/tmp/'+uriPhoto}} style={{width: 320, height: 240,}}/>
                             <Text>Preview image or video</Text>
                         </View>
                     </View>
@@ -71,7 +78,7 @@ export default function PubliParams(props) {
                                     onValueChange={setRange}
                                     style={{ width: 200, height: 40, }}
                                     trackStyle={{ color: '#242424' }}
-                                    minimumValue={0}
+                                    minimumValue={0.010}
                                     maximumValue={1}
                                     step={0.01}
                                     minimumTrackTintColor="#FFFFFF"
@@ -126,3 +133,9 @@ export default function PubliParams(props) {
         </KeyboardAvoidingView>
     )
 };
+
+function mapStateToProps(state){
+    return ({ newPhoto: state.photoReducer });
+};
+
+export default connect(mapStateToProps, null)(PubliParams);
