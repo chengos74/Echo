@@ -13,8 +13,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 //icons
 // import { Ionicons } from '@expo/vector-icons';
 //fontawesome
-import { FontAwesomeIcon  } from '@fortawesome/react-native-fontawesome';
-import {faComment, faMapLocationDot, faUser, faHouse, faCirclePlus, faCircleUser, faUserGear } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faComment, faMapLocationDot, faUser, faHouse, faCirclePlus, faCircleUser, faUserGear } from '@fortawesome/free-solid-svg-icons'
 
 //screens
 import profile from './screens/ProfileScreen';
@@ -32,6 +32,15 @@ import Status from './screenComponents/StatusComponent';
 import ProfileSettings from './screens/ProfileSettingsScreen';
 import Login from './screens/loginScreen';
 
+//-----REDUX STORE--------//
+import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers } from 'redux';
+import photoReducer from './reducers/camera.reducers';
+import { Provider } from 'react-redux';
+
+const reducer = combineReducers({ photoReducer });
+const store = configureStore({ reducer });
+
 
 
 
@@ -40,38 +49,38 @@ const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const BottomNavigation = () => {
- 
-  return (
-    <Tab.Navigator  
-    screenOptions={( { route } ) => ({
-      tabBarIcon: ( { color } ) => {
-        let iconName;
 
-        if(route.name === 'Home') {
-          iconName = faHouse;
-        } else if(route.name === 'localisation') {
-          iconName = faMapLocationDot;
-        } else if(route.name === 'PChoice') {
-          iconName = faCirclePlus;
-        }else if(route.name === 'chat') {
-          iconName = faComment;
-        }else if(route.name === 'profile') {
-          iconName = faCircleUser;
-        }else if(route.name === 'Account') {
-          iconName = faUserGear;
+  return (
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ color }) => {
+          let iconName;
+
+          if (route.name === 'Home') {
+            iconName = faHouse;
+          } else if (route.name === 'localisation') {
+            iconName = faMapLocationDot;
+          } else if (route.name === 'PChoice') {
+            iconName = faCirclePlus;
+          } else if (route.name === 'chat') {
+            iconName = faComment;
+          } else if (route.name === 'profile') {
+            iconName = faCircleUser;
+          } else if (route.name === 'Account') {
+            iconName = faUserGear;
+          }
+          return <FontAwesomeIcon icon={iconName} size={20} color={color} />
+        },
+      })}
+      tabBarOptions={{
+        activeTintColor: '#94FFBD',
+        inactiveTintColor: '#94FFBD',
+        showLabel: false,
+        style: {
+          backgroundColor: '#151515'
         }
-        return <FontAwesomeIcon  icon={iconName} size={20} color={color} />
-      },
-    })}
-    tabBarOptions={{
-      activeTintColor : '#94FFBD',
-      inactiveTintColor: '#94FFBD',
-      showLabel: false,
-      style: {
-        backgroundColor : '#151515'
-      }
-    }}
-  >
+      }}
+    >
       <Tab.Screen name='Home' component={Home} />
       <Tab.Screen name='localisation' component={localisation} />
       <Tab.Screen name='PChoice' component={PChoice} />
@@ -84,10 +93,11 @@ const BottomNavigation = () => {
 
 export default function App() {
   return (
-    <NavigationContainer style={styles.container}>
-        <Stack.Navigator screenOptions={{ headerShown : false }} >
+    <Provider store={store}>
+      <NavigationContainer style={styles.container}>
+        <Stack.Navigator screenOptions={{ headerShown: false }} >
           <Stack.Screen name='BottomNavigation' component={BottomNavigation} />
-          <Stack.Screen exact name='Home' component={Home} />
+          <Stack.Screen name='Home' component={Home} />
           <Stack.Screen name='Status' component={Status} />
           <Stack.Screen name='ProfileSettings' component={ProfileSettings} />
           <Stack.Screen name='CameraScreen' component={CameraScreen} />
@@ -98,6 +108,7 @@ export default function App() {
           <Stack.Screen name='Login' component={Login} />
         </Stack.Navigator>
       </NavigationContainer>
+    </Provider>
   );
 }
 

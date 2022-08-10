@@ -14,6 +14,7 @@ var usersModel = require("../models/users");
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
+  
   res.render('index', { title: 'Express' });
 });
 
@@ -23,7 +24,16 @@ router.post('/login', async (req, res, next) => {
     var user = await usersModel.findOne({ 
       name : req.body.nom, 
     })
-  // créer une session
+
+var password = req.body.password
+
+if (bcrypt.compareSync(password, user.password)) {
+ res.json({ login: true, user });
+} else {
+ res.json({ login: false });
+}
+
+console.log("le mot de pass est " +password);
   // res.json(userId) redirection vers homepage
 });
 
@@ -102,17 +112,18 @@ router.get('/create', (req, res, next) => {
 
 //CAMERA
 router.post('/camera', async (req, res, next) => {
-  let imagePath = './tmp/' + uniqid() + '.jpg';
-  let resultCopy = await req.files.photo.mv(imagePath); // chaque photo est enregistrée dans le repertoire temporaire
 
-  console.log(resultCopy); // si undefined = tout est ok !
+  let imageUri =  uniqid() + '.jpg'
+  let imagePath = './tmp/' + imageUri ;
+  let resultCopy = await req.files.photo.mv(imagePath); // chaque photo est enregistrée dans le repertoire temporaire
+  console.log(req.files.photo); // si undefined = tout est ok !
 
   if (!resultCopy) {
     // stocker l'image sur un server et dans la bonne collection
     // renvoyer l'image au front
-    res.json(resultCopy);
+    res.json({photo : imageUri});
   }
-  //fs.unlinkSync(imagePath); // supprimer l'image du dossier tmp
+  // fs.unlinkSync(imagePath); // supprimer l'image du dossier tmp
 });
 
 //ADD CONTENT
@@ -121,7 +132,12 @@ router.post('/add-content', (req, res, next) => {
 });
 
 //POST
-router.post('/post-content', (req, res, next) => {
+router.get('/post-content', async (req, res, next) => {
+
+  var contentBDD = await postsModel.find();
+  
+  console.log(contentBDD);
+  res.json({result : contentBDD})
   // afficher la homepage avec la nouvelle publication 
 });
 

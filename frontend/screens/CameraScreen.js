@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { StyleSheet, Text, View } from 'react-native';
+import { View } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
-import { CameraType, VideoQuality, WhiteBalance } from 'expo-camera';
+import { CameraType } from 'expo-camera';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { connect } from 'react-redux';
 
 //-----IMPORT ICONS-----//
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
@@ -11,7 +12,7 @@ import { faCameraRotate, faCircle, faBolt, faCircleXmark } from '@fortawesome/fr
 //-----IMPORT CAMERA EXPO-----//
 import { Camera } from 'expo-camera';
 
-export default function CameraScreen(props) {
+function CameraScreen(props) {
 
     // State qui passe à true si on autorise l'accès à la caméra
     const [hasPermission, setHasPermission] = useState(false);
@@ -79,7 +80,7 @@ export default function CameraScreen(props) {
                                             base64: true,
                                             exif: true,
                                         });
-
+                     
                                         // création d'un fichier qui contient la photo
                                         let dataPhoto = new FormData();
                                         dataPhoto.append('photo', {
@@ -109,13 +110,21 @@ export default function CameraScreen(props) {
                                         //-----FIN DU CODE POUR ENREGISTRER UNE VIDEO, FONCTIONNEL-----//
 
                                         // IP adress partage de connexion
-                                        const ip = "172.20.10.5";
+                                        const ip = "192.168.1.11";
 
                                         // réponse du backend
-                                        await fetch("http://" + ip + ":3000/camera", {
+                                        let response = await fetch("http://" + ip + ":3000/camera", {
                                             method: 'POST',
                                             body: dataPhoto,
                                         });
+                                        let photoBackend = await response.json()
+                                        // envoie de l'uri de la photo au reducer puis au store
+                                        props.onSnap(photoBackend.photo);
+
+                                        // on redirige vers les paramètres d'une publication
+                                        if(photoBackend != null){
+                                            props.navigation.navigate("PParams", { screen: "PParams" });
+                                        }
                                     }
                                 }
                                 }
@@ -148,3 +157,12 @@ export default function CameraScreen(props) {
 };
 
 
+function mapDispatchToProps(dispatch){
+    return {
+        onSnap: function(uriFromFront){
+        dispatch({type: 'snap', uri: uriFromFront});
+        }
+    };
+};
+
+export default connect (null, mapDispatchToProps)(CameraScreen);
