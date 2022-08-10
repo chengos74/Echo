@@ -87,7 +87,7 @@ export default function App() {
     <NavigationContainer style={styles.container}>
         <Stack.Navigator screenOptions={{ headerShown : false }} >
           <Stack.Screen name='BottomNavigation' component={BottomNavigation} />
-          <Stack.Screen exact name='Home' component={Home} />
+          <Stack.Screen name='Home' component={Home} />
           <Stack.Screen name='Status' component={Status} />
           <Stack.Screen name='ProfileSettings' component={ProfileSettings} />
           <Stack.Screen name='CameraScreen' component={CameraScreen} />

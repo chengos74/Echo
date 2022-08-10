@@ -72,7 +72,7 @@ export default function login(props) {
 
   //sauvegarde des données en json
   const submitData = () => {
-    fetch('http://192.168.1.12:3000/signup', {
+    fetch('http://192.168.15.190/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -89,21 +89,6 @@ export default function login(props) {
         console.log("error", err);
       })
   }
-
-  //  const submitData = () => {
-  //   fetch('/signup', {
-  //     method: 'POST',
-  //       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-  //     body: `nom=${props.myToken}&prenom=${article.title}&username=${article.title}&email=${article.title}&password=${article.title}`
-
-  //   }).then(res => res.json())
-  //     .then(data => {
-  //     console.log("envoie from front" +data);
-  //     }).catch(err => {
-  //     console.log("error", err);
-  //   })
-
-  // }
 
   return (
     <View style={styles.container}>
