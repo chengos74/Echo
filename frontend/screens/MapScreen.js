@@ -1,19 +1,22 @@
-import React, { useEffect, useState, useRef, Components } from "react";
-import { Alert, Modal, StyleSheet, Text, Pressable, View, Image } from "react-native";
+import React, { useEffect, useState, useRef } from "react";
+import { StyleSheet, Text, View, Image } from "react-native";
 
 // ATTENTION : BALISES BUTTON, OVERLAY ET INPUT --> UTILISER LA DOC RNEUI 4.0.0.RC6 
 
 // NE PAS IMPORTER DES ÉLÉMENTS DEPUIS REACT NATIVE ELEMENTS --> CONFLIT 
 
 // IMPORTER UNIQUEMENT DES ÉLÉMENTS DEPUIS @RNEUI/THEMED OU @RNEUI/BASE
-import { Button, Overlay, Input } from "@rneui/themed";
+import { Overlay } from "@rneui/themed";
 
-import MapView, { Marker } from 'react-native-maps';
+import { Marker } from 'react-native-maps';
+
+import MapView from "react-native-map-clustering";
+
 import * as Location from 'expo-location';
-import { TouchableOpacity } from "react-native";
 
 
 
+//// Mise en place position
 
 export const getCurrentLocation = () => {
 	return new Promise((resolve, reject) => {
@@ -22,29 +25,38 @@ export const getCurrentLocation = () => {
 };
 
 
-export default function MapScreen(props) {
+export default function MapScreen() {
 
-	//// Mise en place de la géolocalisation
+	//// Mise en place géolocalisation
 
 	const [currentLatitude, setCurrentLatitude] = useState(0);
 	const [currentLongitude, setCurrentLongitude] = useState(0);
 
-	//// Mise en place de la géolocalisation
 	useEffect(() => {
+		const currentLocation = {
+			latitude: currentLatitude,
+			longitude: currentLongitude,
+			latitudeDelta: 0.05,
+			longitudeDelta: 0.05,
+		};
 		async function askPermissions() {
+			// let { status } = await Permissions.askAsync(Permissions.LOCATION);
 			let { status } = await Location.requestForegroundPermissionsAsync();
-			if (status === 'granted') {
-				Location.watchPositionAsync({ distanceInterval: 2 },
-					(location) => {
-						setCurrentLatitude(location.coords.latitude);
-						setCurrentLongitude(location.coords.longitude);
-					});
+			if (status === "granted") {
+				Location.watchPositionAsync({ distanceInterval: 2 }, (location) => {
+					setCurrentLatitude(location.coords.latitude);
+					setCurrentLongitude(location.coords.longitude);
+				});
 			}
 		}
-
-		askPermissions()
-
-	}, [])
+		askPermissions();
+		if (currentLocation != 0) {
+			const yourLocation = () => {
+				mapRef.current.animateToRegion(currentLocation, 3 * 1000);
+			};
+			yourLocation();
+		}
+	}, [currentLatitude, currentLongitude, mapRef]);
 
 
 	useEffect(() => {
@@ -62,16 +74,24 @@ export default function MapScreen(props) {
 			yourLocation();
 		}
 	}, []);
+
 	const mapRef = useRef();
 
 
-	//// Pour modal
+	//// Pour overlay
 
 	const [visible, setVisible] = useState(false);
 
 	const toggleOverlay = () => {
 		setVisible(!visible);
 	};
+
+	const [visible2, setVisible2] = useState(false);
+
+	const toggleOverlay2 = () => {
+		setVisible2(!visible2);
+	};
+
 
 
 	return (
@@ -94,30 +114,35 @@ export default function MapScreen(props) {
 				{/* Notre position perso */}
 
 				<Marker key={'currentPos'}
-					title='Current position'
 					coordinate={{ latitude: currentLatitude, longitude: currentLongitude }}
 					image={require('../assets/green-circle.png')}
+					onPress={toggleOverlay}
 				/>
 
 				{/* Position des publis */}
 
-				<View>
-						<Marker key={'marker'}
-							pinColor='blue'
-							coordinate={{ latitude: 44.836151, longitude: -0.580816 }}
-							onPress={toggleOverlay}
-							hitSlop={{ top: 30, bottom: 30, right: 30, left: 30 }}
-						/>
-					<Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
-						<Text style={styles.textPrimary}>User</Text>
-						<Image
-							style={styles.tinyLogo}
-							source={require('../assets/green-circle.png')}
-						/>
-					</Overlay>
-				</View>
+				<Marker key={'marker'}
+					pinColor='blue'
+					coordinate={{ latitude: 44.836151, longitude: -0.580816 }}
+					onPress={toggleOverlay2}
+				/>
 
-			</MapView>
+				<Marker key={'marker2'}
+					pinColor='blue'
+					coordinate={{ latitude: 44.9, longitude: -0.59 }}
+					onPress={toggleOverlay2}
+				/>
+
+			</MapView >
+
+			<Overlay isVisible={visible} onBackdropPress={() => toggleOverlay()}>
+				<Text style={styles.textPrimary}>Current position</Text>
+			</Overlay>
+
+			<Overlay isVisible={visible2} onBackdropPress={toggleOverlay2}>
+				<Text style={styles.textSecondary}>User</Text>
+				<Image source={require('../assets/green-circle.png')} />
+			</Overlay>
 
 		</View >
 	)
@@ -138,4 +163,5 @@ const styles = StyleSheet.create({
 		textAlign: 'center',
 		fontSize: 17,
 	},
+
 });
