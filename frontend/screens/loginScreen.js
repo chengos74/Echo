@@ -66,6 +66,9 @@ export default function login(props) {
       }
   }, [response]);
 
+  // var dataResponse = await response.json();
+  // console.log("envoie du back vers front"+ JSON.stringify(dataResponse));
+
   return (
     <View style={styles.container}>
       <Text style={styles.login}>Login</Text>
@@ -95,12 +98,12 @@ export default function login(props) {
         <FontAwesomeIcon style={styles.Icon} icon={faFacebook} size={24} color={'#7E7E7E'} />
       </TouchableOpacity>
       
-      <TouchableOpacity style={styles.searchSection} onPress={() => {
+      {/* <TouchableOpacity style={styles.searchSection} onPress={() => {
         googlePromptAsync({useProxy: true});
         }}>
         <Text style={styles.searchInput}>google</Text>
         <FontAwesomeIcon style={styles.Icon} icon={faGoogle} size={24} color={'#7E7E7E'} />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       
         {/* <TouchableOpacity style={styles.searchSection}>
         <Text style={styles.searchInput}>tiktok</Text>

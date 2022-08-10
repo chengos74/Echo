@@ -14,6 +14,7 @@ var usersModel = require("../models/users");
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
+  
   res.render('index', { title: 'Express' });
 });
 
@@ -23,7 +24,16 @@ router.post('/login', async (req, res, next) => {
     var user = await usersModel.findOne({ 
       name : req.body.nom, 
     })
-  // créer une session
+
+var password = req.body.password
+
+if (bcrypt.compareSync(password, user.password)) {
+ res.json({ login: true, user });
+} else {
+ res.json({ login: false });
+}
+
+console.log("le mot de pass est " +password);
   // res.json(userId) redirection vers homepage
 });
 
