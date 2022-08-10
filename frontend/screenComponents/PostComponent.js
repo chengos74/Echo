@@ -35,13 +35,13 @@ const PostComponent = () => {
       setUserPosition(location);
       setUserLatitude(location.coords.latitude);
       setUserLongitude(location.coords.longitude);
-      console.log('1er useEffect');
+      // console.log('1er useEffect');
     })(); // appel de la fonction anonyme
   }, []); // useEffect exécuté au chargement du screen 
 
-  console.log(userPosition)
-  console.log(userLatitude);
-  console.log(userLongitude);
+  // console.log(userPosition)
+  // console.log(userLatitude);
+  // console.log(userLongitude);
 
   let txt = 'waiting...';
   if (errorMsg) {
@@ -100,8 +100,8 @@ const PostComponent = () => {
     if((userLatitude && userLongitude) != null){
       const user = postInfo.map((data, index) => {
         let postIsInRange = isPointWithinRadius({ latitude: data.latitude, longitude: data.longitude }, { latitude: userLatitude, longitude: userLongitude }, 2800)
-        console.log('2e useEffect');
-        console.log("is in range : " + postIsInRange);
+        // console.log('2e useEffect');
+        // console.log("is in range : " + postIsInRange);
       })
     }
 

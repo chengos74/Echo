@@ -107,60 +107,56 @@ export default function HomePage(props) {
     )
   };
 
-  var homeNotLoggedIn = () => {
-    return (
-      <TouchableOpacity onPress={() => {
-          props.navigation.navigate("Login", { screen: "Login" });
-      }}>
-        <View style={styles.searchSection}>
-          <FontAwesomeIcon style={styles.searchIcon} icon={faSearch} size={24} color={'#7E7E7E'} />
-          <TextInput
-            style={styles.searchInput}
-            placeholder='Search'
-            placeholderTextColor="#7E7E7E"
-            color='white'
-            onChangeText={(value) => { setSearch(value), handlesubmit(value) }}
-            value={search}
-            onFocus={() => { setSearchClick(OnSearchClick) }}
-          >
-          </TextInput>
-        </View>
-        {searchClick}
+  // var homeLogged = () => {
+  //   return (
+  //       <View style={styles.searchSection}>
+  //         <FontAwesomeIcon style={styles.searchIcon} icon={faSearch} size={24} color={'#7E7E7E'} />
+  //         <TextInput
+  //           style={styles.searchInput}
+  //           placeholder='Search'
+  //           placeholderTextColor="#7E7E7E"
+  //           color='white'
+  //           onChangeText={(value) => { setSearch(value), handlesubmit(value) }}
+  //           value={search}
+  //           onFocus={() => { setSearchClick(OnSearchClick) }}
+  //         >
+  //         </TextInput>
+  //       </View>
+  //       {searchClick}
 
-        <ScrollView>
+  //       <ScrollView>
 
-          <Stories />
-          <Post />
+  //         <Stories />
+  //         <Post />
 
-        </ScrollView>
-      </TouchableOpacity>
+  //       </ScrollView>
 
-    )
-  }
+  //   )
+  // }
 
     return (
       <View style={styles.container}>
+        {/* <TouchableOpacity onPress={() => {
+          props.navigation.navigate("Login", { screen: "Login" });
+      }}> */}
         <View style={styles.searchSection}>
-          <FontAwesomeIcon style={styles.searchIcon} icon={faSearch} size={24} color={'#7E7E7E'} />
-          <TextInput
-            style={styles.searchInput}
-            placeholder='Search'
-            placeholderTextColor="#7E7E7E"
-            color='white'
-            onChangeText={(value) => { setSearch(value), handlesubmit(value) }}
-            value={search}
-            onFocus={() => { setSearchClick(OnSearchClick) }}
-          >
-          </TextInput>
+          <TouchableOpacity onPress={() => props.navigation.navigate("Login", { screen: "Login" })}>
+          <Text 
+          style={styles.login}
+          onPress={() => props.navigation.navigate("Login", { screen: "Login" })}
+        >Login</Text>
+          </TouchableOpacity>
         </View>
         {searchClick}
-
-        <ScrollView>
-
+        <View>
           <Stories />
+        </View>
+        <ScrollView>
           <Post />
-
         </ScrollView>
+
+
+        {/* </TouchableOpacity> */}
 
 
         {/* <Button style={{ justifyContent: 'center' }}
@@ -184,7 +180,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#505050',
+    justifyContent: 'center',
+    backgroundColor: '#348A55',
     borderRadius: 10,
     height: 42,
     width: '50%',
@@ -203,6 +200,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#505050',
     paddingLeft: 10,
     textAlignVertical: 'center',
+  },
+  login: {
+    fontSize: 20,
+    textAlignVertical: 'center',
+    color: '#FFFFFF'
   },
   searchIcon: {
     marginLeft: 10,
