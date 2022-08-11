@@ -23,7 +23,6 @@ var usersSchema = mongoose.Schema({
     },
     latitude: Number,
     longitude: Number,
-    password: String,
     id: Number,
     desccription: String,
     isPublic: Boolean,

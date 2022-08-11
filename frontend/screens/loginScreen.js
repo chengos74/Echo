@@ -3,7 +3,9 @@ import { StyleSheet, Button, View, TextInput, TouchableOpacity, Text } from 'rea
 
 //fontawesome
 import { FontAwesomeIcon  } from '@fortawesome/react-native-fontawesome';
-import { faFacebook, faGoogle, faTiktok, faInstagram} from '@fortawesome/free-brands-svg-icons'
+import { faFacebook, faGoogle, faTiktok, faInstagram } from '@fortawesome/free-brands-svg-icons'
+
+import { connect } from 'react-redux';
 
 //auth
 import * as Facebook from 'expo-facebook';
@@ -14,60 +16,69 @@ WebBrowser.maybeCompleteAuthSession();
 
 
 
-export default function login(props) {
+function login(props) {
 
   //username et password
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
 
   //facebook useState
-  const [isLoggedin, setIsLoggedin] = useState(false);
-  const [userData, setUserData] = useState(null);
-  const [isImageLoading, setIsImageLoading] = useState(false);
+  // const [isLoggedin, setIsLoggedin] = useState(false);
+  // const [userData, setUserData] = useState(null);
+  // const [isImageLoading, setIsImageLoading] = useState(false);
 
   
   //facebook connexion
-  const facebookLogin = async () => {
-    try {
-      await Facebook.initializeAsync({
-        appId: '1242896003145192',
-      });
-      const { type, token } =
-        await Facebook.logInWithReadPermissionsAsync({
-          permissions: ['public_profile'],
-        });
-      if (type === 'success') {
-        // Get the user's name using Facebook's Graph API
-        const response = await fetch(`https://graph.facebook.com/me?access_token=${token}&fields=id,name,email,picture.height(500)`);
-        Alert.alert('Logged in!', `Hi ${(await response.json()).name}!`);
-        setLo
-      } else {
-        // type === 'cancel'
-      }
-    } catch ({ message }) {
-      alert(`Facebook Login Error: ${message}`);
-    }
-  }
+  // const facebookLogin = async () => {
+  //   try {
+  //     await Facebook.initializeAsync({
+  //       appId: '1242896003145192',
+  //     });
+  //     const { type, token } =
+  //       await Facebook.logInWithReadPermissionsAsync({
+  //         permissions: ['public_profile'],
+  //       });
+  //     if (type === 'success') {
+  //       // Get the user's name using Facebook's Graph API
+  //       const response = await fetch(`https://graph.facebook.com/me?access_token=${token}&fields=id,name,email,picture.height(500)`);
+  //       Alert.alert('Logged in!', `Hi ${(await response.json()).name}!`);
+  //       setLo
+  //     } else {
+  //       // type === 'cancel'
+  //     }
+  //   } catch ({ message }) {
+  //     alert(`Facebook Login Error: ${message}`);
+  //   }
+  // }
   //facebook logout
-  const logout = () => {
-    setIsLoggedin(false);
-    setUserData(null);
-    setIsImageLoading(false);
-  }
+  // const logout = () => {
+  //   setIsLoggedin(false);
+  //   setUserData(null);
+  //   setIsImageLoading(false);
+  // }
 
   //google
-  const [request, response, googlePromptAsync] = Google.useAuthRequest({
-    expoClientId: '683904437558-2ftt05jb1u2t2arm66k2ctdokk3mgo6t.apps.googleusercontent.com',
-  });
+  // const [request, response, googlePromptAsync] = Google.useAuthRequest({
+  //   expoClientId: '683904437558-2ftt05jb1u2t2arm66k2ctdokk3mgo6t.apps.googleusercontent.com',
+  // });
 
-    useEffect(() => {
-    if (response?.type === 'success') {
-      const { authentication } = response;
-      }
-  }, [response]);
+  //   useEffect(() => {
+  //   if (response?.type === 'success') {
+  //     const { authentication } = response;
+  //     }
+  // }, [response]);
 
-  // var dataResponse = await response.json();
-  // console.log("envoie du back vers front"+ JSON.stringify(dataResponse));
+  //recuperation du token du back 
+  const token = async () => {
+    //chercher réponse de la route login
+    let response = await fetch(`http://192.168.43.223/login`);
+    var dataResponse = response.json();
+  
+    console.log("envoie du back vers front" + dataResponse);
+  }
+    
+// props.navigation.navigate("BottomNavigation", { screen: "BottomNavigation" })
+
 
   return (
     <View style={styles.container}>
@@ -75,7 +86,7 @@ export default function login(props) {
       <View style={styles.lineStyle} />
         <TextInput 
         style={styles.input}
-        placeholder="UserName"
+        placeholder="Username"
         placeholderTextColor={"#7E7E7E"}
         onChangeText={(value) => setUserName(value)}
        value={userName} />
@@ -86,17 +97,17 @@ export default function login(props) {
         onChangeText={(value) => setPassword(value)}
         value={password} />
       
-      <TouchableOpacity onPress={() => console.log("Username is :" + userName + " and password is :" +password)} style={styles.valider}>
+      <TouchableOpacity onPress={() => { token() }} style={styles.valider}>
           <Text style={styles.searchInput}>Valider</Text>
         </TouchableOpacity>
 
-        <View style={styles.lineStyle} />
+        {/* <View style={styles.lineStyle} /> */}
 
       
-        <TouchableOpacity style={styles.searchSection} onPress={facebookLogin} >
+        {/* <TouchableOpacity style={styles.searchSection} onPress={facebookLogin} >
         <Text style={styles.searchInput}>Facebook</Text>
         <FontAwesomeIcon style={styles.Icon} icon={faFacebook} size={24} color={'#7E7E7E'} />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       
       {/* <TouchableOpacity style={styles.searchSection} onPress={() => {
         googlePromptAsync({useProxy: true});
@@ -125,6 +136,8 @@ export default function login(props) {
   </View>
 )
 }
+
+
 
 const styles = StyleSheet.create({
   container: {
@@ -206,4 +219,17 @@ const styles = StyleSheet.create({
     
 });
 
+function mapDispatchToProps(dispatch) {
+
+  return {
+    addToken: function(token) {
+      dispatch({ type : 'addToken', myToken : token })
+    }
+  }
+}
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(login)
 

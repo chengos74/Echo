@@ -41,7 +41,7 @@ export default function HomePage(props) {
   // fonction que détecte le click sur un item de la flatlist
   async function handlesubmit(textFromInput) {
     // IP adress partage de connexion
-    const ip = "192.168.1.12";
+    const ip = "192.168.43.223";
 
     let userResearch = textFromInput;
 
@@ -107,45 +107,21 @@ export default function HomePage(props) {
     )
   };
 
-  // var homeLogged = () => {
-  //   return (
-  //       <View style={styles.searchSection}>
-  //         <FontAwesomeIcon style={styles.searchIcon} icon={faSearch} size={24} color={'#7E7E7E'} />
-  //         <TextInput
-  //           style={styles.searchInput}
-  //           placeholder='Search'
-  //           placeholderTextColor="#7E7E7E"
-  //           color='white'
-  //           onChangeText={(value) => { setSearch(value), handlesubmit(value) }}
-  //           value={search}
-  //           onFocus={() => { setSearchClick(OnSearchClick) }}
-  //         >
-  //         </TextInput>
-  //       </View>
-  //       {searchClick}
-
-  //       <ScrollView>
-
-  //         <Stories />
-  //         <Post />
-
-  //       </ScrollView>
-
-  //   )
-  // }
-
     return (
       <View style={styles.container}>
-        {/* <TouchableOpacity onPress={() => {
-          props.navigation.navigate("Login", { screen: "Login" });
-      }}> */}
+        
         <View style={styles.searchSection}>
-          <TouchableOpacity onPress={() => props.navigation.navigate("Login", { screen: "Login" })}>
-          <Text 
-          style={styles.login}
-          onPress={() => props.navigation.navigate("Login", { screen: "Login" })}
-        >Login</Text>
-          </TouchableOpacity>
+          <FontAwesomeIcon style={styles.searchIcon} icon={faSearch} size={24} color={'#7E7E7E'} />
+           <TextInput
+            style={styles.searchInput}
+            placeholder='Search'
+            placeholderTextColor="#7E7E7E"
+            color='white'
+            onChangeText={(value) => { setSearch(value), handlesubmit(value) }}
+            value={search}
+            onFocus={() => { setSearchClick(OnSearchClick) }}
+          >
+          </TextInput>
         </View>
         {searchClick}
         <View>
@@ -154,18 +130,6 @@ export default function HomePage(props) {
         <ScrollView>
           <Post />
         </ScrollView>
-
-
-        {/* </TouchableOpacity> */}
-
-
-        {/* <Button style={{ justifyContent: 'center' }}
-        title="Home"
-        onPress={() => {
-          props.navigation.navigate("BottomNavigation", { screen: "Home" });
-        }}
-      >
-      </Button> */}
 
       </View>
     )
@@ -181,7 +145,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#348A55',
+    backgroundColor: '#505050',
     borderRadius: 10,
     height: 42,
     width: '50%',
@@ -200,11 +164,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#505050',
     paddingLeft: 10,
     textAlignVertical: 'center',
-  },
-  login: {
-    fontSize: 20,
-    textAlignVertical: 'center',
-    color: '#FFFFFF'
   },
   searchIcon: {
     marginLeft: 10,

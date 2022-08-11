@@ -23,6 +23,7 @@ export default function login(props) {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isTokenValide, setIsTokenValide] = useState(false)
 
   //facebook useState
   const [isLoggedin, setIsLoggedin] = useState(false);
@@ -60,34 +61,56 @@ export default function login(props) {
   }
 
   //google
-  const [request, response, googlePromptAsync] = Google.useAuthRequest({
-    expoClientId: '683904437558-2ftt05jb1u2t2arm66k2ctdokk3mgo6t.apps.googleusercontent.com',
-  });
+  // const [request, response, googlePromptAsync] = Google.useAuthRequest({
+  //   expoClientId: '683904437558-2ftt05jb1u2t2arm66k2ctdokk3mgo6t.apps.googleusercontent.com',
+  // });
 
-  useEffect(() => {
-    if (response?.type === 'success') {
-      const { authentication } = response;
-    }
-  }, [response]);
+  // useEffect(() => {
+  //   if (response?.type === 'success') {
+  //     const { authentication } = response;
+  //   }
+  // }, [response]);
 
   //sauvegarde des données en json
-  const submitData = () => {
-    fetch('http://192.168.15.190/signup', {
+  const submitData = async () => {
+    var donnee = await fetch('http://192.168.43.223/signup', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        nom: nom,
-        prenom: prenom,
-        email: email,
-        username: userName,
-        password: password
-      })
-    }).then(res => res.json())
-      .then(data => {
-        console.log("envoie from front" + JSON.stringify(data));
-      }).catch(err => {
-        console.log("error", err);
-      })
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `nom=${nom}&prenom=${prenom}&email=${email}&username=${userName}password=${password}`
+    })
+    
+    var newDonnee = donnee.json();
+    console.log("les données sont " + JSON.stringify(newDonnee));
+
+  }
+
+  // const submitData = async () => {
+  //   await fetch('http://192.168.43.223/signup', {
+  //     method: 'POST',
+  //     headers: { 'Content-Type': 'application/json' },
+  //     body: JSON.stringify({
+  //       lastName: nom,
+  //       firstName: prenom,
+  //       email: email,
+  //       username: userName,
+  //       password: password
+  //     })
+  //   }).then(res => res.json())
+  //     .then(data => {
+  //       console.log("envoie from front" + data);
+  //     }).catch(err => {
+  //       console.log("error", err);
+  //     })
+  // }
+
+  var tokenOk = () => {
+    setIsTokenValide(true)
+    if (isTokenValide) {
+      props.navigation.navigate('BottomNavigation', { screen: 'BottomNavigation' })
+    } else {
+      <Text>Il y a eu un problème lors du signUp</Text>
+    }
+    setIsTokenValide(false)
   }
 
   return (
@@ -127,7 +150,7 @@ export default function login(props) {
         value={password} />
 
       <TouchableOpacity
-        onPress={() => { submitData(); props.navigation.navigate('Home', { screen: 'Home' }) }} 
+        onPress={() => { submitData() }} 
         style={styles.valider}>
         <Text style={styles.searchInput}>Valider</Text>
       </TouchableOpacity>

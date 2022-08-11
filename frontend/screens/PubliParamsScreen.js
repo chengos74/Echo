@@ -1,5 +1,5 @@
 // Import React & cie
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, View, TouchableOpacity, TextInput, ScrollView, Switch, KeyboardAvoidingView, Image } from "react-native";
 import { Slider } from '@rneui/themed';
 import { connect } from 'react-redux';
@@ -9,9 +9,10 @@ import { faCircleArrowLeft, faCircleArrowRight } from '@fortawesome/free-solid-s
 
 // Fonction paramètres de la publication
 function PubliParams(props) {
-    console.log("photo taken: "+ JSON.stringify(props.newPhoto[0].uri));
+    // console.log("photo taken: " + JSON.stringify(props.newPhoto[0].uri));
+    console.log("selected image: "+ props.selectedImage)
     // Pour l'input de la description
-    const [text, onChangeText] = React.useState(null);
+    const [text, onChangeText] = useState(null);
     // State pour la valeur du slider
     const [range, setRange] = useState(0);
     // Pour le switch
@@ -19,9 +20,15 @@ function PubliParams(props) {
     // toggle switch ephemere
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
-    // State qui reçoit l'uri de la photo qui vient d'être prise
+    // State qui reçoit l'uri de la photo qui vient d'être priseé
     const [uriPhoto, setUriPhoto] = useState(props.newPhoto[0].uri);
-    console.log(uriPhoto);
+    // console.log(uriPhoto);
+    var postImage
+
+    useEffect(() => {
+        postImage = `../../backend/tmp/${props.newPhoto[0].uri}`
+        // console.log(postImage);
+    },[props.newPhoto[0].uri])
 
     return (
         <KeyboardAvoidingView
@@ -49,8 +56,9 @@ function PubliParams(props) {
                     {/* Aperçu du fichier choisi (depuis la pellicule ou la camera) */}
                     <View style={{ alignItems: 'center', paddingTop: 30 }}>
                         <View style={{ justifyContent: 'center', alignItems: 'center', width: 320, height: 240, borderRadius: 10, backgroundColor: 'white' }}>
-                            {/* <Image source={require(`../../backend/tmp/${uriPhoto}`)} /> */}
-                            <Image source={{uri : '../../backend/tmp/'+uriPhoto}} style={{width: 320, height: 240,}}/>
+                            {/* <Image source={postImage} /> */}
+                            <Image source={{uri : postImage}} style={{width: 320, height: 140,}}/>
+                    
                             <Text>Preview image or video</Text>
                         </View>
                     </View>
@@ -125,7 +133,7 @@ function PubliParams(props) {
                             numberOfLines={4}
                             onChangeText={onChangeText}
                             value={text}
-                            style={{ color: '#fff', marginLeft: 10, width: '90%', alignSelf: 'center',  height: 100 }}
+                            style={{ color: '#fff', marginLeft: 10, width: '90%', alignSelf: 'center', height: 100 }}
                         />
                     </View>
                 </ScrollView>
@@ -134,8 +142,8 @@ function PubliParams(props) {
     )
 };
 
-function mapStateToProps(state){
-    return ({ newPhoto: state.photoReducer });
+function mapStateToProps(state) {
+    return ({ newPhoto: state.photoReducer, selectedImage : state.selectedImage });
 };
 
 export default connect(mapStateToProps, null)(PubliParams);

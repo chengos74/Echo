@@ -20,67 +20,85 @@ router.get('/', function (req, res, next) {
 
 // LOG-IN 
 router.post('/login', async (req, res, next) => {
-	// comparer le user à la bdd
-	var user = await usersModel.findOne({
-		name: req.body.nom,
-	})
+
+  // comparer le user à la bdd
+    var user = await usersModel.findOne({ 
+      username : req.body.username, 
+    })
 
 	var password = req.body.password
 
-	if (bcrypt.compareSync(password, user.password)) {
-		res.json({ login: true, user });
-	} else {
-		res.json({ login: false });
-	}
+  console.log("usertoken = " + user.token);
+if (bcrypt.compareSync(password, user.password)) {
+ res.json({ login: true, token: user.token  });
+} else {
+ res.json({ login: false });
+}
 
-	console.log("le mot de pass est " + password);
-	// res.json(userId) redirection vers homepage
+  // res.json(userId) redirection vers homepage
 });
 
 //SIGN-UP
 router.post('/signup', async (req, res, next) => {
 
-	//comparer si l'email existe déjà
-	var userTaken = await usersModel.findOne({ userEmail: req.body.email })
-	var error = []
+  //comparer si l'email existe déjà
+  var userTaken = await usersModel.findOne({ email : req.body.email })
+  var error = []
 
-	if (req.body.username == ''
-		|| req.body.email == ''
-		|| req.body.password == '') {
+  if (req.body.username == ''
+        || req.body.email == ''
+        || req.body.password == ''
+        || req.body.prenom == ''
+        || req.body.nom == '') {
+    error.push("Fields empty ...")
+  
+  } else if (userTaken) {
+    error.push("Email already taken")
+  
+  } else {
+    const hash = bcrypt.hashSync(req.body.password, cost)
+  
+    var newUser = new usersModel({
+      lastName: req.body.nom,
+      firstName: req.body.prenom,
+      username: req.body.username,
+      email: req.body.email,
+      password: hash,
+      token: uid2(32),
+      avatar: null,
+      dateInscription : null,
+      birthday: null, 
+      userGallery: null,
+      followers: null,
+      following: null,
+      likes: null,
+      messagerie: {
+          message: null,
+          pseudo: null,
+          date: null,
+          isRead: null,
+          isSend: null
+      },
+      latitude: null,
+      longitude: null,
+      id: null,
+      desccription: null,
+      isPublic: null,
+    })
+  
+    console.log("new utilisateur est " + newUser);
+    var userSave = await newUser.save();
+  
+    var result = false
+      var token;
+      if(userSave){
+        result = true
+        token = userSave.token
+      }
+  }
 
-		error.push("Fields empty ...")
-
-	} else if (userTaken) {
-
-		error.push("Email already taken")
-	} else {
-
-		// créer un nouveau user
-		// enregistrer en base de données
-		const hash = bcrypt.hashSync(req.body.password, cost)
-
-		var newUser = new usersModel({
-			name: req.body.nom,
-			prenom: req.body.prenom,
-			username: req.body.username,
-			email: req.body.email,
-			password: hash,
-			token: uid2(32)
-		})
-
-		console.log("utilisateur new" + newUser);
-		var userSave = await newUser.save();
-
-		var result = false
-		var token;
-		if (userSave) {
-			result = true
-			token = userSave.token
-		}
-	}
-
-	// res.json(uderId) redirection vers homepage
-	res.json(userSave, token, error, result)
+  // res.json(uderId) redirection vers homepage
+  res.json(userSave, token, error, result)
 });
 
 //PROFIL (NOTRE PAGE PERSONNELLE)
@@ -113,17 +131,17 @@ router.get('/create', (req, res, next) => {
 //CAMERA
 router.post('/camera', async (req, res, next) => {
 
-	let imageUri = uniqid() + '.jpg'
-	let imagePath = './tmp/' + imageUri;
-	let resultCopy = await req.files.photo.mv(imagePath); // chaque photo est enregistrée dans le repertoire temporaire
-	console.log(req.files.photo); // si undefined = tout est ok !
+  let imageUri =  uniqid() + '.jpg';
+  let imagePath = './tmp/' + imageUri ;
+  let resultCopy = await req.files.photo.mv(imagePath); // chaque photo est enregistrée dans le repertoire temporaire
+  console.log(req.files.photo.uri); // si undefined = tout est ok !
 
-	if (!resultCopy) {
-		// stocker l'image sur un server et dans la bonne collection
-		// renvoyer l'image au front
-		res.json({ photo: imageUri });
-	}
-	// fs.unlinkSync(imagePath); // supprimer l'image du dossier tmp
+  if (!resultCopy) {
+    // stocker l'image sur un server et dans la bonne collection
+    // renvoyer l'image au front
+    res.json({photo : resultCopy});
+  }
+  // fs.unlinkSync(imagePath); // supprimer l'image du dossier tmp
 });
 
 //ADD CONTENT

@@ -36,9 +36,10 @@ import Login from './screens/loginScreen';
 import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
 import photoReducer from './reducers/camera.reducers';
+import selectedImage from './reducers/imageSelection.reducer';
 import { Provider } from 'react-redux';
 
-const reducer = combineReducers({ photoReducer });
+const reducer = combineReducers({ photoReducer, selectedImage });
 const store = configureStore({ reducer });
 
 
@@ -96,8 +97,8 @@ export default function App() {
     <Provider store={store}>
       <NavigationContainer style={styles.container}>
         <Stack.Navigator screenOptions={{ headerShown: false }} >
+          <Stack.Screen name='Login' component={Login} />
           <Stack.Screen name='BottomNavigation' component={BottomNavigation} />
-          <Stack.Screen name='Home' component={Home} />
           <Stack.Screen name='Status' component={Status} />
           <Stack.Screen name='ProfileSettings' component={ProfileSettings} />
           <Stack.Screen name='CameraScreen' component={CameraScreen} />
@@ -105,7 +106,7 @@ export default function App() {
           <Stack.Screen name='SignUp' component={SignUp} />
           <Stack.Screen name='Message' component={Message} />
           <Stack.Screen name='Image' component={ImagePublication} />
-          <Stack.Screen name='Login' component={Login} />
+          <Stack.Screen name='Home' component={Home} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
