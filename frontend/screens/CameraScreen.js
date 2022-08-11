@@ -111,16 +111,18 @@ function CameraScreen(props) {
 
                                         // IP adress partage de connexion
                                         const ip = "192.168.1.11";
+                                        const ipSpaces = "172.20.10.5"
 
                                         // réponse du backend
-                                        let response = await fetch("http://" + ip + ":3000/camera", {
+                                        let response = await fetch("http://" + ipSpaces + ":3000/camera", {
                                             method: 'POST',
                                             body: dataPhoto,
                                         });
                                         let photoBackend = await response.json()
+                                        console.log(photoBackend.uri);
                                         // envoie de l'uri de la photo au reducer puis au store
                                         props.onSnap(photoBackend.photo);
-
+                                        
                                         // on redirige vers les paramètres d'une publication
                                         if(photoBackend != null){
                                             props.navigation.navigate("PParams", { screen: "PParams" });

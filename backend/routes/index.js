@@ -133,15 +133,15 @@ router.get('/create', (req, res, next) => {
 //CAMERA
 router.post('/camera', async (req, res, next) => {
 
-  let imageUri =  uniqid() + '.jpg'
+  let imageUri =  uniqid() + '.jpg';
   let imagePath = './tmp/' + imageUri ;
   let resultCopy = await req.files.photo.mv(imagePath); // chaque photo est enregistrée dans le repertoire temporaire
-  console.log(req.files.photo); // si undefined = tout est ok !
+  console.log(req.files.photo.uri); // si undefined = tout est ok !
 
   if (!resultCopy) {
     // stocker l'image sur un server et dans la bonne collection
     // renvoyer l'image au front
-    res.json({photo : imageUri});
+    res.json({photo : resultCopy});
   }
   // fs.unlinkSync(imagePath); // supprimer l'image du dossier tmp
 });
