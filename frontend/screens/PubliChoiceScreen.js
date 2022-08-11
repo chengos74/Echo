@@ -37,6 +37,7 @@ function PubliChoice(props) {
 		// assigner l'uri de l'image choisie à la state d'état
 		if (result !== null) {
 			setSelectedImage({ localUri: result.uri });
+			props.onSelectImage(result.uri) // on passe l'uri dans le reducer (cameraReducer)
 		}
 	};
 	if (selectedImage !== null) {
@@ -159,7 +160,7 @@ const styles = StyleSheet.create({
 function mapDispatchToProps(dispatch) {
 	return {
 		onSelectImage: function (uriFromSelectedImage) {
-			dispatch({ type: 'imageIsSelected', uri: uriFromSelectedImage })
+			dispatch({ type: 'imageSelected', uri: uriFromSelectedImage })
 		}
 	}
 }
