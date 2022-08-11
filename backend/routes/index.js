@@ -34,7 +34,6 @@ if (bcrypt.compareSync(password, user.password)) {
  res.json({ login: false });
 }
 
-// console.log("le mot de pass est " +password);
   // res.json(userId) redirection vers homepage
 });
 
@@ -46,18 +45,16 @@ router.post('/signup', async (req, res, next) => {
   var error = []
 
   if (req.body.username == ''
-    || req.body.email == ''
-    || req.body.password == '') {
-
+        || req.body.email == ''
+        || req.body.password == ''
+        || req.body.prenom == ''
+        || req.body.nom == '') {
     error.push("Fields empty ...")
-
+  
   } else if (userTaken) {
-
     error.push("Email already taken")
+  
   } else {
-
-    // créer un nouveau user
-    // enregistrer en base de données
     const hash = bcrypt.hashSync(req.body.password, cost)
   
     var newUser = new usersModel({
