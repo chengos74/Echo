@@ -36,9 +36,10 @@ import Login from './screens/loginScreen';
 import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
 import photoReducer from './reducers/camera.reducers';
+import selectedImage from './reducers/imageSelection.reducer';
 import { Provider } from 'react-redux';
 
-const reducer = combineReducers({ photoReducer });
+const reducer = combineReducers({ photoReducer, selectedImage });
 const store = configureStore({ reducer });
 
 

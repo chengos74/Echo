@@ -1,21 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
-import { View, Text } from "react-native"
+import { View, Text, Image } from "react-native"
 import * as ImagePicker from 'expo-image-picker';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { connect } from 'react-redux';
 //-----IMPORT DES ICONS-----//
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faCamera, faImages, faCircleXmark } from '@fortawesome/free-solid-svg-icons'
 
-
-export default function PubliChoice(props) {
+function PubliChoice(props) {
 
 	// Constante pour pickImage (accéder à la pellicule)
-	const [image, setImage] = useState(null);
+	const [selectedImage, setSelectedImage] = useState(null);
 
 	//Accéder à la pellicule
 	const pickImage = async () => {
-		// No permissions request is necessary for launching the image library
+
+		// permission d'accéder à la galerie 
+		let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+		if (permissionResult === false) {
+			alert('Permission to access camera roll is required!');
+			return;
+		};
+		// choisir une image
 		let result = await ImagePicker.launchImageLibraryAsync({
 			mediaTypes: ImagePicker.MediaTypeOptions.All,
 			allowsEditing: true,
@@ -23,13 +31,13 @@ export default function PubliChoice(props) {
 			quality: 1,
 		});
 
-		if (!result.cancelled) {
-			setImage(result.uri);
+		if (result.cancelled === true) {
+			return;
+		};
+		// assigner l'uri de l'image choisie à la state d'état
+		if(result !== null){
+			setSelectedImage({ localUri: result.uri });
 		}
-
-		return (
-			<View>{pickImage}</View>
-		)
 	};
 
 	return (
@@ -53,7 +61,8 @@ export default function PubliChoice(props) {
 			</View>
 
 			<View style={{ alignItems: 'center', paddingTop: 20 }}>
-				<View style={{ justifyContent: 'center', borderWidth: 2, width: '90%', height: 210, backgroundColor: 'white', borderRadius: 20 }}>
+				<View style={{ alignItems: 'center', }}>
+					<Image source={{ uri: selectedImage.localUri }} style={{ width: 320, height: 240, borderRadius: 20 }} />
 				</View>
 			</View>
 
@@ -65,7 +74,7 @@ export default function PubliChoice(props) {
 						hitSlop={{ top: 30, bottom: 30, left: 30, right: 30 }}
 						style={{ marginRight: 10, }}
 						title='Pellicule'
-						onPress={() => { pickImage }}
+						onPress={() => { pickImage() }}
 					>
 						<FontAwesomeIcon icon={faImages} size={30} color={'#fff'} />
 					</TouchableOpacity>
@@ -82,15 +91,22 @@ export default function PubliChoice(props) {
 
 				</View>
 				<View style={{ alignItems: 'center', justifyContent: 'center', height: 250, marginTop: -25 }}>
-					{pickImage}
 				</View>
 			</View>
 		</View>
 	)
-
 };
-
 
 const styles = StyleSheet.create({
 
-});
+  });
+
+function mapDispatchToProps(dispatch){
+	return {
+		onSelectImage: function (uriFromSelectedImage){
+			dispatch({type: 'imageIsSelected', uri : uriFromSelectedImage})
+		}
+	}
+}
+
+export default connect(null, mapDispatchToProps)(PubliChoice);
