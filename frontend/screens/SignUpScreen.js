@@ -72,24 +72,36 @@ export default function login(props) {
   // }, [response]);
 
   //sauvegarde des données en json
-  const submitData = () => {
-    fetch('http://192.168.43.223/signup', {
+  const submitData = async () => {
+    var donnee = await fetch('http://192.168.43.223/signup', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        lastName: nom,
-        firstName: prenom,
-        email: email,
-        username: userName,
-        password: password
-      })
-    }).then(res => res.json())
-      .then(data => {
-        console.log("envoie from front" + JSON.stringify(data));
-      }).catch(err => {
-        console.log("error from submitData", err);
-      })
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `nom=${nom}&prenom=${prenom}&email=${email}&username=${userName}password=${password}`
+    })
+    
+    var newDonnee = donnee.json();
+    console.log("les données sont " + JSON.stringify(newDonnee));
+
   }
+
+  // const submitData = async () => {
+  //   await fetch('http://192.168.43.223/signup', {
+  //     method: 'POST',
+  //     headers: { 'Content-Type': 'application/json' },
+  //     body: JSON.stringify({
+  //       lastName: nom,
+  //       firstName: prenom,
+  //       email: email,
+  //       username: userName,
+  //       password: password
+  //     })
+  //   }).then(res => res.json())
+  //     .then(data => {
+  //       console.log("envoie from front" + data);
+  //     }).catch(err => {
+  //       console.log("error", err);
+  //     })
+  // }
 
   var tokenOk = () => {
     setIsTokenValide(true)
@@ -138,7 +150,7 @@ export default function login(props) {
         value={password} />
 
       <TouchableOpacity
-        onPress={() => { submitData(); tokenOk() }} 
+        onPress={() => { submitData() }} 
         style={styles.valider}>
         <Text style={styles.searchInput}>Valider</Text>
       </TouchableOpacity>
