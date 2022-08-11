@@ -3,7 +3,9 @@ import { StyleSheet, Button, View, TextInput, TouchableOpacity, Text } from 'rea
 
 //fontawesome
 import { FontAwesomeIcon  } from '@fortawesome/react-native-fontawesome';
-import { faFacebook, faGoogle, faTiktok, faInstagram} from '@fortawesome/free-brands-svg-icons'
+import { faFacebook, faGoogle, faTiktok, faInstagram } from '@fortawesome/free-brands-svg-icons'
+
+import { connect } from 'react-redux';
 
 //auth
 import * as Facebook from 'expo-facebook';
@@ -14,7 +16,7 @@ WebBrowser.maybeCompleteAuthSession();
 
 
 
-export default function login(props) {
+function login(props) {
 
   //username et password
   const [userName, setUserName] = useState("");
@@ -56,18 +58,27 @@ export default function login(props) {
   }
 
   //google
-  const [request, response, googlePromptAsync] = Google.useAuthRequest({
-    expoClientId: '683904437558-2ftt05jb1u2t2arm66k2ctdokk3mgo6t.apps.googleusercontent.com',
-  });
+  // const [request, response, googlePromptAsync] = Google.useAuthRequest({
+  //   expoClientId: '683904437558-2ftt05jb1u2t2arm66k2ctdokk3mgo6t.apps.googleusercontent.com',
+  // });
 
-    useEffect(() => {
-    if (response?.type === 'success') {
-      const { authentication } = response;
-      }
-  }, [response]);
+  //   useEffect(() => {
+  //   if (response?.type === 'success') {
+  //     const { authentication } = response;
+  //     }
+  // }, [response]);
 
-  // var dataResponse = await response.json();
-  // console.log("envoie du back vers front"+ JSON.stringify(dataResponse));
+  //recuperation du token du back 
+  const token = async () => {
+    //chercher réponse de la route login
+    let response = await fetch(`http://192.168.43.223/login`);
+    var dataResponse = response.json();
+  
+    console.log("envoie du back vers front" + JSON.stringify(dataResponse));
+  }
+    
+// props.navigation.navigate("BottomNavigation", { screen: "BottomNavigation" })
+
 
   return (
     <View style={styles.container}>
@@ -86,7 +97,7 @@ export default function login(props) {
         onChangeText={(value) => setPassword(value)}
         value={password} />
       
-      <TouchableOpacity onPress={() => console.log("Username is :" + userName + " and password is :" +password)} style={styles.valider}>
+      <TouchableOpacity onPress={() => { token() }} style={styles.valider}>
           <Text style={styles.searchInput}>Valider</Text>
         </TouchableOpacity>
 
@@ -125,6 +136,8 @@ export default function login(props) {
   </View>
 )
 }
+
+
 
 const styles = StyleSheet.create({
   container: {
@@ -206,4 +219,17 @@ const styles = StyleSheet.create({
     
 });
 
+function mapDispatchToProps(dispatch) {
+
+  return {
+    addToken: function(token) {
+      dispatch({ type : 'addToken', myToken : token })
+    }
+  }
+}
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(login)
 

@@ -22,18 +22,19 @@ router.get('/', function (req, res, next) {
 router.post('/login', async (req, res, next) => {
   // comparer le user à la bdd
     var user = await usersModel.findOne({ 
-      name : req.body.nom, 
+      username : req.body.username, 
     })
 
 var password = req.body.password
 
+  console.log("usertoken = " + user.token);
 if (bcrypt.compareSync(password, user.password)) {
- res.json({ login: true, user });
+ res.json({ login: true, token: user.token  });
 } else {
  res.json({ login: false });
 }
 
-console.log("le mot de pass est " +password);
+// console.log("le mot de pass est " +password);
   // res.json(userId) redirection vers homepage
 });
 
@@ -41,7 +42,7 @@ console.log("le mot de pass est " +password);
 router.post('/signup', async (req, res, next) => {
 
   //comparer si l'email existe déjà
-  var userTaken = await usersModel.findOne({ userEmail : req.body.email })
+  var userTaken = await usersModel.findOne({ email : req.body.email })
   var error = []
 
   if (req.body.username == ''
@@ -60,15 +61,34 @@ router.post('/signup', async (req, res, next) => {
     const hash = bcrypt.hashSync(req.body.password, cost)
   
     var newUser = new usersModel({
-      name: req.body.nom,
-      prenom: req.body.prenom,
+      lastName: req.body.nom,
+      firstName: req.body.prenom,
       username: req.body.username,
       email: req.body.email,
       password: hash,
-      token: uid2(32)
+      token: uid2(32),
+      avatar: null,
+      dateInscription : null,
+      birthday: null, 
+      userGallery: null,
+      followers: null,
+      following: null,
+      likes: null,
+      messagerie: {
+          message: null,
+          pseudo: null,
+          date: null,
+          isRead: null,
+          isSend: null
+      },
+      latitude: null,
+      longitude: null,
+      id: null,
+      desccription: null,
+      isPublic: null,
     })
   
-    console.log("utilisateur new" + newUser);
+    console.log("new utilisateur est " + newUser);
     var userSave = await newUser.save();
   
     var result = false
