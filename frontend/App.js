@@ -97,8 +97,8 @@ export default function App() {
     <Provider store={store}>
       <NavigationContainer style={styles.container}>
         <Stack.Navigator screenOptions={{ headerShown: false }} >
+          <Stack.Screen name='Login' component={Login} />
           <Stack.Screen name='BottomNavigation' component={BottomNavigation} />
-          <Stack.Screen name='Home' component={Home} />
           <Stack.Screen name='Status' component={Status} />
           <Stack.Screen name='ProfileSettings' component={ProfileSettings} />
           <Stack.Screen name='CameraScreen' component={CameraScreen} />
@@ -106,7 +106,7 @@ export default function App() {
           <Stack.Screen name='SignUp' component={SignUp} />
           <Stack.Screen name='Message' component={Message} />
           <Stack.Screen name='Image' component={ImagePublication} />
-          <Stack.Screen name='Login' component={Login} />
+          <Stack.Screen name='Home' component={Home} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

@@ -107,7 +107,7 @@ const PostComponent = () => {
       })
 
       //ip Gauthier
-      const ip = '192.168.1.11'
+      const ip = '192.168.43.223'
       const getPosts = async () => {
         var rawResponse = await fetch('http://' + ip + ':3000/post-content')
 
