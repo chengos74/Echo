@@ -114,7 +114,7 @@ function CameraScreen(props) {
                                         const ipSpaces = "172.20.10.5"
 
                                         // réponse du backend
-                                        let response = await fetch("http://" + ipSpaces + ":3000/camera", {
+                                        let response = await fetch("http://" + ip + ":3000/camera", {
                                             method: 'POST',
                                             body: dataPhoto,
                                         });
