@@ -46,11 +46,11 @@ router.post('/signup', async (req, res, next) => {
   var error = []
 
   if (req.body.username == ''
-        || req.body.email == ''
-        || req.body.username == ''    
-        || req.body.password == ''
-        || req.body.prenom == ''
-        || req.body.nom == '') {
+      || req.body.email == ''
+      || req.body.username == ''    
+      || req.body.password == ''
+      || req.body.prenom == ''
+      || req.body.nom == '') {
     error.push("Fields empty ...")
   
   } else if (userTaken) {
@@ -88,6 +88,7 @@ router.post('/signup', async (req, res, next) => {
       desccription: null,
       isPublic: null,
     })
+    console.log("body" + req.body.nom);
   
     console.log("new utilisateur est " + newUser);
     var userSave = await newUser.save();
@@ -97,11 +98,11 @@ router.post('/signup', async (req, res, next) => {
       if(userSave){
         result = true
         token = userSave.token
+        res.json(userSave, token, error, result)
       }
   }
 
   // res.json(uderId) redirection vers homepage
-  res.json(userSave, token, error, result)
 });
 
 //PROFIL (NOTRE PAGE PERSONNELLE)

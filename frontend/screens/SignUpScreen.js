@@ -73,17 +73,19 @@ export default function login(props) {
 
   //sauvegarde des données en json
   
+  const ip = "192.168.43.223"
   const submitData = async () => {
-    var donnee = await fetch('http://192.168.43.223/signup', {
+    const donnee = await fetch('http://192.168.43.223:3000/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: `nom=${nom}&prenom=${prenom}&email=${email}&username=${userName}password=${password}`
+      body: `nom=${nom}&prenom=${prenom}&email=${email}&username=${userName}&password=${password}`
     })
     
-    var newDonnee = await donnee.json();
-    console.log("nouvel utilisateur " + JSON.stringify(newDonnee));
-
+    const newDonnee = await donnee.json();
+    console.log("donnée envoyé"+ JSON.stringify(newDonnee));
+    // console.log("nouvel utilisateur " + JSON.stringify(newDonnee));
   }
+
 
   // const submitData = async () => {
   //   await fetch('http://192.168.43.223/signup', {
@@ -187,6 +189,11 @@ export default function login(props) {
         </TouchableOpacity> */}
 
       <View style={styles.lineStyle} />
+      <TouchableOpacity onPress={() => {
+          props.navigation.navigate("Login", { screen: "Login" });
+      }}>
+        <Text style={{fontSize:20, fontWeight:"bold", marginTop: 30, color:'#7E7E7E' }} >Already have an account - Login </Text>
+      </TouchableOpacity>
 
     </View>
   )
