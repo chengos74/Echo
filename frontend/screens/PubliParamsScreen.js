@@ -10,7 +10,7 @@ import { faCircleArrowLeft, faCircleArrowRight } from '@fortawesome/free-solid-s
 // Fonction paramètres de la publication
 function PubliParams(props) {
     // console.log("photo taken: " + JSON.stringify(props.newPhoto[0].uri));
-    console.log("selected image: "+ props.selectedImage)
+    console.log("selected image: " + JSON.stringify(props.newPhoto[0].uri))
     // Pour l'input de la description
     const [text, onChangeText] = useState(null);
     // State pour la valeur du slider
@@ -23,12 +23,12 @@ function PubliParams(props) {
     // State qui reçoit l'uri de la photo qui vient d'être priseé
     const [uriPhoto, setUriPhoto] = useState(props.newPhoto[0].uri);
     // console.log(uriPhoto);
-    var postImage
+    // var postImage
 
-    useEffect(() => {
-        postImage = `../../backend/tmp/${props.newPhoto[0].uri}`
-        // console.log(postImage);
-    },[props.newPhoto[0].uri])
+    // useEffect(() => {
+    //     postImage = `../../backend/tmp/${props.newPhoto[0].uri}`
+    //     // console.log(postImage);
+    // },[props.newPhoto[0].uri])
 
     return (
         <KeyboardAvoidingView
@@ -55,11 +55,15 @@ function PubliParams(props) {
                 <ScrollView>
                     {/* Aperçu du fichier choisi (depuis la pellicule ou la camera) */}
                     <View style={{ alignItems: 'center', paddingTop: 30 }}>
-                        <View style={{ justifyContent: 'center', alignItems: 'center', width: 320, height: 240, borderRadius: 10, backgroundColor: 'white' }}>
-                            {/* <Image source={postImage} /> */}
-                            <Image source={{uri : postImage}} style={{width: 320, height: 140,}}/>
-                    
-                            <Text>Preview image or video</Text>
+                        <View style={{ 
+                            justifyContent: 'center', 
+                            alignItems: 'center', 
+                            width: 320, 
+                            height: 240, 
+                            borderRadius: 20, 
+                            backgroundColor: 'white' }}
+                        >
+                            <Image source={{ uri: uriPhoto }} style={{ width: 320, height: 240, borderRadius: 20 }} />
                         </View>
                     </View>
                     {/* "Publier" + flèche retour vers home (droite) */}
@@ -143,7 +147,7 @@ function PubliParams(props) {
 };
 
 function mapStateToProps(state) {
-    return ({ newPhoto: state.photoReducer, selectedImage : state.selectedImage });
+    return ({ newPhoto: state.photoReducer, selectedImage: state.selectedImage });
 };
 
 export default connect(mapStateToProps, null)(PubliParams);

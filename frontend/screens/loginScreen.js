@@ -101,6 +101,7 @@ function login(props) {
           <Text style={styles.searchInput}>Valider</Text>
         </TouchableOpacity>
 
+
         {/* <View style={styles.lineStyle} /> */}
 
       

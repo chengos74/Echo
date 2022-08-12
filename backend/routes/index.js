@@ -14,18 +14,19 @@ var usersModel = require("../models/users");
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  
-  res.render('index', { title: 'Express' });
+
+	res.render('index', { title: 'Express' });
 });
 
 // LOG-IN 
 router.post('/login', async (req, res, next) => {
+
   // comparer le user à la bdd
     var user = await usersModel.findOne({ 
       username : req.body.username, 
     })
 
-var password = req.body.password
+	var password = req.body.password
 
   console.log("usertoken = " + user.token);
 if (bcrypt.compareSync(password, user.password)) {
@@ -105,29 +106,29 @@ router.post('/signup', async (req, res, next) => {
 
 //PROFIL (NOTRE PAGE PERSONNELLE)
 router.get('/profil', (req, res, next) => {
-  // afficher la page du profile utilisateur 
+	// afficher la page du profile utilisateur 
 });
 
 //SETTINGS
 router.get('/settings', (req, res, next) => {
-  // afficher les settings 
+	// afficher les settings 
 });
 
 //ACCUEIL MESSAGE
 router.get('/home-message', (req, res, next) => {
-  // afficher l'accueil des messages
+	// afficher l'accueil des messages
 });
 
 //CONVERSATION
 router.get('/conversation', (req, res, next) => {
-  // récupérer les messages de la conversation
-  // SI appuie bouton envoyer (mettre à jour la conversation)
-  // afficher une conversation
+	// récupérer les messages de la conversation
+	// SI appuie bouton envoyer (mettre à jour la conversation)
+	// afficher une conversation
 });
 
 //CREATE
 router.get('/create', (req, res, next) => {
-  // res.json(afficher la page de création, pellicule et photos)
+	// res.json(afficher la page de création, pellicule et photos)
 });
 
 //CAMERA
@@ -148,60 +149,60 @@ router.post('/camera', async (req, res, next) => {
 
 //ADD CONTENT
 router.post('/add-content', (req, res, next) => {
-  // afficher la page des paramètres de la publication 
+	// afficher la page des paramètres de la publication 
 });
 
 //POST
 router.get('/post-content', async (req, res, next) => {
 
-  var contentBDD = await postsModel.find();
-  
-  console.log(contentBDD);
-  res.json({result : contentBDD})
-  // afficher la homepage avec la nouvelle publication 
+	var contentBDD = await postsModel.find();
+
+	console.log(contentBDD);
+	res.json({ result: contentBDD })
+	// afficher la homepage avec la nouvelle publication 
 });
 
 //BACK TO HOME
 router.get('/back-to-home', (req, res, next) => {
-  // redirect sur la homepage
+	// redirect sur la homepage
 });
 
 //BACK-TO-PELLICULE-OR-CAMERA
 router.get('/back', (req, res, next) => {
-  // retour à la page précédente en fonction de la page d'arrivée
-  // SI arrivé depuis pellicule (redirect to pellicule)
-  // SI arrivé depuis camera (redirect to camera)
+	// retour à la page précédente en fonction de la page d'arrivée
+	// SI arrivé depuis pellicule (redirect to pellicule)
+	// SI arrivé depuis camera (redirect to camera)
 });
 
 //SEARCH
 router.post('/search', (req, res, next) => {
-  // récupérer la valeur du champ de saisie
-  // redirect en fonction du nom du compte
-  // redirect en fonction du # (afficher toutes les publications avec le # en question)
+	// récupérer la valeur du champ de saisie
+	// redirect en fonction du nom du compte
+	// redirect en fonction du # (afficher toutes les publications avec le # en question)
 });
 
 
 //--------------COMPTE DES AUTRES UTILISATEURS--------------//
 //ACCOUNT
 router.post('/account', (req, res, next) => {
-  // récupérer l'id du user sur lequel on a cliqué ou recherché
-  // SI compte public
-  // ALORS afficher les publications SINON afficher message compte privé
-  // redirect sur account publication
+	// récupérer l'id du user sur lequel on a cliqué ou recherché
+	// SI compte public
+	// ALORS afficher les publications SINON afficher message compte privé
+	// redirect sur account publication
 });
 
 //ACCOUNT-LIKED
 router.post('/account-like', (req, res, next) => {
-  // récupérer l'id du user sur lequel on a cliqué ou recherché
-  // SI compte public
-  // ALORS afficher les publications liké SINON afficher message compte privé
-  // redirect sur account liked
+	// récupérer l'id du user sur lequel on a cliqué ou recherché
+	// SI compte public
+	// ALORS afficher les publications liké SINON afficher message compte privé
+	// redirect sur account liked
 });
 
 
 //MAP 
 router.post('/map', (req, res, next) => {
-  // ouvrir la map et centrer la map sur la position de l'utilateur
+
 });
 
 module.exports = router;
