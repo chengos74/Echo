@@ -158,7 +158,7 @@ export default function login(props) {
         value={password} />
 
       <TouchableOpacity
-        onPress={() => { submitData() }} 
+        onPress={() => { submitData(); tokenOk() }} 
         style={styles.valider}>
         <Text style={styles.searchInput}>Valider</Text>
       </TouchableOpacity>
