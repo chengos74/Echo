@@ -31,7 +31,7 @@ import ImagePublication from './screenComponents/imagePublicationAccount';
 import Status from './screenComponents/StatusComponent';
 import ProfileSettings from './screens/ProfileSettingsScreen';
 import Login from './screens/loginScreen';
-import HomePage2 from './screens/HomePageScreen2';
+import HomePage2 from './screens/HomeScreen2';
 
 //-----REDUX STORE--------//
 import { configureStore } from '@reduxjs/toolkit';
@@ -89,6 +89,7 @@ const BottomNavigation = () => {
       <Tab.Screen name="chat" component={chat} />
       <Tab.Screen name="profile" component={profile} />
       <Tab.Screen name="Account" component={Account} />
+      <Tab.Screen name='HomePage2' component={HomePage2} />
     </Tab.Navigator>
   )
 }
@@ -107,8 +108,6 @@ export default function App() {
           <Stack.Screen name='SignUp' component={SignUp} />
           <Stack.Screen name='Message' component={Message} />
           <Stack.Screen name='Image' component={ImagePublication} />
-          <Stack.Screen name='Home' component={Home} />
-          <Stack.Screen name='HomePage2' component={HomePage2} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
