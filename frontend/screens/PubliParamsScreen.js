@@ -32,7 +32,7 @@ function PubliParams(props) {
 
     return (
         <KeyboardAvoidingView
-            // style={{ flex: 1 }}
+            style={{ flex: 1 }}
             behavior={Platform.OS === "ios" ? "padding" : "height"} >
             <View style={{ flex: 1, backgroundColor: '#101010' }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 50, justifyContent: 'space-between', marginLeft: 12, marginRight: 12 }}>
