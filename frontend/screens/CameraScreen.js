@@ -110,11 +110,11 @@ function CameraScreen(props) {
                                         //-----FIN DU CODE POUR ENREGISTRER UNE VIDEO, FONCTIONNEL-----//
 
                                         // IP adress partage de connexion
-                                        const ip = "192.168.1.11";
+                                        const ip = "192.168.43.223"; // a changer par sa propre ip
                                         const ipSpaces = "172.20.10.5"
 
                                         // réponse du backend
-                                        let response = await fetch("http://" + ipSpaces + ":3000/camera", {
+                                        let response = await fetch("http://" + ip + ":3000/camera", {
                                             method: 'POST',
                                             body: dataPhoto,
                                         });

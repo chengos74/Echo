@@ -62,7 +62,7 @@ function PubliChoice(props) {
 
 			<View style={{ alignItems: 'center', paddingTop: 20 }}>
 				<View style={{ alignItems: 'center', }}>
-					<Image source={{ uri: selectedImage.localUri }} style={{ width: 320, height: 240, borderRadius: 20 }} />
+					{/* <Image source={{ uri: selectedImage.localUri }} style={{ width: 320, height: 240, borderRadius: 20 }} /> */}
 				</View>
 			</View>
 
