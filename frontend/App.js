@@ -31,15 +31,16 @@ import ImagePublication from './screenComponents/imagePublicationAccount';
 import Status from './screenComponents/StatusComponent';
 import ProfileSettings from './screens/ProfileSettingsScreen';
 import Login from './screens/loginScreen';
+import HomePage2 from './screens/HomePageScreen2';
 
 //-----REDUX STORE--------//
 import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
 import photoReducer from './reducers/camera.reducers';
-import selectedImage from './reducers/imageSelection.reducer';
+import postReducer from './reducers/post.reducer';
 import { Provider } from 'react-redux';
 
-const reducer = combineReducers({ photoReducer, selectedImage });
+const reducer = combineReducers({ photoReducer, postReducer });
 const store = configureStore({ reducer });
 
 
@@ -107,6 +108,7 @@ export default function App() {
           <Stack.Screen name='Message' component={Message} />
           <Stack.Screen name='Image' component={ImagePublication} />
           <Stack.Screen name='Home' component={Home} />
+          <Stack.Screen name='HomePage2' component={HomePage2} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

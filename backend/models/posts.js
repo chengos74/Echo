@@ -10,13 +10,15 @@ var postsSchema = mongoose.Schema({
     comments: String,
     likes: Number,
     wishlist: String,
-    date : Date,
+    date : Number,
     isStory : Boolean,
     URI : String,
     isLiked: Boolean,
     isComment: Boolean,
     id : Number,
     range: Number,
+    desc: String,
+    city: String,
 });
 
 var postsModel = mongoose.model("posts", postsSchema);

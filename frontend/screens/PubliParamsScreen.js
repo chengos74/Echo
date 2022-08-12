@@ -1,7 +1,7 @@
 // Import React & cie
 import React, { useEffect, useState } from 'react';
 import { Text, View, TouchableOpacity, TextInput, ScrollView, Switch, KeyboardAvoidingView, Image } from "react-native";
-import { Slider } from '@rneui/themed';
+import { Slider, useTheme } from '@rneui/themed';
 import { connect } from 'react-redux';
 // Import icons
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
@@ -20,8 +20,21 @@ function PubliParams(props) {
     // toggle switch ephemere
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
+    // State fictives pour post
+    const [pseudo, setPseudo] = useState('mr_Bean');
+    const [avatar, setAvatar] = useState(require('../assets/profilePicture/userPicture1.jpg'));
+    const [location, setLocation] = useState('Bordeaux');
+    const [likes, setLikes] = useState(0);
+    const [comments, setComments] = useState(null)
+    const [time, setTime] = useState(0);
+    const [isLiked, setIsLiked] = useState(false);
+    const [isComment, setIsComment] = useState(false);
+    const [latitude, setLatitude] = useState(44.83667581936292);
+    const [longitude, setLongitude] = useState(-0.575641307603843);
+
     // State qui reçoit l'uri de la photo qui vient d'être priseé
     const [uriPhoto, setUriPhoto] = useState(props.newPhoto[0].uri);
+
     // console.log(uriPhoto);
     // var postImage
 
@@ -29,6 +42,42 @@ function PubliParams(props) {
     //     postImage = `../../backend/tmp/${props.newPhoto[0].uri}`
     //     // console.log(postImage);
     // },[props.newPhoto[0].uri])
+
+    const ip = '172.20.10.5'
+    function handlePost(
+        postImage,
+        postPseudo,
+        range,
+        desc,
+        postProfilePicture,
+        city,
+        likes,
+        comments,
+        time,
+        isLiked,
+        isComment,
+        latitude,
+        longitude){
+        fetch('http://' + ip + ':3000/create', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                postImage: postImage,
+                postPseudo: postPseudo,
+                range: range,
+                desc: desc,
+                postProfilePicture: postProfilePicture,
+                city: city,
+                likes: likes,
+                comments: comments,
+                time: time,
+                isLiked: isLiked,
+                isComment: isComment,
+                latitude: latitude,
+                longitude: longitude
+            })
+        })
+    };
 
     return (
         <KeyboardAvoidingView
@@ -55,13 +104,14 @@ function PubliParams(props) {
                 <ScrollView>
                     {/* Aperçu du fichier choisi (depuis la pellicule ou la camera) */}
                     <View style={{ alignItems: 'center', paddingTop: 30 }}>
-                        <View style={{ 
-                            justifyContent: 'center', 
-                            alignItems: 'center', 
-                            width: 320, 
-                            height: 240, 
-                            borderRadius: 20, 
-                            backgroundColor: 'white' }}
+                        <View style={{
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            width: 320,
+                            height: 240,
+                            borderRadius: 20,
+                            backgroundColor: 'white'
+                        }}
                         >
                             <Image source={{ uri: uriPhoto }} style={{ width: 320, height: 240, borderRadius: 20 }} />
                         </View>
@@ -76,7 +126,31 @@ function PubliParams(props) {
                         <TouchableOpacity
                             style={{ height: 40 }}
                             title='Post'
-                            onPress={() => { props.navigation.navigate("Home", { screen: "Home" }); }}
+                            onPress={() => {
+                                props.navigation.navigate("BottomNavigation", { screen: "HomePage2" });
+                                props.onPost(
+                                    uriPhoto,
+                                    pseudo,
+                                    range,
+                                    text,
+                                    avatar,
+                                    location,
+                                );
+                                handlePost(
+                                    uriPhoto,
+                                    pseudo,
+                                    range,
+                                    text,
+                                    avatar,
+                                    location,
+                                    likes,
+                                    comments,
+                                    time,
+                                    isLiked,
+                                    isComment,
+                                    latitude,
+                                    longitude)
+                            }}
                         >
                             <FontAwesomeIcon icon={faCircleArrowRight} size={35} color={'#67D692'} />
                         </TouchableOpacity>
@@ -146,8 +220,31 @@ function PubliParams(props) {
     )
 };
 
+function mapDispatchToProps(dispatch) {
+    return {
+        onPost: function (uriFromImage, pseudo, range, desc, avatar, location) {
+            dispatch({
+                type: 'post',
+                postImage: uriFromImage,
+                postPseudo: pseudo,
+                range: range,
+                desc: desc,
+                postProfilePicture: avatar,
+                city: location,
+                likes: null,
+                comments: null,
+                time: 'now',
+                isLiked: false,
+                isComment: false,
+                latitude: 44.83667581936292,
+                longitude: -0.575641307603843,
+            });
+        }
+    }
+}
+
 function mapStateToProps(state) {
-    return ({ newPhoto: state.photoReducer, selectedImage: state.selectedImage });
+    return ({ newPhoto: state.photoReducer });
 };
 
-export default connect(mapStateToProps, null)(PubliParams);
+export default connect(mapStateToProps, mapDispatchToProps)(PubliParams);
