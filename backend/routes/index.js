@@ -128,8 +128,32 @@ router.get('/conversation', (req, res, next) => {
 });
 
 //CREATE
-router.get('/create', (req, res, next) => {
-	// res.json(afficher la page de création, pellicule et photos)
+router.post('/create', async (req, res, next) => {
+  console.log(req.body)
+  var newPost = new postsModel({
+    pseudo: req.body.postPseudo,
+    avatar: req.body.postProfilePicture,
+    URI: req.body.postImage,
+    range: req.body.range,
+    desc: req.body.desc,
+    likes: req.body.likes,
+    comments: req.body.comments,
+    city: req.body.city,
+    date: req.body.time,
+    isLiked: req.body.isLiked,
+    isComment: req.body.isComment,
+    latitude: req.body.latitude,
+    longitude: req.body.longitude,
+    wishlist: null,
+    isStory: false,
+  })
+
+  // enregistrement du post en BDD
+  var postSave = await newPost.save();
+
+  if(postSave != null){
+    res.json(postSave)
+  }
 });
 
 //CAMERA
