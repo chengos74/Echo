@@ -47,6 +47,7 @@ router.post('/signup', async (req, res, next) => {
 
   if (req.body.username == ''
         || req.body.email == ''
+        || req.body.username == ''    
         || req.body.password == ''
         || req.body.prenom == ''
         || req.body.nom == '') {
@@ -72,13 +73,15 @@ router.post('/signup', async (req, res, next) => {
       followers: null,
       following: null,
       likes: null,
-      messagerie: {
+      messagerie: [
+        {
           message: null,
           pseudo: null,
           date: null,
           isRead: null,
           isSend: null
-      },
+      }
+      ],
       latitude: null,
       longitude: null,
       id: null,
@@ -134,7 +137,7 @@ router.post('/camera', async (req, res, next) => {
   let imageUri =  uniqid() + '.jpg';
   let imagePath = './tmp/' + imageUri ;
   let resultCopy = await req.files.photo.mv(imagePath); // chaque photo est enregistrée dans le repertoire temporaire
-  console.log(req.files.photo.uri); // si undefined = tout est ok !
+  console.log("backend" + JSON.stringify(req.files.photo)); // si undefined = tout est ok !
 
   if (!resultCopy) {
     // stocker l'image sur un server et dans la bonne collection

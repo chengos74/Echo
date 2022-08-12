@@ -14,13 +14,15 @@ var usersSchema = mongoose.Schema({
     followers: Number,
     following: Number,
     likes: Number,
-    messagerie: {
+    messagerie: [
+        {
         message: String,
         pseudo: String,
         date: Date,
         isRead: Boolean,
         isSend: Boolean
-    },
+        }
+    ],
     latitude: Number,
     longitude: Number,
     id: Number,

@@ -118,6 +118,7 @@ function PubliChoice(props) {
 			</View>
 
 			<View style={{ alignItems: 'center', paddingTop: 20 }}>
+
 				<View style={{ alignItems: 'center',  width: 320, height: 240, borderRadius: 20, backgroundColor: "grey"  }}>
 				</View>
 			</View>

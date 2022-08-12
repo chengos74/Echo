@@ -110,7 +110,7 @@ function CameraScreen(props) {
                                         //-----FIN DU CODE POUR ENREGISTRER UNE VIDEO, FONCTIONNEL-----//
 
                                         // IP adress partage de connexion
-                                        const ip = "192.168.1.11";
+                                        const ip = "192.168.43.223"; // a changer par sa propre ip
                                         const ipSpaces = "172.20.10.5"
 
                                         // réponse du backend

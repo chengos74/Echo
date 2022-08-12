@@ -26,39 +26,39 @@ export default function login(props) {
   const [isTokenValide, setIsTokenValide] = useState(false)
 
   //facebook useState
-  const [isLoggedin, setIsLoggedin] = useState(false);
-  const [userData, setUserData] = useState(null);
-  const [isImageLoading, setIsImageLoading] = useState(false);
+  // const [isLoggedin, setIsLoggedin] = useState(false);
+  // const [userData, setUserData] = useState(null);
+  // const [isImageLoading, setIsImageLoading] = useState(false);
 
 
   //facebook 
-  const facebookLogin = async () => {
-    try {
-      await Facebook.initializeAsync({
-        appId: '1242896003145192',
-      });
-      const { type, token } =
-        await Facebook.logInWithReadPermissionsAsync({
-          permissions: ['public_profile'],
-        });
-      if (type === 'success') {
-        // Get the user's name using Facebook's Graph API
-        const response = await fetch(`https://graph.facebook.com/me?access_token=${token}&fields=id,name,email,picture.height(500)`);
-        Alert.alert('Logged in!', `Hi ${(await response.json()).name}!`);
-        setLo
-      } else {
-        // type === 'cancel'
-      }
-    } catch ({ message }) {
-      alert(`Facebook Login Error: ${message}`);
-    }
-  }
+  // const facebookLogin = async () => {
+  //   try {
+  //     await Facebook.initializeAsync({
+  //       appId: '1242896003145192',
+  //     });
+  //     const { type, token } =
+  //       await Facebook.logInWithReadPermissionsAsync({
+  //         permissions: ['public_profile'],
+  //       });
+  //     if (type === 'success') {
+  //       // Get the user's name using Facebook's Graph API
+  //       const response = await fetch(`https://graph.facebook.com/me?access_token=${token}&fields=id,name,email,picture.height(500)`);
+  //       Alert.alert('Logged in!', `Hi ${(await response.json()).name}!`);
+  //       setLo
+  //     } else {
+  //       // type === 'cancel'
+  //     }
+  //   } catch ({ message }) {
+  //     alert(`Facebook Login Error: ${message}`);
+  //   }
+  // }
 
-  const logout = () => {
-    setIsLoggedin(false);
-    setUserData(null);
-    setIsImageLoading(false);
-  }
+  // const logout = () => {
+  //   setIsLoggedin(false);
+  //   setUserData(null);
+  //   setIsImageLoading(false);
+  // }
 
   //google
   // const [request, response, googlePromptAsync] = Google.useAuthRequest({
@@ -72,6 +72,7 @@ export default function login(props) {
   // }, [response]);
 
   //sauvegarde des données en json
+  
   const submitData = async () => {
     var donnee = await fetch('http://192.168.43.223/signup', {
       method: 'POST',
@@ -79,8 +80,8 @@ export default function login(props) {
       body: `nom=${nom}&prenom=${prenom}&email=${email}&username=${userName}password=${password}`
     })
     
-    var newDonnee = donnee.json();
-    console.log("les données sont " + JSON.stringify(newDonnee));
+    var newDonnee = await donnee.json();
+    console.log("nouvel utilisateur " + JSON.stringify(newDonnee));
 
   }
 
@@ -89,8 +90,8 @@ export default function login(props) {
   //     method: 'POST',
   //     headers: { 'Content-Type': 'application/json' },
   //     body: JSON.stringify({
-  //       lastName: nom,
-  //       firstName: prenom,
+  //       nom: nom,
+  //       prenom: prenom,
   //       email: email,
   //       username: userName,
   //       password: password
@@ -102,6 +103,11 @@ export default function login(props) {
   //       console.log("error", err);
   //     })
   // }
+
+  // const validate = (text) => {
+  //   const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+  //   console.log(text, reg.test(text));
+  // };
 
   var tokenOk = () => {
     setIsTokenValide(true)
@@ -155,13 +161,13 @@ export default function login(props) {
         <Text style={styles.searchInput}>Valider</Text>
       </TouchableOpacity>
 
-      <View style={styles.lineStyle} />
+      {/* <View style={styles.lineStyle} />
 
 
       <TouchableOpacity style={styles.searchSection} onPress={facebookLogin} >
         <Text style={styles.searchInput}>Facebook</Text>
         <FontAwesomeIcon style={styles.Icon} icon={faFacebook} size={24} color={'#7E7E7E'} />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
       {/* <TouchableOpacity style={styles.searchSection} onPress={() => {
         googlePromptAsync({useProxy: true});
