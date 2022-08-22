@@ -30,7 +30,7 @@ import Message from './screenComponents/ChatMessages'
 import ImagePublication from './screenComponents/imagePublicationAccount';
 import Status from './screenComponents/StatusComponent';
 import ProfileSettings from './screens/ProfileSettingsScreen';
-import Login from './screens/LoginScreen';
+import Login from './screens/loginScreen';
 import HomePage2 from './screens/HomeScreen2';
 
 //-----REDUX STORE--------//

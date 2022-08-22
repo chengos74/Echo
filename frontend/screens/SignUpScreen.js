@@ -75,7 +75,7 @@ export default function login(props) {
   
   const ip = "192.168.43.223"
   const submitData = async () => {
-    const donnee = await fetch('http://192.168.43.223:3000/signup', {
+    const donnee = await fetch('http://192.168.1.11:3000/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: `nom=${nom}&prenom=${prenom}&email=${email}&username=${userName}&password=${password}`
@@ -114,7 +114,7 @@ export default function login(props) {
   var tokenOk = () => {
     setIsTokenValide(true)
     if (isTokenValide) {
-      props.navigation.navigate('BottomNavigation', { screen: 'BottomNavigation' })
+      props.navigation.navigate('BottomNavigation', { screen: 'Home' })
     } else {
       <Text>Il y a eu un problème lors du signUp</Text>
     }
@@ -158,7 +158,7 @@ export default function login(props) {
         value={password} />
 
       <TouchableOpacity
-        onPress={() => { submitData(); tokenOk() }} 
+        onPress={() => { submitData(); props.navigation.navigate('BottomNavigation', { screen: 'Home' }) }} 
         style={styles.valider}>
         <Text style={styles.searchInput}>Valider</Text>
       </TouchableOpacity>

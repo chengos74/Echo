@@ -5,6 +5,6 @@
   "minify": false,
   "urlRandomness": "xw-3gp",
   "https": false,
-  "scheme": null,
+  "scheme": "exp+echo",
   "devClient": false
 }

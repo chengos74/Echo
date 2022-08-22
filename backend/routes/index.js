@@ -27,7 +27,7 @@ router.post('/login', async (req, res, next) => {
     })
 
 	var password = req.body.password
-
+  console.log(req.body.password);
   console.log("usertoken = " + user);
   
   if (bcrypt.compareSync(password, user.password)) {

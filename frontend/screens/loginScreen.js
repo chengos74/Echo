@@ -1,8 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Button, View, TextInput, TouchableOpacity, Text } from 'react-native';
 
 //fontawesome
-import { FontAwesomeIcon  } from '@fortawesome/react-native-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faFacebook, faGoogle, faTiktok, faInstagram } from '@fortawesome/free-brands-svg-icons'
 
 import { connect } from 'react-redux';
@@ -27,7 +27,7 @@ function login(props) {
   // const [userData, setUserData] = useState(null);
   // const [isImageLoading, setIsImageLoading] = useState(false);
 
-  
+
   //facebook connexion
   // const facebookLogin = async () => {
   //   try {
@@ -71,13 +71,13 @@ function login(props) {
   //recuperation du token du back 
   const token = async () => {
     //chercher réponse de la route login
-    const donnee = await fetch('http://192.168.43.223:3000/login', {
+    const donnee = await fetch('http://192.168.1.11:3000/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: `username=${userName}&password=${password}`
     })
     var dataResponse = await donnee.json();
-  
+
     console.log("envoie du front vers back" + JSON.stringify(dataResponse));
   }
 
@@ -92,49 +92,53 @@ function login(props) {
   //   });
   //   console.log(postInfo);
   // }, [posts]);
-    
-// props.navigation.navigate("BottomNavigation", { screen: "BottomNavigation" })
+
+  // props.navigation.navigate("BottomNavigation", { screen: "BottomNavigation" })
 
 
   return (
     <View style={styles.container}>
       <Text style={styles.login}>Login</Text>
       <View style={styles.lineStyle} />
-        <TextInput 
+      <TextInput
         style={styles.input}
         placeholder="Username"
+        color='white'
         placeholderTextColor={"#7E7E7E"}
         onChangeText={(value) => setUserName(value)}
-       value={userName} />
-        <TextInput
+        value={userName} />
+      <TextInput
         style={styles.password}
         secureTextEntry={true}
+        color='white'
         placeholder="Password"
         placeholderTextColor={"#7E7E7E"}
         onChangeText={(value) => setPassword(value)}
         value={password} />
-      
-      <TouchableOpacity onPress={() => { token() }} style={styles.valider}>
-          <Text style={styles.searchInput}>Valider</Text>
-        </TouchableOpacity>
+
+      <TouchableOpacity
+        onPress={() => { token(); props.navigation.navigate("BottomNavigation", { screen: "Home" }) }} 
+        style={styles.valider}>
+        <Text style={styles.searchInput}>Submit</Text>
+      </TouchableOpacity>
 
 
-        {/* <View style={styles.lineStyle} /> */}
+      {/* <View style={styles.lineStyle} /> */}
 
-      
-        {/* <TouchableOpacity style={styles.searchSection} onPress={facebookLogin} >
+
+      {/* <TouchableOpacity style={styles.searchSection} onPress={facebookLogin} >
         <Text style={styles.searchInput}>Facebook</Text>
         <FontAwesomeIcon style={styles.Icon} icon={faFacebook} size={24} color={'#7E7E7E'} />
       </TouchableOpacity> */}
-      
+
       {/* <TouchableOpacity style={styles.searchSection} onPress={() => {
         googlePromptAsync({useProxy: true});
         }}>
         <Text style={styles.searchInput}>google</Text>
         <FontAwesomeIcon style={styles.Icon} icon={faGoogle} size={24} color={'#7E7E7E'} />
       </TouchableOpacity> */}
-      
-        {/* <TouchableOpacity style={styles.searchSection}>
+
+      {/* <TouchableOpacity style={styles.searchSection}>
         <Text style={styles.searchInput}>tiktok</Text>
         <FontAwesomeIcon style={styles.Icon} icon={faTiktok} size={24} color={'#7E7E7E'} />
 
@@ -144,15 +148,15 @@ function login(props) {
         <FontAwesomeIcon style={styles.Icon} icon={faInstagram} size={24} color={'#7E7E7E'} />
         </TouchableOpacity> */}
 
-        <View style={styles.lineStyle} />
-        <TouchableOpacity onPress={() => {
-          props.navigation.navigate("SignUp", { screen: "SignUp" });
+      <View style={styles.lineStyle} />
+      <TouchableOpacity onPress={() => {
+        props.navigation.navigate("SignUp", { screen: "SignUp" });
       }}>
-        <Text style={{fontSize:20, fontWeight:"bold", marginTop: 30, color:'#7E7E7E' }} >Don't have an account - Sign-Up </Text>
+        <Text style={{ fontSize: 20, fontWeight: "bold", marginTop: 30, color: '#7E7E7E' }} >Don't have an account - Sign-Up </Text>
       </TouchableOpacity>
 
-  </View>
-)
+    </View>
+  )
 }
 
 
@@ -174,7 +178,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     textAlign: 'center',
     width: "60%",
-    borderWidth: 1, 
+    borderWidth: 1,
     borderColor: "black",
     backgroundColor: "#505050",
     borderRadius: 26,
@@ -211,13 +215,13 @@ const styles = StyleSheet.create({
   password: {
     textAlign: 'center',
     width: "60%",
-    borderWidth: 1, 
+    borderWidth: 1,
     borderColor: "black",
     backgroundColor: "#505050",
     borderRadius: 26,
     height: 46
   },
-  
+
   appButtonText: {
     fontSize: 18,
     color: "#7E7E7E",
@@ -230,18 +234,18 @@ const styles = StyleSheet.create({
 
   lineStyle: {
     borderWidth: 2,
-    width: "60%", 
-    borderColor:'#7E7E7E', 
-    marginTop: 30, 
+    width: "60%",
+    borderColor: '#7E7E7E',
+    marginTop: 30,
   }
-    
+
 });
 
 function mapDispatchToProps(dispatch) {
 
   return {
-    addToken: function(token) {
-      dispatch({ type : 'addToken', myToken : token })
+    addToken: function (token) {
+      dispatch({ type: 'addToken', myToken: token })
     }
   }
 }
