@@ -114,7 +114,7 @@ function login(props) {
         onChangeText={(value) => setPassword(value)}
         value={password} />
       
-      <TouchableOpacity onPress={() => { token() }} style={styles.valider}>
+      <TouchableOpacity onPress={() => { token(); props.navigation.navigate('BottomNavigation', { screen: 'BottomNavigation' }) }} style={styles.valider}>
           <Text style={styles.searchInput}>Valider</Text>
         </TouchableOpacity>
 
