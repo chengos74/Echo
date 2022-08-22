@@ -30,7 +30,7 @@ import Message from './screenComponents/ChatMessages'
 import ImagePublication from './screenComponents/imagePublicationAccount';
 import Status from './screenComponents/StatusComponent';
 import ProfileSettings from './screens/ProfileSettingsScreen';
-import Login from './screens/loginScreen';
+import Login from './screens/LoginScreen';
 import HomePage2 from './screens/HomeScreen2';
 
 //-----REDUX STORE--------//
@@ -89,7 +89,7 @@ const BottomNavigation = () => {
       <Tab.Screen name="chat" component={chat} />
       <Tab.Screen name="profile" component={profile} />
       <Tab.Screen name="Account" component={Account} />
-      <Tab.Screen name='HomePage2' component={HomePage2} />
+      {/* <Tab.Screen name='HomePage2' component={HomePage2} /> */}
     </Tab.Navigator>
   )
 }

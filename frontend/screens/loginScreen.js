@@ -71,11 +71,27 @@ function login(props) {
   //recuperation du token du back 
   const token = async () => {
     //chercher réponse de la route login
-    let response = await fetch(`http://192.168.43.223/login`);
-    var dataResponse = response.json();
+    const donnee = await fetch('http://192.168.43.223:3000/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `username=${userName}&password=${password}`
+    })
+    var dataResponse = await donnee.json();
   
-    console.log("envoie du back vers front" + dataResponse);
+    console.log("envoie du front vers back" + JSON.stringify(dataResponse));
   }
+
+  // useEffect(() => {
+  //   var response;
+  //   (async () => {
+  //     var rawResponse = await fetch('http://' + ip + ':3000/post-content')
+  //     response = await rawResponse.json();
+  //     // console.log("postInfo :" + JSON.stringify(response));
+  //     setPostInfo(response.result);
+  //   })()
+  //   });
+  //   console.log(postInfo);
+  // }, [posts]);
     
 // props.navigation.navigate("BottomNavigation", { screen: "BottomNavigation" })
 
@@ -92,12 +108,13 @@ function login(props) {
        value={userName} />
         <TextInput
         style={styles.password}
+        secureTextEntry={true}
         placeholder="Password"
         placeholderTextColor={"#7E7E7E"}
         onChangeText={(value) => setPassword(value)}
         value={password} />
       
-      <TouchableOpacity onPress={() => { token(); props.navigation.navigate("BottomNavigation", { screen: "BottomNavigation" }) }} style={styles.valider}>
+      <TouchableOpacity onPress={() => { token() }} style={styles.valider}>
           <Text style={styles.searchInput}>Valider</Text>
         </TouchableOpacity>
 

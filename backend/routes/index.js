@@ -28,13 +28,13 @@ router.post('/login', async (req, res, next) => {
 
 	var password = req.body.password
 
-  console.log("usertoken = " + user.token);
-if (bcrypt.compareSync(password, user.password)) {
- res.json({ login: true, token: user.token  });
-} else {
- res.json({ login: false });
-}
-
+  console.log("usertoken = " + user);
+  
+  if (bcrypt.compareSync(password, user.password)) {
+   res.json({ login: true, token: user.token  });
+  } else {
+   res.json({ login: false });
+  }
   // res.json(userId) redirection vers homepage
 });
 
