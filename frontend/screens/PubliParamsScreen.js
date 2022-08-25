@@ -58,7 +58,7 @@ function PubliParams(props) {
         isComment,
         latitude,
         longitude){
-        fetch('http://' + ip + ':3000/create', {
+        fetch('https://mvpechobackend.herokuapp.com/create', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

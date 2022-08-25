@@ -29,7 +29,7 @@ const PostComponent = (props) => {
 
   // const getNewPost = async () => {
 
-  //   var rawResponse = await fetch('http://' + ip + ':3000/post-content')
+  //   var rawResponse = await fetch('https://mvpechobackend.herokuapp.com/post-content')
 
   //   response = await rawResponse.json()
   //   setPostInfo(response);
@@ -41,7 +41,7 @@ const PostComponent = (props) => {
   // useEffect(() => {
   //   var response;
   //   (async () => {
-  //     var rawResponse = await fetch('http://' + ip + ':3000/post-content')
+  //     var rawResponse = await fetch('https://mvpechobackend.herokuapp.com/post-content')
   //     response = await rawResponse.json();
   //     // console.log("postInfo :" + JSON.stringify(response));
   //     setPostInfo(response.result);
@@ -144,7 +144,7 @@ const PostComponent = (props) => {
   //     //ip Gauthier
   //     const ip = '192.168.43.223'
   //     const getPosts = async () => {
-  //       var rawResponse = await fetch('http://' + ip + ':3000/post-content')
+  //       var rawResponse = await fetch('https://mvpechobackend.herokuapp.com/post-content')
 
   //       let response = await rawResponse.json()
   //       console.log("response :" + JSON.stringify(response));
