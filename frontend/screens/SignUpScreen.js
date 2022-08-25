@@ -75,7 +75,7 @@ export default function login(props) {
   
   const ip = "192.168.43.223"
   const submitData = async () => {
-    const donnee = await fetch('https://mvpechobackend.herokuapp.com/signup', {
+    const donnee = await fetch('https://192.168.43.223:3000/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: `nom=${nom}&prenom=${prenom}&email=${email}&username=${userName}&password=${password}`
@@ -88,7 +88,7 @@ export default function login(props) {
 
 
   // const submitData = async () => {
-  //   await fetch('http://192.168.43.223/signup', {
+  //   await fetch('http://192.168.43.223:3000/signup', {
   //     method: 'POST',
   //     headers: { 'Content-Type': 'application/json' },
   //     body: JSON.stringify({
