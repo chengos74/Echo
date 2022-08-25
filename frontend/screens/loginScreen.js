@@ -71,7 +71,7 @@ function login(props) {
   //recuperation du token du back 
   const token = async () => {
     //chercher réponse de la route login
-    const donnee = await fetch('http://192.168.1.11:3000/login', {
+    const donnee = await fetch('http://192.168.43.223:3000/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: `username=${userName}&password=${password}`
@@ -84,7 +84,7 @@ function login(props) {
   // useEffect(() => {
   //   var response;
   //   (async () => {
-  //     var rawResponse = await fetch('http://' + ip + ':3000/post-content')
+  //     var rawResponse = await fetch('http://192.168.43.223:3000/post-content')
   //     response = await rawResponse.json();
   //     // console.log("postInfo :" + JSON.stringify(response));
   //     setPostInfo(response.result);
