@@ -46,7 +46,7 @@ export default function HomePage(props) {
     let userResearch = textFromInput;
 
     // réponse du backend
-    let rawReponse = await fetch("http://" + ip + ":3000/search", {
+    let rawReponse = await fetch("https://mvpechobackend.herokuapp.com/search", {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: `userResearch=${userResearch}`
