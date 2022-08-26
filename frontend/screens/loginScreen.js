@@ -71,7 +71,7 @@ function login(props) {
   //recuperation du token du back 
   const token = async () => {
     //chercher réponse de la route login
-    const donnee = await fetch('http://192.168.43.223:3000/login', {
+    const donnee = await fetch('https://echoproject-api.herokuapp.com/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: `username=${userName}&password=${password}`
@@ -79,6 +79,10 @@ function login(props) {
     var dataResponse = await donnee.json();
 
     console.log("envoie du front vers back" + JSON.stringify(dataResponse));
+
+    if(dataResponse.token){
+      props.navigation.navigate("BottomNavigation", { screen: "Home" })
+    }
   }
 
   // useEffect(() => {
@@ -117,7 +121,13 @@ function login(props) {
         value={password} />
 
       <TouchableOpacity
-        onPress={() => { token(); props.navigation.navigate("BottomNavigation", { screen: "Home" }) }} 
+        onPress={() => {
+          token();
+          // if (token) {
+          //   props.navigation.navigate("BottomNavigation", { screen: "Home" })
+          // }
+        }
+        }
         style={styles.valider}>
         <Text style={styles.searchInput}>Submit</Text>
       </TouchableOpacity>

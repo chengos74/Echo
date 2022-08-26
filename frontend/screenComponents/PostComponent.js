@@ -290,8 +290,9 @@ const PostComponent = (props) => {
               source={data.postProfilePicture} // photo de profil de l'utilisateur
               size={64}
             />
+
             <View style={styles.subtitleCardHead}>
-              <Text style={{ fontSize: 18, marginTop: 10, color: "white", fontWeight: 'bold' }}> {data.pseudo} </Text>
+              <Text style={{ fontSize: 18, color: "white", fontWeight: 'bold' }}> {data.postPseudo} </Text>
               <View style={{ flexDirection: 'row', marginTop: 10 }}>
                 <FontAwesomeIcon icon={faLocationDot} size={16} color={'#EBEBEB'} />
                 <Text style={{ marginLeft: 3, color: "#7E7E7E" }}> {data.city} </Text>
