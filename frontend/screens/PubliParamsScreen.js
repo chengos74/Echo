@@ -43,7 +43,7 @@ function PubliParams(props) {
     //     // console.log(postImage);
     // },[props.newPhoto[0].uri])
 
-    const ip = '172.20.10.5'
+    const ip = '192.168.43.223'
     function handlePost(
         postImage,
         postPseudo,

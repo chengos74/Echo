@@ -88,7 +88,7 @@ function login(props) {
   // useEffect(() => {
   //   var response;
   //   (async () => {
-  //     var rawResponse = await fetch('http://' + ip + ':3000/post-content')
+  //     var rawResponse = await fetch('http://192.168.43.223:3000/post-content')
   //     response = await rawResponse.json();
   //     // console.log("postInfo :" + JSON.stringify(response));
   //     setPostInfo(response.result);
