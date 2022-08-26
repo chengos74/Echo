@@ -21,8 +21,8 @@ function PubliParams(props) {
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
     // State fictives pour post
-    const [pseudo, setPseudo] = useState('mr_Bean');
-    const [avatar, setAvatar] = useState(require('../assets/profilePicture/userPicture1.jpg'));
+    const [pseudo, setPseudo] = useState(props.userData.username);
+    const [avatar, setAvatar] = useState(require('../assets/photo/photo7.jpg'));
     const [location, setLocation] = useState('Bordeaux');
     const [likes, setLikes] = useState(0);
     const [comments, setComments] = useState(null)
@@ -64,7 +64,7 @@ function PubliParams(props) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 postImage: postImage,
-                postPseudo: postPseudo,
+                postPseudo: props.userData.username,
                 range: range,
                 desc: desc,
                 postProfilePicture: postProfilePicture,
@@ -131,7 +131,7 @@ function PubliParams(props) {
                                 props.navigation.navigate("BottomNavigation", { screen: "Home" });
                                 props.onPost(
                                     uriPhoto,
-                                    pseudo,
+                                    props.userData.username,
                                     range,
                                     text,
                                     avatar,
@@ -139,7 +139,7 @@ function PubliParams(props) {
                                 );
                                 handlePost(
                                     uriPhoto,
-                                    pseudo,
+                                    props.userData.username,
                                     range,
                                     text,
                                     avatar,
@@ -245,7 +245,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-    return ({ newPhoto: state.photoReducer });
-};
+    return ({ newPhoto: state.photoReducer, userData: state.userData });
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(PubliParams);

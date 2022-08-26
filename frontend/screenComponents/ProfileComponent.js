@@ -7,9 +7,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faGear, faLink } from '@fortawesome/free-solid-svg-icons';
 import { Avatar } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
+import { connect } from 'react-redux';
 
-export default function ProfileComponent(props) {
-
+function ProfileComponent(props) {
     // gère la navigation vers Profile-Settings
     const navigation = useNavigation();
     // Données fictives 
@@ -19,7 +19,7 @@ export default function ProfileComponent(props) {
             userPseudo: 'mr Bean',
             profilePicture: require('../assets/profilePicture/userPicture1.jpg'),
             like: 75,
-            desc: "My name is Bean and i'd like to know how to center a div pls",
+            desc: `My name is ${props.userData.username} and i'd like to know how to center a div pls`,
             following: 255,
             followers: 321,
             likes: 1907,
@@ -30,7 +30,7 @@ export default function ProfileComponent(props) {
             <View key={index}>
                 <View style={{ flexDirection: 'row', marginTop: 50, alignItems: 'center', justifyContent: 'center' }}>
                     <View style={{ alignItems: 'center' }}>
-                        <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 22, }}>{data.userPseudo}</Text>
+                        <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 22, }}>{props.userData.username}</Text>
                     </View>
                     <TouchableOpacity style={{ left: 130 }}>
                         <FontAwesomeIcon icon={faGear} size={20} color='#fff' />
@@ -46,7 +46,7 @@ export default function ProfileComponent(props) {
                         <Text style={{ color: '#fff' }}>{data.desc}</Text>
                         <TouchableOpacity style={{ flexDirection: 'row', marginTop: 10, }}>
                             <FontAwesomeIcon icon={faLink} color='white' style={{ marginRight: 5 }} />
-                            <Text style={{ color: '#fff' }}>MrBean.fr</Text>
+                            <Text style={{ color: '#fff' }}>{props.userData.username}.fr</Text>
                         </TouchableOpacity>
                     </View>
 
@@ -106,3 +106,10 @@ export default function ProfileComponent(props) {
         </View>
     );
 };
+
+function mapStateToProps(state){
+    return ({ userData: state.userData });
+}
+
+export default connect(mapStateToProps, null)(ProfileComponent);
+

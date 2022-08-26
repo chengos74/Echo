@@ -30,7 +30,7 @@ import Message from './screenComponents/ChatMessages'
 import ImagePublication from './screenComponents/imagePublicationAccount';
 import Status from './screenComponents/StatusComponent';
 import ProfileSettings from './screens/ProfileSettingsScreen';
-import Login from './screens/LoginScreen';
+import Login from './screens/loginScreen';
 import HomePage2 from './screens/HomeScreen2';
 
 //-----REDUX STORE--------//
@@ -38,13 +38,11 @@ import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
 import photoReducer from './reducers/camera.reducers';
 import postReducer from './reducers/post.reducer';
+import userData from './reducers/userDataReducer';
 import { Provider } from 'react-redux';
 
-const reducer = combineReducers({ photoReducer, postReducer });
+const reducer = combineReducers({ photoReducer, postReducer, userData });
 const store = configureStore({ reducer });
-
-
-
 
 //création de la tab et stack
 const Stack = createStackNavigator();

@@ -38,14 +38,14 @@ const PostComponent = (props) => {
 
   // getNewPost();
 
-  // useEffect(() => {
-  //   var response;
-  //   (async () => {
-  //     var rawResponse = await fetch('https://192.168.43.223:3000/post-content')
-  //     response = await rawResponse.json();
-  //     // console.log("postInfo :" + JSON.stringify(response));
-  //     setPostInfo(response.result);
-  //   })()
+  //   useEffect(() => {
+  //     var response;
+  //     (async () => {
+  //       var rawResponse = await fetch('https://192.168.43.223:3000/post-content')
+  //       response = await rawResponse.json();
+  //       // console.log("postInfo :" + JSON.stringify(response));
+  //       setPostInfo(response.result);
+  //     })()
   //   });
   //   console.log(postInfo);
   // }, [posts]);
@@ -71,13 +71,26 @@ const PostComponent = (props) => {
   // }, []); // useEffect exécuté au chargement du screen 
 
 
-  let txt = 'waiting...';
-  if (errorMsg) {
-    txt = errorMsg;
-  } else if (userPosition) {
 
-  };
+  const [feed, setFeed] = useState();
 
+  // const fetchData = async () => {
+  //   var postFeed = await fetch('https://echoproject-api.herokuapp.com/post-content');
+  //   var postBDD = await postFeed.json();
+  //   setFeed(postBDD.result);
+  //   console.log(feed)
+  // };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      var postFeed = await fetch('https://echoproject-api.herokuapp.com/post-content');
+      var postBDD = await postFeed.json();
+      setFeed(postBDD.result);
+    };
+    fetchData();
+  }, [])
+
+  console.log(feed)
 
   // Array fictif contenant les infos relatives à un post pour mapper dessus ensuite
   const postInfo = [
@@ -258,116 +271,128 @@ const PostComponent = (props) => {
   //   });
   // }
 
-  const posts = postInfo.map((data, index) => {
+  const [like, setLike] = useState(false);
+  // State qui passe à true quand on comment
+  const [comment, setComment] = useState(false);
 
-    // State qui passe à true quand on like
-    const [like, setLike] = useState(data.isLiked);
-    // State qui passe à true quand on comment
-    const [comment, setComment] = useState(data.isComment);
+  if (feed != undefined) {
+    const posts = feed.map((data, index) => {
 
-    // on coupe la description à 80 char
-    if (data.desc.length > 80) {
-      data.desc = data.desc.slice(0, 80) + ' ...';
-    }
+      // State qui passe à true quand on like
+      // const [like, setLike] = useState(data.isLiked);
+      // // State qui passe à true quand on comment
+      // const [comment, setComment] = useState(data.isComment);
 
-    return (
-      <View
-        key={index}
-        style={{
-          paddingBottom: 10,
-          borderBottomColor: 'gray',
-          borderBottomWidth: 0.1,
-        }}>
-        <View style={{
-          flexDirection: 'row',
-          justifyContent: 'center',
-          alignItems: 'center',
-          padding: 15,
-        }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Avatar
-              rounded
-              source={data.postProfilePicture} // photo de profil de l'utilisateur
-              size={64}
-            />
+      // on coupe la description à 80 char
+      // if (data.desc.length > 80) {
+      //   data.desc = data.desc.slice(0, 80) + ' ...';
+      // }
 
-            <View style={styles.subtitleCardHead}>
-              <Text style={{ fontSize: 18, color: "white", fontWeight: 'bold' }}> {data.postPseudo} </Text>
-              <View style={{ flexDirection: 'row', marginTop: 10 }}>
-                <FontAwesomeIcon icon={faLocationDot} size={16} color={'#EBEBEB'} />
-                <Text style={{ marginLeft: 3, color: "#7E7E7E" }}> {data.city} </Text>
+      return (
+        <View
+          key={index}
+          style={{
+            paddingBottom: 10,
+            borderBottomColor: 'gray',
+            borderBottomWidth: 0.1,
+          }}>
+          <View style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding: 15,
+          }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Avatar
+                rounded
+                source={data.avatar} // photo de profil de l'utilisateur
+                size={64}
+              />
+
+              <View style={styles.subtitleCardHead}>
+                <Text style={{ fontSize: 18, color: "white", fontWeight: 'bold' }}> {data.pseudo} </Text>
+                <View style={{ flexDirection: 'row', marginTop: 10 }}>
+                  <FontAwesomeIcon icon={faLocationDot} size={16} color={'#EBEBEB'} />
+                  <Text style={{ marginLeft: 3, color: "#7E7E7E" }}> {data.city} </Text>
+                </View>
+              </View>
+              <Text style={{ marginTop: 40, color: "#7E7E7E" }}>{data.date}h ago</Text>
+            </View>
+          </View>
+          <View style={{
+            position: 'relative',
+            justifyContent: 'center',
+            alignItems: 'center',
+
+          }}>
+            <Image source={data.URI} style={{ width: '100%', height: 400, }} />
+          </View>
+          <View style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            paddingHorizontal: 12,
+            paddingVertical: 15,
+            backgroundColor: '#348A55',
+          }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', }}>
+              <TouchableOpacity>
+                <FontAwesomeIcon icon={faEllipsisVertical} style={{ color: '#fff' }} size={20} />
+              </TouchableOpacity>
+            </View>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <TouchableOpacity onPress={() => setLike(!like)}>
+                <FontAwesomeIcon
+                  icon={like ? faHeart : faHeartRegular}
+                  style={{ color: like ? '#D66D67' : 'white', marginRight: 5 }} size={24}
+                />
+              </TouchableOpacity>
+              <Text style={{ marginRight: 20, color: '#fff', }}>{like ? data.likes + 1 : data.likes}</Text>
+              <TouchableOpacity onPress={() => setComment(!comment)}>
+                <FontAwesomeIcon
+                  icon={comment ? faComment : faCommentRegular}
+                  style={{ color: '#fff', marginRight: 5 }} size={20} />
+              </TouchableOpacity>
+              <Text style={{ marginRight: 20, color: '#fff', }}>{comment ? data.comments + 1 : data.comments}</Text>
+              <TouchableOpacity>
+                <FontAwesomeIcon icon={faPaperPlane} style={{ color: '#fff' }} size={20} />
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            paddingHorizontal: 12,
+            paddingVertical: 0,
+            backgroundColor: '#348A55',
+          }}>
+            <View>
+              <View key={index}>
+                <Text style={{ fontWeight: 'bold', color: 'white' }}>{data.pseudo}</Text>
+                <Text style={{ color: 'white', fontSize: 13, marginBottom: 10 }}
+                  onPress={() => { }}
+                  numberOfLines={2}
+                >{data.desc}</Text>
               </View>
             </View>
-            <Text style={{ marginTop: 40, color: "#7E7E7E" }}>{data.time}h ago</Text>
           </View>
         </View>
-        <View style={{
-          position: 'relative',
-          justifyContent: 'center',
-          alignItems: 'center',
-
-        }}>
-          <Image source={data.postImage} style={{ width: '100%', height: 400, }} />
-        </View>
-        <View style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          paddingHorizontal: 12,
-          paddingVertical: 15,
-          backgroundColor: '#348A55',
-        }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center', }}>
-            <TouchableOpacity>
-              <FontAwesomeIcon icon={faEllipsisVertical} style={{ color: '#fff' }} size={20} />
-            </TouchableOpacity>
-          </View>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <TouchableOpacity onPress={() => setLike(!like)}>
-              <FontAwesomeIcon
-                icon={like ? faHeart : faHeartRegular}
-                style={{ color: like ? '#D66D67' : 'white', marginRight: 5 }} size={24}
-              />
-            </TouchableOpacity>
-            <Text style={{ marginRight: 20, color: '#fff', }}>{like ? data.likes + 1 : data.likes}</Text>
-            <TouchableOpacity onPress={() => setComment(!comment)}>
-              <FontAwesomeIcon
-                icon={comment ? faComment : faCommentRegular}
-                style={{ color: '#fff', marginRight: 5 }} size={20} />
-            </TouchableOpacity>
-            <Text style={{ marginRight: 20, color: '#fff', }}>{comment ? data.comments + 1 : data.comments}</Text>
-            <TouchableOpacity>
-              <FontAwesomeIcon icon={faPaperPlane} style={{ color: '#fff' }} size={20} />
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          paddingHorizontal: 12,
-          paddingVertical: 0,
-          backgroundColor: '#348A55',
-        }}>
-          <View>
-            <View key={index}>
-              <Text style={{ fontWeight: 'bold', color: 'white' }}>{data.postPseudo}</Text>
-              <Text style={{ color: 'white', fontSize: 13, marginBottom: 10 }}
-                onPress={() => { }}
-              >{data.desc}</Text>
-            </View>
-          </View>
-        </View>
+      )
+    })
+    return (
+      <View style={{ flex: 1 }}>
+        {posts}
       </View>
     )
-  })
+  } else {
+    return (
+      <View style={{ flex: 1 }}>
+        <Text>Nothing Yet</Text>
+      </View>
+    )
+  }
 
-
-  return (
-    <View style={{ flex: 1 }}>
-      {posts}
-    </View>
-  )
 }
 
 

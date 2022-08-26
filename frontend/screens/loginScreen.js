@@ -81,7 +81,8 @@ function login(props) {
     console.log("envoie du front vers back" + JSON.stringify(dataResponse));
 
     if(dataResponse.token){
-      props.navigation.navigate("BottomNavigation", { screen: "Home" })
+      props.getUserData(dataResponse.userData); // envoie des données utilisateurs dans le reducer approprié 
+      props.navigation.navigate("BottomNavigation", { screen: "Home" });
     }
   }
 
@@ -256,6 +257,9 @@ function mapDispatchToProps(dispatch) {
   return {
     addToken: function (token) {
       dispatch({ type: 'addToken', myToken: token })
+    },
+    getUserData: function (userData) {
+      dispatch({ type: 'getUserInfo', userData: userData })
     }
   }
 }
