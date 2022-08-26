@@ -1,10 +1,10 @@
 {
-  "expoServerPort": null,
+  "expoServerPort": 19000,
   "packagerPort": 19000,
   "packagerPid": null,
-  "expoServerNgrokUrl": "https://xw-3gp.chengkoeng.frontend.exp.direct",
-  "packagerNgrokUrl": "https://xw-3gp.chengkoeng.frontend.exp.direct",
-  "ngrokPid": 32256,
-  "webpackServerPort": 19006,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null,
+  "webpackServerPort": null,
   "devToolsPort": 19002
 }
