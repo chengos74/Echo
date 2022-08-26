@@ -58,7 +58,8 @@ function PubliParams(props) {
         isComment,
         latitude,
         longitude){
-        fetch('http://' + ip + ':3000/create', {
+        fetch('https://echoproject-api.herokuapp.com/create', {
+        // fetch('http://' + ip + ':3000/create', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -127,7 +128,7 @@ function PubliParams(props) {
                             style={{ height: 40 }}
                             title='Post'
                             onPress={() => {
-                                props.navigation.navigate("BottomNavigation", { screen: "HomePage2" });
+                                props.navigation.navigate("BottomNavigation", { screen: "Home" });
                                 props.onPost(
                                     uriPhoto,
                                     pseudo,

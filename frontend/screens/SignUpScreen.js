@@ -75,7 +75,7 @@ export default function login(props) {
   
   const ip = "192.168.43.223"
   const submitData = async () => {
-    const donnee = await fetch('http://192.168.1.11:3000/signup', {
+    const donnee = await fetch('https://echoproject-api.herokuapp.com/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: `nom=${nom}&prenom=${prenom}&email=${email}&username=${userName}&password=${password}`
@@ -83,6 +83,9 @@ export default function login(props) {
     
     const newDonnee = await donnee.json();
     console.log("donnée envoyé"+ JSON.stringify(newDonnee));
+    if(newDonnee.token){
+      props.navigation.navigate("BottomNavigation", { screen: "Home" })
+    }
     // console.log("nouvel utilisateur " + JSON.stringify(newDonnee));
   }
 
@@ -111,15 +114,15 @@ export default function login(props) {
   //   console.log(text, reg.test(text));
   // };
 
-  var tokenOk = () => {
-    setIsTokenValide(true)
-    if (isTokenValide) {
-      props.navigation.navigate('BottomNavigation', { screen: 'Home' })
-    } else {
-      <Text>Il y a eu un problème lors du signUp</Text>
-    }
-    setIsTokenValide(false)
-  }
+  // var tokenOk = () => {
+  //   setIsTokenValide(true)
+  //   if (isTokenValide) {
+  //     props.navigation.navigate('BottomNavigation', { screen: 'Home' })
+  //   } else {
+  //     <Text>Il y a eu un problème lors du signUp</Text>
+  //   }
+  //   setIsTokenValide(false)
+  // }
 
   return (
     <View style={styles.container}>
@@ -158,7 +161,7 @@ export default function login(props) {
         value={password} />
 
       <TouchableOpacity
-        onPress={() => { submitData(); props.navigation.navigate('BottomNavigation', { screen: 'Home' }) }} 
+        onPress={() => { submitData() }} 
         style={styles.valider}>
         <Text style={styles.searchInput}>Valider</Text>
       </TouchableOpacity>
